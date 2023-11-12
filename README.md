@@ -1,7 +1,11 @@
 
 ## Frontend
 
-```npm start```
+```bash
+npm start
+```
 
-```npm run dev```
+```bash
+npm run dev
+```
 
