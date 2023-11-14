@@ -1,10 +1,5 @@
 
-## Frontend
-
-```bash
-npm start
-```
-
+## Start Frontend
 ```bash
 npm run dev
 ```
