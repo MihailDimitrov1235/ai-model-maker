@@ -34,13 +34,14 @@ model.compile(optimizer='adam',
 
 # Training
 
-model.fit(x_train, y_train, epochs=5)
+model.fit(x_train, y_train, epochs=1)
 
-model.evaluate(x_test,  y_test, verbose=2)
+model.save('my_model.tf')
+# model.evaluate(x_test,  y_test, verbose=2)
 
-probability_model = tf.keras.Sequential([
-  model,
-  tf.keras.layers.Softmax()
-])
+# probability_model = tf.keras.Sequential([
+#   model,
+#   tf.keras.layers.Softmax()
+# ])
 
-probability_model(x_test[:5])
+# probability_model(x_test[:5])
