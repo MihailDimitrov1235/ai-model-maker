@@ -1,11 +1,9 @@
 import { Button } from "@mui/material"
-import ThemeToggle from "../Components/ThemeToggle"
 
 const Landing = function(){
     return(
         <>
-        <ThemeToggle/>
-        <Button>button</Button>
+        <h1>sus</h1>
         </>
     )
 }

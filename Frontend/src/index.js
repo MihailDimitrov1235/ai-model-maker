@@ -30,10 +30,12 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-      <CssBaseline /> 
-        {content}
+        <CssBaseline /> 
+        <div style={{ width:'100vw', height:'100vh'}}>
+          {content}
+        </div>
       </ThemeProvider>
-      </ColorModeContext.Provider> 
+    </ColorModeContext.Provider> 
   );
 }
 

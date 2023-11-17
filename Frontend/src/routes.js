@@ -1,9 +1,10 @@
 import Landing from "./Pages/Landing";
+import Layout from "./Components/Layout";
 
 const routes = [
     {
       path: '/',
-    //   element: <MainLayout />,
+      element: <Layout />,
       children: [
         { path: '/', element: <Landing /> },
       ]
