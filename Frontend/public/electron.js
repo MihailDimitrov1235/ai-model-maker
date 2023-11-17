@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 
 function createWindow () {
   // Create the browser window.
@@ -9,6 +9,8 @@ function createWindow () {
       nodeIntegration: true
     }
   })
+  
+  Menu.setApplicationMenu(null)
 
   //load the index.html from a url
   win.loadURL('http://localhost:3000');
