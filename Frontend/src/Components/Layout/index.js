@@ -18,8 +18,8 @@ export default function Layout(){
 
     return(
         <Box sx={{
-            height:'100vh',
-            width:'100vw',
+            height:'100%',
+            width:'100%',
             display:'flex',
             bgcolor:'background.main'
         }}>
@@ -27,8 +27,9 @@ export default function Layout(){
                 display:'flex',
                 flexDirection:'column',
                 width:'300px',
-                height:'100%',
-                bgcolor:'background.standOut'
+                bgcolor:'background.standOut',
+                m:2,
+                borderRadius:'10px'
             }}>
                 <Box sx={{
                     display:'flex',

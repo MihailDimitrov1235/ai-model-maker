@@ -20,7 +20,7 @@ export default function SidebarMenu({ items }) {
               display: "flex",
               justifyContent: "start",
               px:3,
-              py:2,
+              py:1,
               fontSize:'16px'
             }}
           >

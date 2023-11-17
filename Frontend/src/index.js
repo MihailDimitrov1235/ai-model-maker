@@ -65,7 +65,9 @@ function App() {
             },
           }}
         />
+        <div style={{ height:'100vh', width:'100vw', overflowX:'hidden'}}>
           {content}
+        </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

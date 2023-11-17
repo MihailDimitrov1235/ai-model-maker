@@ -11,7 +11,8 @@ export default function ThemeToggle(){
   return (
         <Box
           sx={{
-            p: 1,
+            px: 2,
+            py: 1,
             fontSize:'30px',
             display:'flex',
             alignItems:'center',
@@ -44,8 +45,5 @@ export default function ThemeToggle(){
             />
           </Box>
         </Box>
-      // <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-      //   {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      // </IconButton>
   );
 }
