@@ -1,18 +1,20 @@
 import { createTheme } from "@mui/material";
-import { blue, grey } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 
+const blue ='#15A4C1'
 const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary:{
-      main:blue[500]
+      main:blue
     },
     background:{
       main:grey[300],
       standOut:'#ffffff',
     },
     text:{
-      main:'#000000'
+      main:'#000000',
+      contrast:'#ffffff'
     }
   },
 });
@@ -20,14 +22,15 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary:{
-      main:blue[500]
+      main:blue
     },
     background:{
-      main:'#101418',
-      standOut:'#0a0d0f',
+      main:'#1C1F26',
+      standOut:'#16181D',
     },
     text:{
-      main:'#ffffff'
+      main:'#ffffff',
+      contrast:'#ffffff'
     }
   },
 });

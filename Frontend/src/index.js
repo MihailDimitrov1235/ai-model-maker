@@ -4,13 +4,16 @@ import { BrowserRouter, useRoutes } from "react-router-dom";
 import { ThemeProvider, CssBaseline, GlobalStyles } from "@mui/material";
 import { lightTheme, darkTheme } from "./theme";
 import routes from "./routes";
+import {useMediaQuery} from "@mui/material";
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
 
 function App() {
-  const [mode, setMode] = React.useState("light");
+  
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [mode, setMode] = React.useState(prefersDarkMode? "dark" : "light");
 
   const colorMode = React.useMemo(
     () => ({
@@ -20,7 +23,6 @@ function App() {
     }),
     []
   );
-
   const theme = React.useMemo(
     () => (mode == "light" ? lightTheme : darkTheme),
     [mode]
@@ -37,9 +39,6 @@ function App() {
             '*::-webkit-scrollbar': {
               width: '0.4em'
             },
-            '*::-webkit-scrollbar-track': {
-              '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-            },
             '*::-webkit-scrollbar-thumb': {
               backgroundColor: 'rgba(0,0,0,.1)',
               outline: '1px solid slategrey',
@@ -49,10 +48,9 @@ function App() {
               boxSizing: "border-box",
               margin: 0,
               padding: 0,
+              fontFamily: 'Noto Sans Display, sans-serif'
             },
             html: {
-              "-webkit-font-smoothing": "antialiased",
-              "-moz-osx-font-smoothing": "grayscale",
               height: "100%",
               width: "100%",
             },
