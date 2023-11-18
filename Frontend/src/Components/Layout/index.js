@@ -10,10 +10,10 @@ import ThemeToggle from './ThemeToggle';
 export default function Layout(){
 
     const items = [
-        {type:'item', name:'Home', icon:HomeIcon, href:''},
-        {type:'item', name:'Data', icon:DatasetIcon, href:''},
-        {type:'item', name:'Train', icon:SchoolIcon, href:''},
-        {type:'item', name:'Test', icon:ScienceIcon, href:''},
+        {type:'item', name:'Home', icon:HomeIcon, href:'/'},
+        {type:'item', name:'Data', icon:DatasetIcon, href:'/data'},
+        {type:'item', name:'Train', icon:SchoolIcon, href:'/train'},
+        {type:'item', name:'Test', icon:ScienceIcon, href:'/test'},
     ]
 
     return(
