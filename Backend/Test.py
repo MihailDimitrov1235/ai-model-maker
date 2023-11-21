@@ -1,11 +1,14 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
+# import numpy as np
+# import pandas as pd
+# import seaborn as sns
 
 import tensorflow as tf
 
 import os
+
+
+# print("GPUs Available: ", tf.config.list_physical_devices('GPU'))
+
 
 def is_file_in_folder(folder_path, file_name):
     file_path = os.path.join(folder_path, file_name)
