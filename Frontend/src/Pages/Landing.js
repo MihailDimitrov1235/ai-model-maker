@@ -3,7 +3,7 @@ import { Button } from "@mui/material"
 const Landing = function(){
     return(
         <>
-        <h1>sus</h1>
+            <Button style={{maxWidth:'100px'}}>sus</Button>
         </>
     )
 }
