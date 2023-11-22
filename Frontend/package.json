@@ -20,9 +20,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "dev": "concurrently \"SET BROWSER=none&&npm run start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron": "wait-on tcp:3000 && electron ."
@@ -48,6 +48,8 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "electron": "^27.0.4",
+    "react-app-rewired": "^2.2.1",
+    "react-error-overlay": "^6.0.9",
     "wait-on": "^7.1.0"
   }
 }

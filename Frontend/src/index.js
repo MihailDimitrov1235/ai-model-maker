@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, useRoutes } from "react-router-dom";
 import { ThemeProvider, CssBaseline, GlobalStyles } from "@mui/material";
@@ -11,6 +11,11 @@ export const ColorModeContext = React.createContext({
 });
 
 function App() {
+  useEffect(() => {
+    window.process = {
+      ...window.process,
+    };
+  }, []);
   
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = React.useState(prefersDarkMode? "dark" : "light");

@@ -1,26 +1,18 @@
-import { Button } from "@mui/material"
-// import python from 'python-shell';
-// import path from "path";
+import React from 'react';
+const { exec } = require("child_process");
+const { ipcRenderer } = require("electron");
 
-// var options = {
-//     scriptPath : path.join(__dirname, '/../Backend/'),
-//     args : [],
-// };
+function Landing() {
+  const runPythonScript = () => {
+    console.log('imagine')
+  };
 
-
-
-const Landing = function(){
-    const click = () => {
-        // let test = new python('Test.py', options);
-        // test.on('message', function(message){
-        //     console.log(message)
-        // })
-    }
-    return(
-        <>
-            <Button onClick={click} style={{maxWidth:'100px'}}>sus</Button>
-        </>
-    )
+  return (
+    <div>
+      <h1>Electron React Python Example</h1>
+      <button onClick={runPythonScript}>Run Python Script</button>
+    </div>
+  );
 }
 
-export default Landing
+export default Landing;
