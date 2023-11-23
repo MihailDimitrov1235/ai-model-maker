@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button,  Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import SidebarMenu from "./SidebarMenu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -14,6 +14,7 @@ export default function Layout() {
     { type: "item", name: "Train", icon: SchoolIcon, href: "/train" },
     { type: "item", name: "Test", icon: ScienceIcon, href: "/test" },
   ];
+  const isActive = false;
 
   return (
     <Box
@@ -60,12 +61,13 @@ export default function Layout() {
         <Box>
           <ThemeToggle />
         </Box>
+         
       </Box>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          flex: "1",
+          flex: "2",
           bgcolor: "background.standOut",
           m: 2,
           ml: 0,
@@ -75,6 +77,40 @@ export default function Layout() {
         }}
       >
         <Outlet />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: "0.5",
+          bgcolor: "background.standOut",
+          m: 2,
+          ml: 0,
+          borderRadius: "10px",
+          fontWeight: 'fontWeightLight',
+          py: 1,
+          px: 2,
+        }}
+      >
+        <p sx={{
+            p: 2,
+            width: 20 ,
+        }}>
+          <Typography sx={{ color: isActive?"text.contrast" : "text.main", fontSize: "16px", fontWeight:500 }}>
+            Това е показно за input:
+          </Typography>
+          
+        </p>
+        <Button
+
+          sx={{
+            bgcolor:"primary.main",
+            color: "Black",
+            m:4,
+          }}
+        >
+          ON/OFF
+        </Button>
       </Box>
     </Box>
   );
