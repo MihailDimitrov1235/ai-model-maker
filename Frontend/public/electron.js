@@ -1,4 +1,6 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const path = require('node:path');
+const {PythonShell} = require('python-shell');
 
 function createWindow () {
   // Create the browser window.
@@ -6,6 +8,7 @@ function createWindow () {
     width: 1980,
     height: 1080,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
     }
   })
@@ -17,6 +20,12 @@ function createWindow () {
 
   // Open the DevTools.
   win.webContents.openDevTools()
+
+  ipcMain.on('run-python', (event, arg) => {
+    PythonShell.runString('x=1+1;print(x)', null).then(messages=>{
+      console.log(messages);
+    });
+  })
 }
 
 // This method will be called when Electron has finished

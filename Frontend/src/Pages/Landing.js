@@ -11,6 +11,7 @@ import { Button } from "@mui/material"
 
 const Landing = function(){
     const click = () => {
+      window.electronAPI.runPython('test')
         // let test = new python('Test.py', options);
         // test.on('message', function(message){
         //     console.log(message)
