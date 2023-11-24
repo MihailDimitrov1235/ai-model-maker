@@ -6,6 +6,8 @@ import { lightTheme, darkTheme } from "./theme";
 import routes from "./routes";
 import {useMediaQuery} from "@mui/material";
 
+import './i18n';
+
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });

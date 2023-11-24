@@ -17,6 +17,15 @@ const lightTheme = createTheme({
       contrast:'#ffffff'
     }
   },
+  components: {
+    MuiIconButton:{
+      styleOverrides:{
+        root:{
+          aspectRatio:'1/1'
+        }
+      }
+    }
+  }
 });
 const darkTheme = createTheme({
   palette: {
@@ -33,6 +42,15 @@ const darkTheme = createTheme({
       contrast:'#ffffff'
     }
   },
+  components: {
+    MuiIconButton:{
+      styleOverrides:{
+        root:{
+          aspectRatio:'1/1'
+        }
+      }
+    }
+  }
 });
 
 export { lightTheme, darkTheme };
