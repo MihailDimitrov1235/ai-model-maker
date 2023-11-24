@@ -22,8 +22,17 @@ function createWindow () {
   win.webContents.openDevTools()
 
   ipcMain.on('run-python', (event, arg) => {
-    PythonShell.runString('x=1+1;print(x)', null).then(messages=>{
-      console.log(messages);
+    let options = {
+      mode: 'text',
+      pythonPath: path.join(__dirname, '/../Python/.conda/python.exe'),
+      pythonOptions: ['-u'], // get print results in real-time
+      scriptPath: path.join(__dirname, '/../Python'),
+      args: []
+    };
+    
+    PythonShell.run('Test.py', options).then(messages=>{
+      // results is an array consisting of messages collected during execution
+      console.log('results: %j', messages);
     });
   })
 }
