@@ -8,7 +8,8 @@ import ScienceIcon from "@mui/icons-material/Science";
 import ThemeToggle from "./ThemeToggle";
 import { useTranslation } from "react-i18next";
 import LanguageChanger from "./LanguageChanger"
-
+import BarChart from "./ChartDiagrams.js";
+ 
 export default function Layout() {
   const { t } = useTranslation()
   const items = [
@@ -83,6 +84,7 @@ export default function Layout() {
           px: 2,
         }}
       >
+        <BarChart/>
         <Outlet />
       </Box>
       <Box
