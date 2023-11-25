@@ -7,7 +7,7 @@ import DatasetIcon from "@mui/icons-material/Dataset";
 import ScienceIcon from "@mui/icons-material/Science";
 import ThemeToggle from "./ThemeToggle";
 import { useTranslation } from "react-i18next";
-import LanguageChanger from "../LanguageChanger"
+import LanguageChanger from "./LanguageChanger"
 
 export default function Layout() {
   const { t } = useTranslation()

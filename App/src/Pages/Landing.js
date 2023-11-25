@@ -1,6 +1,5 @@
 import { Button } from "@mui/material"
 import { useTranslation } from 'react-i18next';
-import LanguageChanger from "../Components/LanguageChanger"
 
 // import python from 'python-shell';
 // import path from "path";

@@ -13,6 +13,7 @@ export default function ThemeToggle(){
         onClick={colorMode.toggleColorMode}
         sx={{
           m:1,
+          mt:0,
           bgcolor: "background.standOut",
           textTransform: "none",
           width: "100%",

@@ -17,6 +17,7 @@ export default function LanguageChanger() {
         onClick={changeLanguageHandler}
         sx={{
           m:1,
+          mb:0,
           textTransform: "none",
           width: "100%",
           aspectRatio:'1/1',
