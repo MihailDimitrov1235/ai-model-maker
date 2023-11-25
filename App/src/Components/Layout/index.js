@@ -1,6 +1,6 @@
 import { Box, Button,  Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import SidebarMenu from "./SidebarMenu";
+import SidebarIconMenu from "./SidebarIconMenu";
 import HomeIcon from "@mui/icons-material/Home";
 import SchoolIcon from "@mui/icons-material/School";
 import DatasetIcon from "@mui/icons-material/Dataset";
@@ -58,7 +58,7 @@ export default function Layout() {
             overflowX: "hidden",
           }}
         >
-          <SidebarMenu items={items} />
+          <SidebarIconMenu items={items} />
         </Box>
 
         <Box sx={{ width:'100%' , display:'flex'}}>
