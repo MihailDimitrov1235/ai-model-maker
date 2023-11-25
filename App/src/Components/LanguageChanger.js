@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { IconButton } from '@mui/material'
+import { Button } from '@mui/material'
 
-export default function Intro() {
+export default function LanguageChanger() {
 
     const bgPath = "icons/bulgaria.svg"
     const enPath = "icons/united-kingdom.svg"
@@ -9,13 +9,25 @@ export default function Intro() {
     const { i18n } = useTranslation()
 
     const changeLanguageHandler = (lang) =>{
-        console.log(i18n.language)
         i18n.changeLanguage(i18n.language=="bg"?"en":"bg")
     }
 
     return (
-        <IconButton onClick={changeLanguageHandler} sx={{ width:'50px'}}>
-            <img src={i18n.language=="bg"?enPath:bgPath}/>
-        </IconButton>
+        <Button
+        onClick={changeLanguageHandler}
+        sx={{
+          m:1,
+          textTransform: "none",
+          width: "100%",
+          aspectRatio:'1/1',
+          minWidth:'0',
+          display: "flex",
+          justifyContent: "center",
+          flexDirection:'column',
+          alignItems:'center',
+        }}
+      >
+        <img src={i18n.language=="bg"?enPath:bgPath}/>
+      </Button>
     )
 }

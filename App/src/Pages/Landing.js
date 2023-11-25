@@ -25,8 +25,7 @@ const Landing = function(){
     }
     return(
         <>
-            <LanguageChanger/>
-            <Button onClick={click} style={{maxWidth:'100px'}}>{t('test')}</Button>
+            <Button onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button>
         </>
     )
 }

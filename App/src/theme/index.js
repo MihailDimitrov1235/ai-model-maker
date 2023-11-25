@@ -25,7 +25,10 @@ const lightTheme = createTheme({
         }
       }
     }
-  }
+  },
+  shape:{
+    borderRadius:20
+  },
 });
 const darkTheme = createTheme({
   palette: {
@@ -38,7 +41,8 @@ const darkTheme = createTheme({
       standOut:'#16181D',
     },
     text:{
-      main:'#ffffff',
+      main:'#8A94A8',
+      dark:'#576175',
       contrast:'#ffffff'
     }
   },
@@ -49,8 +53,26 @@ const darkTheme = createTheme({
           aspectRatio:'1/1'
         }
       }
+    },
+    MuiTooltip:{
+      styleOverrides:{
+        tooltip:{
+          color:'#8A94A8',
+          fontSize:'15px',
+          fontWeight:600,
+          backgroundColor:'#1C1F26',
+          padding:'10px',
+          margin:'20px'
+        },
+        popper: {
+          marginLeft: '12px !important', 
+        },
+      }
     }
-  }
+  },
+  shape:{
+    borderRadius:20
+  },
 });
 
 export { lightTheme, darkTheme };

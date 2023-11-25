@@ -6,13 +6,16 @@ import SchoolIcon from "@mui/icons-material/School";
 import DatasetIcon from "@mui/icons-material/Dataset";
 import ScienceIcon from "@mui/icons-material/Science";
 import ThemeToggle from "./ThemeToggle";
+import { useTranslation } from "react-i18next";
+import LanguageChanger from "../LanguageChanger"
 
 export default function Layout() {
+  const { t } = useTranslation()
   const items = [
-    { type: "item", name: "Home", icon: HomeIcon, href: "/" },
-    { type: "item", name: "Data", icon: DatasetIcon, href: "/data" },
-    { type: "item", name: "Train", icon: SchoolIcon, href: "/train" },
-    { type: "item", name: "Test", icon: ScienceIcon, href: "/test" },
+    { type: "item", name: t("Home"), icon: HomeIcon, href: "/" },
+    { type: "item", name: t("Data"), icon: DatasetIcon, href: "/data" },
+    { type: "item", name: t("Train"), icon: SchoolIcon, href: "/train" },
+    { type: "item", name: t("Test"), icon: ScienceIcon, href: "/test" },
   ];
   const isActive = false;
 
@@ -29,24 +32,24 @@ export default function Layout() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "270px",
+          width: "70px",
           bgcolor: "background.standOut",
-          m: 2,
-          borderRadius: "10px",
+          mx: 1,
+          borderRadius: '20px',
         }}
       >
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            p: 1,
+            // p: 1,
           }}
         >
           <img
             src="logo-placeholder-image.png"
-            style={{ aspectRatio: "1/1", height: "64px" }}
+            style={{ aspectRatio: "1/1", width: "100%" }}
           />
-          <Typography variant="h6">AI-MODEL-MAKER</Typography>
+          {/* <Typography variant="h6">AI-MODEL-MAKER</Typography> */}
         </Box>
 
         <Box
@@ -58,7 +61,11 @@ export default function Layout() {
           <SidebarMenu items={items} />
         </Box>
 
-        <Box>
+        <Box sx={{ width:'100%' , display:'flex'}}>
+          <LanguageChanger/>
+        </Box>
+
+        <Box sx={{ width:'100%' , display:'flex'}}>
           <ThemeToggle />
         </Box>
          
@@ -69,9 +76,9 @@ export default function Layout() {
           flexDirection: "column",
           flex: "2",
           bgcolor: "background.standOut",
-          m: 2,
+          mx: 1,
           ml: 0,
-          borderRadius: "10px",
+          borderRadius: '20px',
           py: 1,
           px: 2,
         }}
@@ -84,9 +91,9 @@ export default function Layout() {
           flexDirection: "column",
           flex: "0.5",
           bgcolor: "background.standOut",
-          m: 2,
+          mx: 1,
           ml: 0,
-          borderRadius: "10px",
+          borderRadius: '20px',
           fontWeight: 'fontWeightLight',
           py: 1,
           px: 2,
@@ -96,9 +103,9 @@ export default function Layout() {
             p: 2,
             width: 20 ,
         }}>
-          <Typography sx={{ color: isActive?"text.contrast" : "text.main", fontSize: "16px", fontWeight:500 }}>
+          {/* <Typography sx={{ color: isActive?"text.contrast" : "text.main", fontSize: "16px", fontWeight:500 }}>
             Това е показно за input:
-          </Typography>
+          </Typography> */}
           
         </p>
         <Button
@@ -106,7 +113,7 @@ export default function Layout() {
           sx={{
             bgcolor:"primary.main",
             color: "Black",
-            m:4,
+            m:2,
           }}
         >
           ON/OFF
