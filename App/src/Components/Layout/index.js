@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import SidebarIconMenu from "./SidebarIconMenu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -17,7 +17,6 @@ export default function Layout() {
     { type: "item", name: t("Train"), icon: SchoolIcon, href: "/train" },
     { type: "item", name: t("Test"), icon: ScienceIcon, href: "/test" },
   ];
-  const isActive = false;
 
   return (
     <Box

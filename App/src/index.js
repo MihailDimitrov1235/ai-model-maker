@@ -5,7 +5,6 @@ import { ThemeProvider, CssBaseline, GlobalStyles } from "@mui/material";
 import { lightTheme, darkTheme } from "./theme";
 import routes from "./routes";
 import {useMediaQuery} from "@mui/material";
-
 import './i18n';
 
 export const ColorModeContext = React.createContext({
@@ -39,12 +38,15 @@ function App() {
         <GlobalStyles
           styles={{
             '*::-webkit-scrollbar': {
-              width: '0.4em'
+              margin:'1px',
+              width: '0.4em',
             },
             '*::-webkit-scrollbar-thumb': {
-              backgroundColor: 'rgba(0,0,0,.1)',
-              outline: '1px solid slategrey',
+              backgroundColor: 'rgba(127,127,127,.15)',
               borderRadius: '10px',
+            },
+            '*::-webkit-scrollbar-thumb:hover': {
+              backgroundColor: 'rgba(127,127,127,.2)',
             },
             "*": {
               boxSizing: "border-box",

@@ -24,6 +24,24 @@ const routes = [
             {path: 'data2', element: <Landing />}
           ]  
         },
+        { 
+          path: '/train', 
+          element: <InnerLayout type={'train'} />, 
+          children: [
+            {path: '', element: <Landing />},
+            {path: 'data1', element: <Landing />},
+            {path: 'data2', element: <Landing />}
+          ]  
+        },
+        { 
+          path: '/test', 
+          element: <InnerLayout type={'test'} />, 
+          children: [
+            {path: '', element: <Landing />},
+            {path: 'data1', element: <Landing />},
+            {path: 'data2', element: <Landing />}
+          ]  
+        },
         { path: '*', element: <InnerLayout />, children:[{path: '*', element: <Page404 />}]}
       ]
     },

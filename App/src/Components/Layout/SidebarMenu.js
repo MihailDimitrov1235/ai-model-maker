@@ -1,36 +1,77 @@
-// import { Outlet } from "react-router-dom"
-import { Box, Button } from "@mui/material"
+import { useState } from "react";
+import { Collapse, List, ListItemButton, ListItemText } from "@mui/material";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const items = [
-    {type:"section", name:'section 1', items:[
-        {type:"item", name:"item1", href:"/"},
-        {type:"item", name:"item2", href:"/"},
-    ]}
-]
+export default function SidebarMenu({ items }) {
+const navigate = useNavigate()
+const location = useLocation();
+console.log(location.pathname)
+  return (
+    <>
+      {items.map((item) => {
+        const isActive = location.pathname.includes(item.href)
+        return(
+        <>
+          {item.type == "section" ? (
+            <Section item={item} isActive={isActive} />
+          ) : (
+            <ListItemButton
+                onClick={() => navigate(item.href)}
+              disableRipple
+              sx={{
+                bgcolor: "",
+                color: isActive? "text.main" : "text.dark",
+                ":hover": {
+                  bgcolor: "transparent",
+                  color: "text.main",
+                },
+              }}
+            >
+              {/* <ListItemIcon>
+                    <SendIcon />
+                </ListItemIcon> */}
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          )}
+        </>
+      )})}
+    </>
+  );
+}
 
-export default function SidebarMenu({type}){
-    return(
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection:'row', 
-                width:'250px',
-                flexDirection: "column",
-                bgcolor: "background.standOut",
-                borderRadius: '20px',
-                m: 1,
-                ml: 0,
-            }}
-        >
-            <Button
-                sx={{
-                    bgcolor:"primary.main",
-                    color: "text.contrast",
-                    m:2,
-                }}
-                >
-                ON/OFF
-            </Button>
-        </Box>
-    )
+function Section({ item, isActive }) {
+  const [open, setOpen] = useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      <ListItemButton
+        disableRipple
+        sx={{
+          bgcolor: "",
+          color: isActive? "text.main" : "text.dark",
+          ":hover": {
+            bgcolor: "transparent",
+          },
+          ".MuiTypography-root":{
+            fontWeight:600,
+          }
+        }}
+        onClick={handleClick}
+      >
+        <ListItemText primary={item.name} />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding sx={{ml:1}}>
+          <SidebarMenu items={item.items} />
+        </List>
+      </Collapse>
+    </>
+  );
 }

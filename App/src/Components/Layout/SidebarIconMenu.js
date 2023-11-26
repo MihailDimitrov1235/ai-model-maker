@@ -1,5 +1,5 @@
 import { Button, Box, Typography, Tooltip } from "@mui/material";
-import { useNavigate, matchPath, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Zoom } from "@mui/material";
 
 export default function SidebarIconMenu({ items }) {
