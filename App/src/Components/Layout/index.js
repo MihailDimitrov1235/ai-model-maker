@@ -1,4 +1,4 @@
-import { Box, Button,  Typography } from "@mui/material";
+import { Box, Button, Typography, Divider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import SidebarIconMenu from "./SidebarIconMenu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -34,7 +34,7 @@ export default function Layout() {
           flexDirection: "column",
           width: "70px",
           bgcolor: "background.standOut",
-          mx: 1,
+          m: 1,
           borderRadius: '20px',
         }}
       >
@@ -42,15 +42,15 @@ export default function Layout() {
           sx={{
             display: "flex",
             alignItems: "center",
-            // p: 1,
           }}
         >
           <img
             src="logo-placeholder-image.png"
             style={{ aspectRatio: "1/1", width: "100%" }}
           />
-          {/* <Typography variant="h6">AI-MODEL-MAKER</Typography> */}
         </Box>
+
+        <Divider variant="middle" light sx={{ bgcolor:'background.main', my:1}}/>
 
         <Box
           sx={{
@@ -61,6 +61,8 @@ export default function Layout() {
           <SidebarIconMenu items={items} />
         </Box>
 
+        <Divider variant="middle" light sx={{ bgcolor:'background.main', my:1}}/>
+
         <Box sx={{ width:'100%' , display:'flex'}}>
           <LanguageChanger/>
         </Box>
@@ -68,30 +70,17 @@ export default function Layout() {
         <Box sx={{ width:'100%' , display:'flex'}}>
           <ThemeToggle />
         </Box>
-         
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          flex: "2",
-          bgcolor: "background.standOut",
-          mx: 1,
-          ml: 0,
-          borderRadius: '20px',
-          py: 1,
-          px: 2,
-        }}
-      >
-        <Outlet />
-      </Box>
-      <Box
+
+      <Outlet/>
+
+      {/* <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           flex: "0.5",
           bgcolor: "background.standOut",
-          mx: 1,
+          m: 1,
           ml: 0,
           borderRadius: '20px',
           fontWeight: 'fontWeightLight',
@@ -99,15 +88,6 @@ export default function Layout() {
           px: 2,
         }}
       >
-        <p sx={{
-            p: 2,
-            width: 20 ,
-        }}>
-          {/* <Typography sx={{ color: isActive?"text.contrast" : "text.main", fontSize: "16px", fontWeight:500 }}>
-            Това е показно за input:
-          </Typography> */}
-          
-        </p>
         <Button
 
           sx={{
@@ -118,7 +98,7 @@ export default function Layout() {
         >
           ON/OFF
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 }
