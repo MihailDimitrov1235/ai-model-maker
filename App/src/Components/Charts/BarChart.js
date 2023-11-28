@@ -11,6 +11,7 @@ export default function BarChart(){
 
     useEffect(() => {
         const svg = d3.select(chartRef.current).select("svg");
+        
         if (svg.empty()) {
         const newSvg = d3
             .select(chartRef.current)
@@ -19,7 +20,8 @@ export default function BarChart(){
             .attr("height", h)
             .style("background-color", "#cccccc")
             .style("padding", 10)
-            .style("margin-left", 50);
+            .style("margin-left", 50)
+            .style("margin-top", 50);
 
         newSvg
             .selectAll("rect")
@@ -31,6 +33,14 @@ export default function BarChart(){
             .attr("width", (d, i) => 65)
             .attr("height", (d, i) => d * 10)
             .attr("fill", (d, i) => (d > 35 ? "tomato" : "yellow"));
+
+        newSvg.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .text((d) => d)
+            .attr("x", (d, i) => i * 70)
+            .attr("y", (d, i) => 300 - (10 * d) +30)
         }
         
       }, [data]);
