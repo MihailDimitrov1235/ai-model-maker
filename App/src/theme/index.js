@@ -24,6 +24,21 @@ const lightTheme = createTheme({
           aspectRatio:'1/1'
         }
       }
+    },
+    MuiTooltip:{
+      styleOverrides:{
+        tooltip:{
+          color:'#000000',
+          fontSize:'15px',
+          fontWeight:600,
+          backgroundColor:grey[300],
+          padding:'10px',
+          margin:'20px'
+        },
+        popper: {
+          marginLeft: '12px !important', 
+        },
+      }
     }
   },
   shape:{

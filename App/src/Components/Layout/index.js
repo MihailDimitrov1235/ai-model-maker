@@ -30,7 +30,8 @@ export default function Layout() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "70px",
+          minWidth: "70px",
+          maxWidth: "70px",
           bgcolor: "background.standOut",
           m: 1,
           borderRadius: '20px',
