@@ -5,43 +5,48 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function SidebarMenu({ items }) {
-const navigate = useNavigate()
-const location = useLocation();
-console.log(location.pathname)
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleButtonClick = (href) => {
+    navigate(href);
+  };
+
   return (
     <>
       {items.map((item) => {
-        const isActive = location.pathname.includes(item.href)
-        return(
-        <>
-          {item.type == "section" ? (
-            <Section item={item} isActive={isActive} />
-          ) : (
-            <ListItemButton
-                onClick={() => navigate(item.href)}
-              disableRipple
-              sx={{
-                bgcolor: "",
-                color: isActive? "text.main" : "text.dark",
-                ":hover": {
-                  bgcolor: "transparent",
-                  color: "text.main",
-                },
-              }}
-            >
-              {/* <ListItemIcon>
-                    <SendIcon />
+        const isActive = location.pathname.includes(item.href);
+        return (
+          <>
+            {item.type === 'section' ? (
+              <Section item={item} />
+            ) : (
+              <ListItemButton
+                onClick={() => handleButtonClick(item.href)}
+                disableRipple
+                sx={{
+                  bgcolor: '',
+                  color: isActive ? 'text.main' : 'text.dark',
+                  ':hover': {
+                    bgcolor: 'transparent',
+                    color: 'text.main',
+                  },
+                }}
+              >
+                {/* <ListItemIcon>
+                  <SendIcon />
                 </ListItemIcon> */}
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          )}
-        </>
-      )})}
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            )}
+          </>
+        );
+      })}
     </>
   );
 }
 
-function Section({ item, isActive }) {
+function Section({ item }) {
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
@@ -54,7 +59,7 @@ function Section({ item, isActive }) {
         disableRipple
         sx={{
           bgcolor: "",
-          color: isActive? "text.main" : "text.dark",
+          color: "text.main",
           ":hover": {
             bgcolor: "transparent",
           },

@@ -10,14 +10,13 @@ import { useTranslation } from "react-i18next";
 import LanguageChanger from "./LanguageChanger"
  
 export default function Layout() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const items = [
     { type: "item", name: t("Home"), icon: HomeIcon, href: "/" },
     { type: "item", name: t("Data"), icon: DatasetIcon, href: "/data" },
     { type: "item", name: t("Train"), icon: SchoolIcon, href: "/train" },
     { type: "item", name: t("Test"), icon: ScienceIcon, href: "/test" },
   ];
-
   return (
     <Box
       sx={{
@@ -45,6 +44,7 @@ export default function Layout() {
         >
           <img
             src="logo-placeholder-image.png"
+            alt="Logo Placeholder"
             style={{ aspectRatio: "1/1", width: "100%" }}
           />
         </Box>
@@ -72,32 +72,6 @@ export default function Layout() {
       </Box>
 
       <Outlet/>
-
-      {/* <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          flex: "0.5",
-          bgcolor: "background.standOut",
-          m: 1,
-          ml: 0,
-          borderRadius: '20px',
-          fontWeight: 'fontWeightLight',
-          py: 1,
-          px: 2,
-        }}
-      >
-        <Button
-
-          sx={{
-            bgcolor:"primary.main",
-            color: "Black",
-            m:2,
-          }}
-        >
-          ON/OFF
-        </Button>
-      </Box> */}
     </Box>
   );
 }

@@ -53,54 +53,46 @@ const learnItems = [
 ];
 
 export default function InnerLayout({ type = null }) {
-  let items = [];
-  switch (type) {
-    case "data":
-      items = dataItems;
-      break;
-    case "train":
-      items = trainItems;
-      break;
-    case "test":
-      items = testItems;
-      break;
-    case "learn":
-      items = learnItems;
-      break;
-    default:
-      break;
-  }
+  const itemMap = {
+    "data": dataItems,
+    "train": trainItems,
+    "test": testItems,
+    "learn": learnItems
+  };
+  const items = itemMap[type] || [];
+
   return (
     <Box display={"flex"} flex={1}>
-      {type && (
+      
+        {type && 
         <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "250px",
+          bgcolor: "background.standOut",
+          borderRadius: "20px",
+          m: 1,
+          ml: 0,
+        }}
+      >
+          <Box
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            width: "250px",
-            flexDirection: "column",
-            bgcolor: "background.standOut",
-            borderRadius: "20px",
-            m: 1,
-            ml: 0,
+            my: 2,
+            overflowX: "hidden",
+            overflowY: "hidden",
+            ":hover": {
+              overflowY: "auto",
+            },
           }}
         >
-          <Box
-            sx={{
-              my: 2,
-              overflowX: "hidden",
-              overflowY: "hidden",
-              ":hover": {
-                overflowY: "auto",
-              },
-            }}
-          >
-            <List>
-              <SidebarMenu items={items} />
-            </List>
-          </Box>
+          <List>
+            <SidebarMenu items={items} />
+          </List>
         </Box>
-      )}
+      </Box>
+        }
+        
 
       <Box
         sx={{
