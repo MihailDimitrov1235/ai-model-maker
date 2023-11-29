@@ -1,8 +1,11 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
 const {PythonShell} = require('python-shell');
+const { initializeConfig, getConfig } = require('./configUtils');
 
 function createWindow () {
+
+  initializeConfig();
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1980,
