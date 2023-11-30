@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const configFilePath = path.resolve(__dirname, 'config.cfg');
-const exampleConfigFilePath = path.resolve(__dirname, 'config.example.cfg');
+const configFilePath = path.resolve(__dirname, 'config.json');
+const exampleConfigFilePath = path.resolve(__dirname, 'config.example.json');
 
 function initializeConfig() {
   if (!fs.existsSync(configFilePath)) {
@@ -13,30 +13,34 @@ function initializeConfig() {
   }
 }
 
-async function getConfig() {
-  try {
-    const response = await fetch(configFilePath);
-    const config = await response.json();
-    return config;
-  } catch (error) {
-    console.error('Error fetching configuration:', error);
-    return {};
-  }
+function getConfig() {
+  fs.readFile(configFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    const config = JSON.parse(data);
+    return config
+  });
 }
 
-async function updateConfig(newConfig) {
-  try {
-    await fetch(configFilePath, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newConfig),
+async function updateConfig(key, value) {
+  fs.readFile(configFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    const config = JSON.parse(data);
+    config[key] = value;
+    const updatedConfig = JSON.stringify(config, null, 2);
+    fs.writeFile(configFilePath, updatedConfig, 'utf8', (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('Config file updated successfully.');
     });
-    console.log('Configuration updated successfully.');
-  } catch (error) {
-    console.error('Error updating configuration:', error);
-  }
+  });
 }
 
 module.exports = {

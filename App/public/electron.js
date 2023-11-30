@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
-const {PythonShell} = require('python-shell');
+const { PythonShell } = require('python-shell');
 const { initializeConfig, getConfig } = require('./configUtils');
 
 function createWindow () {
@@ -25,6 +25,7 @@ function createWindow () {
   win.webContents.openDevTools()
 
   ipcMain.on('run-python', (event, arg) => {
+    getConfig()
     let options = {
       mode: 'text',
       pythonPath: path.join(__dirname, '/../Python/.conda/python.exe'),
@@ -33,10 +34,10 @@ function createWindow () {
       args: []
     };
     
-    PythonShell.run('Test.py', options).then(messages=>{
-      // results is an array consisting of messages collected during execution
-      console.log('results: %j', messages);
-    });
+    // PythonShell.run('Test.py', options).then(messages=>{
+    //   // results is an array consisting of messages collected during execution
+    //   console.log('results: %j', messages);
+    // });
   })
 }
 
