@@ -1,6 +1,6 @@
 import { Button } from "@mui/material"
 import { useTranslation } from 'react-i18next';
-import BarChart from '../Components/Charts/BarChart'
+import {ShowDiagrams} from '../Components/Charts/BarChart_GoogleLib'
 
 // import python from 'python-shell';
 // import path from "path";
@@ -25,7 +25,7 @@ const Landing = function(){
     }
     return(
         <>
-            <BarChart/>
+            <ShowDiagrams/>
             <Button onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button>
         </>
     )

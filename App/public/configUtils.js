@@ -14,14 +14,13 @@ function initializeConfig() {
 }
 
 function getConfig() {
-  fs.readFile(configFilePath, 'utf8', (err, data) => {
+  return JSON.parse(fs.readFileSync(configFilePath, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return;
     }
-    const config = JSON.parse(data);
-    return config
-  });
+    return data
+  }));
 }
 
 async function updateConfig(key, value) {

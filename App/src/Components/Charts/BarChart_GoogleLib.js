@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Bar, Line, Pie } from "react-chartjs-2";
+// import { Bar, Line, Pie } from "react-chartjs-2";
 import { UserData } from "./Data";
-import {Chart as ChartJS} from "chart.js/auto";
 
 
 export function ShowDiagrams(){
@@ -31,7 +30,7 @@ export function ShowDiagrams(){
       return (
         <div className="App">
           <div style={{ width: 700 }}>
-            <BarChart chartData={userData} />
+            {/* <BarChart chartData={userData} /> */}
             {/* <LineChart chartData={userData} />
             <PieChart chartData={userData} /> */}
             
@@ -46,9 +45,9 @@ export function ShowDiagrams(){
   return <Bar data={chartData} />;
 }*/
 
-function BarChart({ chartData }){
-  return <Bar data = {chartData} />
-}
+// function BarChart({ chartData }){
+//   return <Bar data = {chartData} />
+// }
 
 
 /*function LineChart({ chartData }){

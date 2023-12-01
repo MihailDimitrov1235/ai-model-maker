@@ -1,7 +1,8 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
 const { PythonShell } = require('python-shell');
-const { initializeConfig, getConfig } = require('./configUtils');
+const { initializeConfig } = require('./configUtils');
+const { setupIPCMain } = require('./ipcMainHandlers')
 
 function createWindow () {
 
@@ -24,21 +25,7 @@ function createWindow () {
   // Open the DevTools.
   win.webContents.openDevTools()
 
-  ipcMain.on('run-python', (event, arg) => {
-    getConfig()
-    let options = {
-      mode: 'text',
-      pythonPath: path.join(__dirname, '/../Python/.conda/python.exe'),
-      pythonOptions: ['-u'], // get print results in real-time
-      scriptPath: path.join(__dirname, '/../Python'),
-      args: []
-    };
-    
-    // PythonShell.run('Test.py', options).then(messages=>{
-    //   // results is an array consisting of messages collected during execution
-    //   console.log('results: %j', messages);
-    // });
-  })
+  setupIPCMain(win)
 }
 
 // This method will be called when Electron has finished

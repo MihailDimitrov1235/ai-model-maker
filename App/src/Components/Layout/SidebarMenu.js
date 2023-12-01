@@ -22,6 +22,7 @@ export default function SidebarMenu({ items }) {
               <Section item={item} />
             ) : (
               <ListItemButton
+                key={item.name}
                 onClick={() => handleButtonClick(item.href)}
                 disableRipple
                 sx={{
