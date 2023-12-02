@@ -17,7 +17,8 @@ const Landing = function(){
     const { t, i18n } = useTranslation();
 
     const click = () => {
-      window.electronAPI.runPython('test')
+    //   window.electronAPI.runPython('test')
+      window.electronAPI.checkVnev()
         // let test = new python('Test.py', options);
         // test.on('message', function(message){
         //     console.log(message)
@@ -26,7 +27,7 @@ const Landing = function(){
     return(
         <>
             <ShowDiagrams/>
-            <Button onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button>
+            <Button variant="main" onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button>
         </>
     )
 }

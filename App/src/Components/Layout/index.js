@@ -1,4 +1,11 @@
-import { Box, Divider, Dialog, DialogContentText } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Dialog,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { Outlet } from "react-router-dom";
 import SidebarIconMenu from "./SidebarIconMenu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -41,9 +48,17 @@ export default function Layout() {
       }}
     >
       <Dialog open={open} onClose={handleClose}>
-        <DialogContentText sx={{ p: 2 }}>
-          Python enviornment not found!
+        <DialogContentText
+          sx={{ p: 3, pb: 4, bgcolor: "background.main", color: "text.main" }}
+        >
+          {t("no-py-env")}
         </DialogContentText>
+        <DialogActions
+          sx={{ bgcolor: "background.main", py: 2, px: 3, gap: 5 }}
+        >
+          <Button variant="main">{t("use-existing")}</Button>
+          <Button variant="contrast">{t("new-venv")}</Button>
+        </DialogActions>
       </Dialog>
       <Box
         sx={{

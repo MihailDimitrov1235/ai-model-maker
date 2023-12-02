@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Collapse, List, ListItemButton, ListItemText } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -17,12 +17,11 @@ export default function SidebarMenu({ items }) {
       {items.map((item) => {
         const isActive = location.pathname.includes(item.href);
         return (
-          <>
+          <div key={item.name}>
             {item.type === 'section' ? (
               <Section item={item} />
             ) : (
               <ListItemButton
-                key={item.name}
                 onClick={() => handleButtonClick(item.href)}
                 disableRipple
                 sx={{
@@ -40,7 +39,7 @@ export default function SidebarMenu({ items }) {
                 <ListItemText primary={item.name} />
               </ListItemButton>
             )}
-          </>
+          </div>
         );
       })}
     </>

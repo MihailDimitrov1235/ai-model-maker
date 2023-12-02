@@ -2,5 +2,8 @@
   "Home": "Home",
   "Data": "Data",
   "Train": "Train",
-  "Test": "Test"
+  "Test": "Test",
+  "no-py-env": "Python enviornment not found!",
+  "use-existing": "Use Existing",
+  "new-venv":"New VENV"
 }
