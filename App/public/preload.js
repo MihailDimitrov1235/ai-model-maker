@@ -1,7 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  checkVnev: (arg) => ipcRenderer.send('check-vnev', arg),
+  checkVenv: (arg) => ipcRenderer.send('check-venv', arg),
+  createVenv: (arg) =>ipcRenderer.send('create-venv', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
-  handleMissingVnev: (callback) => ipcRenderer.on('no-vnev', callback)
+  handleMissingVenv: (callback) => ipcRenderer.on('no-vnev', callback)
 })

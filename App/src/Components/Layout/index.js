@@ -21,14 +21,19 @@ export default function Layout() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    window.electronAPI.checkVnev();
-    window.electronAPI.handleMissingVnev((event, value) => {
+    window.electronAPI.checkVenv();
+    window.electronAPI.handleMissingVenv((event, value) => {
       setOpen(true);
     });
   }, []);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCreateVenv = () => {
+    window.electronAPI.createVenv();
+    handleClose()
   };
 
   const { t } = useTranslation();
@@ -57,7 +62,7 @@ export default function Layout() {
           sx={{ bgcolor: "background.main", py: 2, px: 3, gap: 5 }}
         >
           <Button variant="main">{t("use-existing")}</Button>
-          <Button variant="contrast">{t("new-venv")}</Button>
+          <Button onClick={handleCreateVenv} variant="contrast">{t("new-venv")}</Button>
         </DialogActions>
       </Dialog>
       <Box
