@@ -52,15 +52,19 @@ function setupIPCMain(win) {
                     console.log('Environment setup complete.');
                   }
                 });
-            
-                // Handle process exit events
-                childProcess.on('exit', (code) => {
-                  if (code !== 0) {
-                    console.error(`Command exited with code ${code}`);
-                  }else{
-                    console.log("success")
-                  }
+
+                childProcess.stdout.on('data', (data) => {
+                  // Handle the stdout data
+                  console.log('stdout')
+                  console.log(data.toString());
                 });
+            
+                childProcess.stderr.on('data', (data) => {
+                  // Handle the stderr data
+                  console.log('stderr')
+                  console.error(data.toString());
+                });
+                
               } else {
                 console.error('Anaconda Prompt shortcut not found.');
               }
