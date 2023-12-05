@@ -18,22 +18,35 @@ import LanguageChanger from "./LanguageChanger";
 import { useEffect, useState } from "react";
 
 export default function Layout() {
-  const [open, setOpen] = useState(false);
+  const [openNoPython, setOpenNoPython] = useState(false);
+  const [openNoConda, setOpenNoConda] = useState(false);
 
   useEffect(() => {
     window.electronAPI.checkVenv();
+    window.electronAPI.handleMissingConda((event, value) => {
+      setOpenNoConda(true);
+    });
     window.electronAPI.handleMissingVenv((event, value) => {
-      setOpen(true);
+      setOpenNoPython(true);
     });
   }, []);
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseNoPython = () => {
+    setOpenNoPython(false);
+  };
+
+  const handleCloseNoConda = () => {
+    setOpenNoPython(false);
   };
 
   const handleCreateVenv = () => {
     window.electronAPI.createVenv();
-    handleClose()
+    handleCloseNoPython()
+  };
+
+  const handleDownloadConda = () => {
+    window.electronAPI.downloadConda();
+    handleCloseNoConda()
   };
 
   const { t } = useTranslation();
@@ -52,7 +65,7 @@ export default function Layout() {
         bgcolor: "background.main",
       }}
     >
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={openNoPython} onClose={handleCloseNoPython}>
         <DialogContentText
           sx={{ p: 3, pb: 4, bgcolor: "background.main", color: "text.main" }}
         >
@@ -63,6 +76,19 @@ export default function Layout() {
         >
           <Button variant="main">{t("use-existing")}</Button>
           <Button onClick={handleCreateVenv} variant="contrast">{t("new-venv")}</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openNoConda} onClose={handleCloseNoConda}>
+        <DialogContentText
+          sx={{ p: 3, pb: 4, bgcolor: "background.main", color: "text.main" }}
+        >
+          {t("no-py-env")}
+        </DialogContentText>
+        <DialogActions
+          sx={{ bgcolor: "background.main", py: 2, px: 3, gap: 5 }}
+        >
+          <Button variant="main">{t("use-existing")}</Button>
+          <Button onClick={handleDownloadConda} variant="contrast">{t("download-conda")}</Button>
         </DialogActions>
       </Dialog>
       <Box
