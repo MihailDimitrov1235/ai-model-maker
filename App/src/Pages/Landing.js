@@ -28,26 +28,78 @@ const Landing = function(){
     }
     return(
         <>
-            <Box>
-                <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                        <CardElement/>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CardElement/>
-                    </Grid>                    
-                    <Grid item xs={4}>
-                        <h1>RABOTI</h1>
-                    </Grid>
-                </Grid>
-                <Box sx={{ 
-                    flexGrow: 1,
-                    display: "flex",
-                    justifyContent: "center"
-                }} >
-                    <Pagination count={10} color="primary" />
+            <Box sx={{
+                margin: "50px",
+            }}>
+                <Box sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "30px" 
+                    }}>
+                        <h1>Datasets and Models</h1>
                 </Box>
-                
+                <Box sx={{
+                    margin: "50px"
+                    
+                }}>
+                    <Box sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "30px" 
+                    }}>
+                        <h1>Datasets</h1>
+                    </Box>
+                    
+                    <Grid container spacing={4}>
+                        <Grid item xs={4}>
+                            <CardElement/>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <CardElement/>
+                        </Grid>                    
+                        <Grid item xs={4}>
+                            <h1>RABOTI</h1>
+                        </Grid>
+                    </Grid>
+                    <Box sx={{ 
+                        flexGrow: 1,
+                        display: "flex",
+                        justifyContent: "center",
+                        margin: "30px"
+                    }} >
+                        <Pagination count={10} color="primary" />
+                    </Box>
+                </Box>
+                <Box sx={{
+                    margin: "50px"
+                }}>
+                    <Box sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "30px" 
+                    }}>
+                        <h1>Models</h1>
+                    </Box>
+                    <Grid container spacing={4}>
+                        <Grid item xs={4}>
+                            <CardElement/>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <CardElement/>
+                        </Grid>                    
+                        <Grid item xs={4}>
+                            <h1>RABOTI</h1>
+                        </Grid>
+                    </Grid>
+                    <Box sx={{ 
+                        flexGrow: 1,
+                        display: "flex",
+                        justifyContent: "center",
+                        margin: "30px"
+                    }} >
+                        <Pagination count={10} color="primary" />
+                    </Box>
+                </Box>
             </Box>
             
             
