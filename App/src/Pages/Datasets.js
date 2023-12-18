@@ -20,7 +20,7 @@ import CardElement from "../Components/Cards/DatasetCard";
 //     args : [],
 // };
 
-const Landing = function () {
+const Datasets = function () {
   const { t, i18n } = useTranslation();
 
   const click = () => {
@@ -53,7 +53,7 @@ const Landing = function () {
             justifyContent: "space-between",
           }}
         >
-          <h2>MAINATATA TI</h2>
+          <h2>DATASETS</h2>
 
           <Box
             sx={{
@@ -100,9 +100,9 @@ const Landing = function () {
       </Box>
 
       {/* <ShowDiagrams/>
-            <Button variant="main" onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button> */}
+              <Button variant="main" onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button> */}
     </>
   );
 };
 
-export default Landing;
+export default Datasets;
