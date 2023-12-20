@@ -36,8 +36,9 @@ const Datasets = function () {
     { title: "Road Sign", Miho: "waka waka eee", Alvin: "Chiponoskovci" },
     { title: "Road Sign" },
     { title: "Road Sign" },
-    { Miho: "waka waka eee" },
-    { Alvin: "Chiponoskovci" },
+    { title: "Football Objects" },
+    { title: "Basketball Objects" },
+    { title: "Titanic Deaths" },
   ];
 
   return (
@@ -76,7 +77,7 @@ const Datasets = function () {
 
         <Box
           sx={{
-            margin: "50px",
+            margin: "25px",
           }}
         >
           <Grid container spacing={4}>

@@ -49,6 +49,16 @@ export default function DatasetCard({ title }) {
           justifyContent: "right",
         }}
       >
+        <Box
+          sx={{
+            display: "inline",
+            margin: 1,
+          }}
+        >
+          <Typography>300</Typography>
+          <Typography>Records</Typography>
+        </Box>
+
         <Button size="small" variant="contrast">
           Make model
         </Button>
