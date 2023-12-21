@@ -70,6 +70,11 @@ const Datasets = function () {
               InputProps={{
                 startAdornment: <SearchIcon />,
               }}
+              sx={{ 
+                "input":{
+                  padding:"8px"
+                }
+              }}
             />
             <Button variant="contrast">New Datasets</Button>
           </Box>
@@ -82,7 +87,7 @@ const Datasets = function () {
         >
           <Grid container spacing={4}>
             {datasets.map((dataset, index) => (
-              <Grid item xs={4} key={index}>
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
                 <CardElement title={dataset.title} />
               </Grid>
             ))}

@@ -7,33 +7,37 @@ import {
   CardContent,
   CardActions,
   Box,
+  IconButton
 } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 export default function DatasetCard({ title }) {
   return (
-    <Card sx={{ width: "100%" }}>
-      <CardContent>
+    <Card sx={{ width: "100%", p:2 }}>
+      <CardContent sx={{ p:0, pb:2}}>
         <Typography
           sx={{
             fontSize: 18,
             fontWeight: "bold",
-            mb: 3,
+            mb: 2,
             display: "flex",
             justifyContent: "space-between",
+            alignItems:'center'
           }}
           color="text.secondary"
           gutterBottom
         >
           {title}
-          <MoreVertIcon />
+          <IconButton><MoreVertIcon /></IconButton>
+          
         </Typography>
 
-        <Typography
+        <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            fontSize: 14,
+            justifyContent:'center',
+            fontSize: 16,
             gap: 1,
           }}
           color="text.secondary"
@@ -41,18 +45,20 @@ export default function DatasetCard({ title }) {
         >
           <InsertDriveFileIcon />
           Name Datasets
-        </Typography>
+        </Box>
       </CardContent>
       <CardActions
         sx={{
+          p:0,
           display: "flex",
-          justifyContent: "right",
+          justifyContent: "space-between",
         }}
       >
         <Box
           sx={{
-            display: "inline",
-            margin: 1,
+            display: "flex",
+            flexDirection:'column',
+            textAlign:'center'
           }}
         >
           <Typography>300</Typography>
