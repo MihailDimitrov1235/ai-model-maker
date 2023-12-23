@@ -6,12 +6,15 @@ import {
   TextField,
   alpha,
   InputAdornment,
+  Menu,
+  MenuItem,
 } from "@mui/material";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
 import { ShowDiagrams } from "../Components/Charts/BarChart_GoogleLib";
 import CardElement from "../Components/Cards/DatasetCard";
-
+import { Link } from "react-router-dom";
 // import python from 'python-shell';
 // import path from "path";
 
@@ -40,6 +43,17 @@ const Datasets = function () {
     { title: "Basketball Objects" },
     { title: "Titanic Deaths" },
   ];
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -70,13 +84,58 @@ const Datasets = function () {
               InputProps={{
                 startAdornment: <SearchIcon />,
               }}
-              sx={{ 
-                "input":{
-                  padding:"8px"
-                }
+              sx={{
+                input: {
+                  padding: "8px",
+                },
               }}
             />
-            <Button variant="contrast">New Datasets</Button>
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              variant="contrast"
+              onClick={handleClick}
+            >
+              New Datasets
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <Link to={"table/import"}>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    color: "#000",
+                  }}
+                >
+                  Tabular Data
+                </MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    color: "#000",
+                  }}
+                >
+                  Image Data
+                </MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    color: "#000",
+                  }}
+                >
+                  Text Data
+                </MenuItem>
+              </Link>
+            </Menu>
           </Box>
         </Box>
 
