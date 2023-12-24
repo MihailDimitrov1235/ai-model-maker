@@ -16,6 +16,7 @@ import ThemeToggle from "./ThemeToggle";
 import { useTranslation } from "react-i18next";
 import LanguageChanger from "./LanguageChanger";
 import { useEffect, useState } from "react";
+import logo from "../../../../assets/logo-placeholder-image.png"
 
 export default function Layout() {
   const [openNoPython, setOpenNoPython] = useState(false);
@@ -109,7 +110,7 @@ export default function Layout() {
           }}
         >
           <img
-            src="logo-placeholder-image.png"
+            src={logo}
             alt="Logo Placeholder"
             style={{ aspectRatio: "1/1", width: "100%" }}
           />

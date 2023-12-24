@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from '@mui/material'
+import bgIcon from "../../../../assets/images/bulgaria.svg"
+import enIcon from "../../../../assets/images/united-kingdom.svg"
 
 export default function LanguageChanger() {
-
-    const bgPath = "icons/bulgaria.svg"
-    const enPath = "icons/united-kingdom.svg"
 
     const { i18n } = useTranslation()
 
@@ -28,7 +27,7 @@ export default function LanguageChanger() {
           alignItems:'center',
         }}
       >
-        <img src={i18n.language=="bg"?enPath:bgPath}/>
+        <img src={i18n.language=="bg"?enIcon:bgIcon}/>
       </Button>
     )
 }

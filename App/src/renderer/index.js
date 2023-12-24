@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, useRoutes } from "react-router-dom";
+import { RouterProvider, useRoutes, useLocation, createHashRouter } from "react-router-dom";
 import { ThemeProvider, CssBaseline, GlobalStyles } from "@mui/material";
 import { lightTheme, darkTheme } from "./theme";
 import routes from "./routes";
@@ -12,6 +12,8 @@ export const ColorModeContext = React.createContext({
 });
 
 function App() {
+  // const location = useLocation()
+  // console.log(location)
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = React.useState(prefersDarkMode? "dark" : "light");
 
@@ -28,7 +30,7 @@ function App() {
     [mode]
   );
 
-  const content = useRoutes(routes);
+  const router = createHashRouter(routes);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -67,7 +69,7 @@ function App() {
           }}
         />
         <div style={{ height:'100vh', width:'100vw', overflowX:'hidden'}}>
-          {content}
+          <RouterProvider router={router}/>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
@@ -77,8 +79,6 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
       <App />
-    </BrowserRouter>
   </React.StrictMode>
 );

@@ -25,7 +25,6 @@ export default function DatasetCard({ title }) {
             alignItems:'center'
           }}
           color="text.secondary"
-          gutterBottom
         >
           {title}
           <IconButton><MoreVertIcon /></IconButton>
@@ -41,7 +40,6 @@ export default function DatasetCard({ title }) {
             gap: 1,
           }}
           color="text.secondary"
-          gutterBottom
         >
           <InsertDriveFileIcon />
           Name Datasets

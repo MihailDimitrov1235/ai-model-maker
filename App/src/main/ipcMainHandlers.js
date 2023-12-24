@@ -9,6 +9,7 @@ function setupIPCMain(win) {
   
     ipcMain.on('check-venv', (event, arg) => {
         const config = getConfig()
+        console.log(config)
         if(!config.python_exe_path){
             win.webContents.send('no-vnev')
         }
@@ -16,7 +17,7 @@ function setupIPCMain(win) {
 
     ipcMain.on('create-venv', (event, arg) => {
 
-        const envPath = path.join(__dirname, '../Python/env');
+        const envPath = path.join(__dirname, '../../assets/python-scripts/env');
 
         if(fs.existsSync(path.join(envPath, 'python.exe'))){
             console.log('already exists')
