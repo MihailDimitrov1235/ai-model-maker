@@ -1,6 +1,11 @@
 
-## Start Frontend
+## Start App
 ```bash
-npm run dev
+npm start
+```
+
+## Build App
+```bash
+npm run package
 ```
 
