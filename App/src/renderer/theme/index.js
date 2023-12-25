@@ -47,6 +47,16 @@ const lightTheme = createTheme({
           },
         },
         {
+          props: { variant: 'contrast-inherit' },
+          style: {
+            backgroundColor: 'rgba(255,255,255,0.02)',
+            color: 'inherit',
+            ':hover':{
+              filter: 'brightness(120%)',
+            },
+          },
+        },
+        {
           props: { variant: 'main' },
           style: {
             padding:'0',
@@ -54,6 +64,21 @@ const lightTheme = createTheme({
             color: lightTextDark,
             ':hover':{
               color: lightTextMain,
+              backgroundColor: 'transparent',
+            },
+            '.MuiTouchRipple-root': {
+              display: 'none',
+            },
+          },
+        },
+        {
+          props: { variant: 'main-inherit' },
+          style: {
+            padding:'0',
+            backgroundColor: '',
+            color: 'inherit',
+            ':hover':{
+              filter: 'brightness(120%)',
               backgroundColor: 'transparent',
             },
             '.MuiTouchRipple-root': {
@@ -122,6 +147,16 @@ const darkTheme = createTheme({
           },
         },
         {
+          props: { variant: 'contrast-inherit' },
+          style: {
+            backgroundColor: 'rgba(255,255,255,0.02)',
+            color: 'inherit',
+            ':hover':{
+              filter: 'brightness(120%)',
+            },
+          },
+        },
+        {
           props: { variant: 'main' },
           style: {
             padding:'0',
@@ -129,6 +164,21 @@ const darkTheme = createTheme({
             color: darkTextDark,
             ':hover':{
               color: darkTextMain,
+              backgroundColor: 'transparent',
+            },
+            '.MuiTouchRipple-root': {
+              display: 'none',
+            },
+          },
+        },
+        {
+          props: { variant: 'main-inherit' },
+          style: {
+            padding:'0',
+            backgroundColor: '',
+            color: 'inherit',
+            ':hover':{
+              filter: 'brightness(120%)',
               backgroundColor: 'transparent',
             },
             '.MuiTouchRipple-root': {

@@ -5,22 +5,24 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-} from "@mui/material";
-import { Outlet } from "react-router-dom";
-import SidebarIconMenu from "./SidebarIconMenu";
-import HomeIcon from "@mui/icons-material/Home";
-import SchoolIcon from "@mui/icons-material/School";
-import DatasetIcon from "@mui/icons-material/Dataset";
-import ScienceIcon from "@mui/icons-material/Science";
-import ThemeToggle from "./ThemeToggle";
-import { useTranslation } from "react-i18next";
-import LanguageChanger from "./LanguageChanger";
-import { useEffect, useState } from "react";
-import logo from "../../../../assets/logo-placeholder-image.png"
+} from '@mui/material';
+import { Outlet } from 'react-router-dom';
+import SidebarIconMenu from './SidebarIconMenu';
+import HomeIcon from '@mui/icons-material/Home';
+import SchoolIcon from '@mui/icons-material/School';
+import DatasetIcon from '@mui/icons-material/Dataset';
+import ScienceIcon from '@mui/icons-material/Science';
+import ThemeToggle from './ThemeToggle';
+import { useTranslation } from 'react-i18next';
+import LanguageChanger from './LanguageChanger';
+import { useEffect, useState } from 'react';
+import logo from '../../../../assets/logo-placeholder-image.png';
+import Snack from '../Snack';
 
 export default function Layout() {
   const [openNoPython, setOpenNoPython] = useState(false);
   const [openNoConda, setOpenNoConda] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.electronAPI.checkVenv();
@@ -42,90 +44,85 @@ export default function Layout() {
 
   const handleCreateVenv = () => {
     window.electronAPI.createVenv();
-    handleCloseNoPython()
+    handleCloseNoPython();
   };
 
   const handleDownloadConda = () => {
     window.electronAPI.downloadConda();
-    handleCloseNoConda()
+    handleCloseNoConda();
   };
 
-  const { t } = useTranslation();
   const items = [
-    { type: "item", name: t("Home"), icon: HomeIcon, href: "/" },
-    { type: "item", name: t("Data"), icon: DatasetIcon, href: "/data" },
-    { type: "item", name: t("Train"), icon: SchoolIcon, href: "/train" },
-    { type: "item", name: t("Test"), icon: ScienceIcon, href: "/test" },
+    { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
+    { type: 'item', name: t('Data'), icon: DatasetIcon, href: '/data' },
+    { type: 'item', name: t('Train'), icon: SchoolIcon, href: '/train' },
+    { type: 'item', name: t('Test'), icon: ScienceIcon, href: '/test' },
   ];
   return (
     <Box
       sx={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        bgcolor: "background.main",
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        bgcolor: 'background.main',
       }}
     >
-      <Dialog open={openNoPython} onClose={handleCloseNoPython}>
-        <DialogContentText
-          sx={{ p: 3, pb: 4, bgcolor: "background.main", color: "text.main" }}
-        >
-          {t("no-py-env")}
-        </DialogContentText>
-        <DialogActions
-          sx={{ bgcolor: "background.main", py: 2, px: 3, gap: 5 }}
-        >
-          <Button variant="main">{t("use-existing")}</Button>
-          <Button onClick={handleCreateVenv} variant="contrast">{t("new-venv")}</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openNoConda} onClose={handleCloseNoConda}>
-        <DialogContentText
-          sx={{ p: 3, pb: 4, bgcolor: "background.main", color: "text.main" }}
-        >
-          {t("no-py-env")}
-        </DialogContentText>
-        <DialogActions
-          sx={{ bgcolor: "background.main", py: 2, px: 3, gap: 5 }}
-        >
-          <Button variant="main">{t("use-existing")}</Button>
-          <Button onClick={handleDownloadConda} variant="contrast">{t("download-conda")}</Button>
-        </DialogActions>
-      </Dialog>
+      <Snack
+        open={openNoPython}
+        setOpen={setOpenNoPython}
+        message={t('no-py-env')}
+        title={t('no-py-env-title')}
+        variant="warning"
+        buttons={[
+          { text: t('use-existing'), variant:'main-inherit', handleClick: () => console.log('test') },
+          { text: t('new-venv'), variant:'contrast-inherit', handleClick: () => console.log('test') },
+        ]}
+      />
+      <Snack
+        open={openNoConda}
+        setOpen={setOpenNoConda}
+        message={t('no-conda')}
+        title={t('no-conda-title')}
+        variant="warning"
+        buttons={[
+          { text: t('download-conda'), handleClick: () => console.log('test') },
+        ]}
+      />
+
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          minWidth: "70px",
-          maxWidth: "70px",
-          bgcolor: "background.standOut",
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: '70px',
+          maxWidth: '70px',
+          bgcolor: 'background.standOut',
           m: 1,
-          borderRadius: "20px",
+          borderRadius: '20px',
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           <img
             src={logo}
             alt="Logo Placeholder"
-            style={{ aspectRatio: "1/1", width: "100%" }}
+            style={{ aspectRatio: '1/1', width: '100%' }}
           />
         </Box>
 
         <Divider
           variant="middle"
           light
-          sx={{ bgcolor: "background.main", my: 1 }}
+          sx={{ bgcolor: 'background.main', my: 1 }}
         />
 
         <Box
           sx={{
             flex: 1,
-            overflowX: "hidden",
+            overflowX: 'hidden',
           }}
         >
           <SidebarIconMenu items={items} />
@@ -134,14 +131,14 @@ export default function Layout() {
         <Divider
           variant="middle"
           light
-          sx={{ bgcolor: "background.main", my: 1 }}
+          sx={{ bgcolor: 'background.main', my: 1 }}
         />
 
-        <Box sx={{ width: "100%", display: "flex" }}>
+        <Box sx={{ width: '100%', display: 'flex' }}>
           <LanguageChanger />
         </Box>
 
-        <Box sx={{ width: "100%", display: "flex" }}>
+        <Box sx={{ width: '100%', display: 'flex' }}>
           <ThemeToggle />
         </Box>
       </Box>

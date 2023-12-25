@@ -6,14 +6,13 @@ import { lightTheme, darkTheme } from "./theme";
 import routes from "./routes";
 import {useMediaQuery} from "@mui/material";
 import './i18n';
+import { SnackbarProvider } from 'notistack';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
 
 function App() {
-  // const location = useLocation()
-  // console.log(location)
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = React.useState(prefersDarkMode? "dark" : "light");
 
@@ -29,7 +28,6 @@ function App() {
     () => (mode == "light" ? lightTheme : darkTheme),
     [mode]
   );
-
   const router = createHashRouter(routes);
 
   return (
@@ -68,9 +66,11 @@ function App() {
             },
           }}
         />
-        <div style={{ height:'100vh', width:'100vw', overflowX:'hidden'}}>
-          <RouterProvider router={router}/>
-        </div>
+        <SnackbarProvider maxSnack={3}>
+          <div style={{ height:'100vh', width:'100vw', overflowX:'hidden'}}>
+            <RouterProvider router={router}/>
+          </div>
+        </SnackbarProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
