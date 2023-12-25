@@ -9,9 +9,9 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { initializeConfig } from './configUtils';
+import { initializeConfig } from './utils/configUtils';
 import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron';
-import { resolveHtmlPath } from './util';
+import { resolveHtmlPath } from './utils';
 import { setupIPCMain } from './ipcMainHandlers';
 
 

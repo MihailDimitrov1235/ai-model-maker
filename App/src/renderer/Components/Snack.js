@@ -48,6 +48,18 @@ export default function Snack({
           }}
         >
           {buttons.map((btn, idx) => (
+            <>
+            {btn.downloadLink?
+              <Button
+              key={idx}
+              variant={btn.variant ? btn.variant : 'main'}
+              onClick={btn.handleClick}
+            >
+            <a href={btn.downloadLink} download style={{ color:'inherit', textDecoration: 'none'}}>
+              {btn.text}
+            </a>
+            </Button>
+            :
             <Button
               key={idx}
               variant={btn.variant ? btn.variant : 'main'}
@@ -55,6 +67,8 @@ export default function Snack({
             >
               {btn.text}
             </Button>
+            }
+            </>
           ))}
         </Box>
       </Alert>

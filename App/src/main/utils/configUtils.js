@@ -3,12 +3,12 @@ const defaultConfig = {
   "python_exe_path":"",
   "theme_mode":""
 };
-let configFile;
 const fs = require('fs');
 const path = require('path');
+const configFilePath = path.resolve(__dirname, '../../assets/config.json');
+let configFile;
 
 function initializeConfig() {
-  const configFilePath = path.resolve(__dirname, '../../assets/config.json');
   try {
     if (fs.existsSync(configFilePath)) {
       configFile = require(configFilePath);
@@ -27,23 +27,20 @@ function getConfig() {
 }
 
 async function updateConfig(key, value) {
-  // fs.readFile(configFilePath, 'utf8', (err, data) => {
-  //   if (err) {
-  //     console.error(err);
-  //     return;
-  //   }
-  //   const config = JSON.parse(data);
-  //   config[key] = value;
-  //   const updatedConfig = JSON.stringify(config, null, 2);
-  //   fs.writeFile(configFilePath, updatedConfig, 'utf8', (err) => {
-  //     if (err) {
-  //       console.error(err);
-  //       return;
-  //     }
-  //     console.log('Config file updated successfully.');
-  //   });
-  // });
+  try {
+    if (!configFile) {
+      initializeConfig();
+    }
+    
+    configFile[key] = value;
+
+    fs.writeFileSync(configFilePath, JSON.stringify(configFile, null, 2));
+    console.log("Config updated successfully:", configFile);
+  } catch (error) {
+    console.error("Error updating config:", error.message);
+  }
 }
+
 
 module.exports = {
   initializeConfig,

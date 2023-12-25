@@ -18,8 +18,10 @@ import LanguageChanger from './LanguageChanger';
 import { useEffect, useState } from 'react';
 import logo from '../../../../assets/logo-placeholder-image.png';
 import Snack from '../Snack';
+import { useNavigate } from 'react-router-dom';
 
 export default function Layout() {
+  const { navigate } = useNavigate()
   const [openNoPython, setOpenNoPython] = useState(false);
   const [openNoConda, setOpenNoConda] = useState(false);
   const { t } = useTranslation();
@@ -48,7 +50,6 @@ export default function Layout() {
   };
 
   const handleDownloadConda = () => {
-    window.electronAPI.downloadConda();
     handleCloseNoConda();
   };
 
@@ -85,7 +86,7 @@ export default function Layout() {
         title={t('no-conda-title')}
         variant="warning"
         buttons={[
-          { text: t('download-conda'), handleClick: () => console.log('test') },
+          { text: t('download-conda'), downloadLink:`https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Windows-x86_64.exe` },
         ]}
       />
 
