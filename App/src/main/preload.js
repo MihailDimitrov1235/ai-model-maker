@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   checkEnv: (arg) => ipcRenderer.send('check-env', arg),
   createEnv: (arg) =>ipcRenderer.send('create-env', arg),
   cancelCreateEnv: (arg) =>ipcRenderer.send('cancel-create-env', arg),
+  installLibs: (arg) =>ipcRenderer.send('install-libraries', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
