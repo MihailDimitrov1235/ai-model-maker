@@ -21,6 +21,9 @@ export function envExists(envPath){
       updateConfig('python_exe_path', path.join(envPath, 'python.exe'))
       return path.join(envPath, 'python.exe')
     }else{
+      if(!fs.existsSync(config.python_exe_path)){
+        updateConfig('python_exe_path', '')
+      }
       return false
     }
   }

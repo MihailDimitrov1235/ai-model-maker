@@ -5,7 +5,7 @@ const defaultConfig = {
 };
 const fs = require('fs');
 const path = require('path');
-const configFilePath = path.resolve(__dirname, '../../assets/config.json');
+const configFilePath = path.resolve(__dirname, '../../../assets/config.json');
 let configFile;
 
 function initializeConfig() {

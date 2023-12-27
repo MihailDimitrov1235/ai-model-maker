@@ -12,6 +12,8 @@ const appDataPath =
     ? path.join(process.env.USERPROFILE, 'AppData', 'Roaming')
     : null);
 
+let createEnvProcess
+
 function setupIPCMain(win) {
   ipcMain.on('check-venv', (event, arg) => {
     if (!envExists(envPath)) {
@@ -24,6 +26,9 @@ function setupIPCMain(win) {
   });
 
   ipcMain.on('create-venv', (event, arg) => {
+    if(createEnvProcess){
+      return
+    }
     if (envExists(envPath)) {
       console.log('already exists');
       return;
@@ -33,7 +38,7 @@ function setupIPCMain(win) {
       const command = `"${anacondaShortcutPath}" && conda create --prefix "${envPath}" python=3.10 --yes && conda activate "${envPath}" && conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0`;
 
       // Execute the command asynchronously
-      const childProcess = exec(
+      createEnvProcess = exec(
         `start /B cmd /C ${command}`,
         (error, stdout, stderr) => {
           console.log(stdout);
@@ -45,13 +50,13 @@ function setupIPCMain(win) {
         },
       );
 
-      childProcess.stdout.on('data', (data) => {
+      createEnvProcess.stdout.on('data', (data) => {
         // Handle the stdout data
         console.log('stdout');
         console.log(data.toString());
       });
 
-      childProcess.stderr.on('data', (data) => {
+      createEnvProcess.stderr.on('data', (data) => {
         // Handle the stderr data
         console.log('stderr');
         console.error(data.toString());

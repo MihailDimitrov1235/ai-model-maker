@@ -49,10 +49,6 @@ export default function Layout() {
     handleCloseNoPython();
   };
 
-  const handleDownloadConda = () => {
-    handleCloseNoConda();
-  };
-
   const items = [
     { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
     { type: 'item', name: t('Data'), icon: DatasetIcon, href: '/data' },
@@ -76,7 +72,7 @@ export default function Layout() {
         variant="warning"
         buttons={[
           { text: t('use-existing'), variant:'main-inherit', handleClick: () => console.log('test') },
-          { text: t('new-venv'), variant:'contrast-inherit', handleClick: () => console.log('test') },
+          { text: t('new-venv'), variant:'contrast-inherit', handleClick: () => handleCreateVenv() },
         ]}
       />
       <Snack
