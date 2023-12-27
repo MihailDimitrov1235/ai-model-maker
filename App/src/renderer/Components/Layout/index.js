@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContentText,
   DialogActions,
+  DialogTitle,
   Button,
 } from '@mui/material';
 import { Outlet } from 'react-router-dom';
@@ -17,22 +18,34 @@ import { useTranslation } from 'react-i18next';
 import LanguageChanger from './LanguageChanger';
 import { useEffect, useState } from 'react';
 import logo from '../../../../assets/logo-placeholder-image.png';
-import Snack from '../Snack';
+import Snack from '../Utils/Snack';
 import { useNavigate } from 'react-router-dom';
+import CustomDialog from '../Utils/CustomDialog';
 
 export default function Layout() {
   const { navigate } = useNavigate()
+  const { t } = useTranslation();
   const [openNoPython, setOpenNoPython] = useState(false);
   const [openNoConda, setOpenNoConda] = useState(false);
-  const { t } = useTranslation();
+  const [openCreateEnv, setOpenCreateEnv] = useState(false);
+  const [createEnvText, setCreateEnvText] = useState(t("create-env-init"))
 
   useEffect(() => {
-    window.electronAPI.checkVenv();
+    window.electronAPI.checkEnv();
     window.electronAPI.handleMissingConda((event, value) => {
       setOpenNoConda(true);
     });
     window.electronAPI.handleMissingVenv((event, value) => {
       setOpenNoPython(true);
+    });
+    window.electronAPI.handleChangeCreateEnvText((event, value) => {
+      if(value == "cancel"){
+        setCreateEnvText(t("cancel"));
+      }
+      setCreateEnvText(value);
+    });
+    window.electronAPI.handleCloseCreateEnv((event, value) => {
+      setOpenCreateEnv(false);
     });
   }, []);
 
@@ -44,10 +57,17 @@ export default function Layout() {
     setOpenNoPython(false);
   };
 
-  const handleCreateVenv = () => {
-    window.electronAPI.createVenv();
+  const handleCreateEnv = () => {
+    window.electronAPI.createEnv();
     handleCloseNoPython();
+    setOpenCreateEnv(true)
   };
+
+  const handleCancelCreateEnv = () => {
+    window.electronAPI.cancelCreateEnv();
+    // setOpenCreateEnv(false)
+    setCreateEnvText(t("create-env-init"))
+  }
 
   const items = [
     { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
@@ -72,7 +92,7 @@ export default function Layout() {
         variant="warning"
         buttons={[
           { text: t('use-existing'), variant:'main-inherit', handleClick: () => console.log('test') },
-          { text: t('new-venv'), variant:'contrast-inherit', handleClick: () => handleCreateVenv() },
+          { text: t('new-venv'), variant:'contrast-inherit', handleClick: () => handleCreateEnv() },
         ]}
       />
       <Snack
@@ -82,8 +102,15 @@ export default function Layout() {
         title={t('no-conda-title')}
         variant="warning"
         buttons={[
-          { text: t('download-conda'), downloadLink:`https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Windows-x86_64.exe` },
+          { text: t('download-conda'), downloadLink:`https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Windows-x86_64.exe`, handleClick: () => handleCloseNoConda() },
         ]}
+      />
+
+      <CustomDialog 
+        open={openCreateEnv}  
+        title={t('create-env-title')} 
+        text={createEnvText}
+        buttons={[{text:t("cancel"), variant:'main', handleClick: () => handleCancelCreateEnv()}]}
       />
 
       <Box

@@ -1,9 +1,12 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  checkVenv: (arg) => ipcRenderer.send('check-venv', arg),
-  createVenv: (arg) =>ipcRenderer.send('create-venv', arg),
+  checkEnv: (arg) => ipcRenderer.send('check-env', arg),
+  createEnv: (arg) =>ipcRenderer.send('create-env', arg),
+  cancelCreateEnv: (arg) =>ipcRenderer.send('cancel-create-env', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
-  handleMissingVenv: (callback) => ipcRenderer.on('no-vnev', callback),
-  handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback)
+  handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
+  handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
+  handleChangeCreateEnvText: (callback) => ipcRenderer.on('change-create-env-text', callback),
+  handleCloseCreateEnv: (callback) => ipcRenderer.on('close-create-env', callback)
 })

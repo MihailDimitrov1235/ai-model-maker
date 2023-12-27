@@ -48,10 +48,9 @@ export default function Snack({
           }}
         >
           {buttons.map((btn, idx) => (
-            <>
+            <Box key={idx}>
             {btn.downloadLink?
               <Button
-              key={idx}
               variant={btn.variant ? btn.variant : 'main'}
               onClick={btn.handleClick}
             >
@@ -68,7 +67,7 @@ export default function Snack({
               {btn.text}
             </Button>
             }
-            </>
+            </Box>
           ))}
         </Box>
       </Alert>
