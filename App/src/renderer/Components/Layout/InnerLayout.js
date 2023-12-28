@@ -18,9 +18,9 @@ const dataItems = [
     name: "Tabular",
     href: "/data/import",
     items: [
-      { type: "item", name: "Tabular", href: "/data/import/tabular" },
-      { type: "item", name: "Image", href: "/data/import/image" },
-      { type: "item", name: "Text", href: "/data/import/text" },
+      { type: "item", name: "1", href: "/data/tabular/1" },
+      { type: "item", name: "2", href: "/data/tabular/2" },
+      { type: "item", name: "3", href: "/data/tabular/3" },
     ],
   },
 ];

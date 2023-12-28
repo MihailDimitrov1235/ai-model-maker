@@ -10,17 +10,21 @@ function ImportDataset() {
   const [type, setType] = useState('')
   useEffect(() => {
     if(location.pathname.includes("tabular")){
-        setType("")
+        setType("tabular")
     }else if(location.pathname.includes("image")){
-
+      setType("image")
     }else if(location.pathname.includes("text")){
-
+      setType("text")
     }else{
-
+      setType("")
     }
-  },[])
+  },[location])
   const handleChange = (event) => {
-    setType(event.target.value)
+    const val = event.target.value
+    setType(val)
+    if(!location.pathname.includes(val)){
+        navigate("/data/import/" + val)
+    }
   }
   return (
     <Box
@@ -42,9 +46,9 @@ function ImportDataset() {
             value={type}
             onChange={handleChange}
         >
-            <MenuItem value={'tab'}>{t("tabular")}</MenuItem>
-            <MenuItem value={'img'}>{t("image")}</MenuItem>
-            <MenuItem value={'txt'}>{t("text")}</MenuItem>
+            <MenuItem value={'tabular'}>{t("tabular")}</MenuItem>
+            <MenuItem value={'image'}>{t("image")}</MenuItem>
+            <MenuItem value={'text'}>{t("text")}</MenuItem>
         </Select>
         </FormControl>
         <Outlet/>
