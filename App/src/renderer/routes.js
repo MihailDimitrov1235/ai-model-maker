@@ -20,7 +20,7 @@ const routes = [
         element: <InnerLayout type={"data"} />,
         children: [
           {
-            path: "table",
+            path: "tables",
             children: [{ path: "import", element: <ImportInfo /> }],
           },
           { path: "", element: <Datasets /> },

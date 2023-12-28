@@ -8,7 +8,7 @@ const dataItems = [
     name: "Tables",
     href: "/data/tables",
     items: [
-      { type: "item", name: "Csv", href: "/data/tables/csv" },
+      { type: "item", name: "Import", href: "/data/tables/import" },
       { type: "item", name: "Excel", href: "/data/tables/excel" },
     ],
   },

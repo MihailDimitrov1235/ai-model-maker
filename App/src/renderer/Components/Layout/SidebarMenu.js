@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Collapse, List, ListItemButton, ListItemText } from "@mui/material";
+import { useState } from "react";
+import { Collapse, List, ListItemButton, ListItemText, IconButton } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -33,9 +33,6 @@ export default function SidebarMenu({ items }) {
                   },
                 }}
               >
-                {/* <ListItemIcon>
-                  <SendIcon />
-                </ListItemIcon> */}
                 <ListItemText primary={item.name} />
               </ListItemButton>
             )}
@@ -47,10 +44,15 @@ export default function SidebarMenu({ items }) {
 }
 
 function Section({ item }) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleTextClick = (href) => {
+    navigate(href)
   };
 
   return (
@@ -67,10 +69,13 @@ function Section({ item }) {
             fontWeight:600,
           }
         }}
-        onClick={handleClick}
+        
+        
       >
-        <ListItemText primary={item.name} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText onClick={() => handleTextClick(item.href)} primary={item.name} />
+        <IconButton onClick={handleClick}>
+          {open ? <ExpandLess  /> : <ExpandMore />}
+        </IconButton>
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding sx={{ml:1}}>
