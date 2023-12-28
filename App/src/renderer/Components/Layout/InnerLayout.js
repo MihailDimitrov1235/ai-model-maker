@@ -5,11 +5,22 @@ import { Outlet } from "react-router-dom";
 const dataItems = [
   {
     type: "section",
-    name: "Tables",
-    href: "/data/tables",
+    name: "Import",
+    href: "/data/import",
     items: [
-      { type: "item", name: "Import", href: "/data/tables/import" },
-      { type: "item", name: "Excel", href: "/data/tables/excel" },
+      { type: "item", name: "Tabular", href: "/data/import/tabular" },
+      { type: "item", name: "Image", href: "/data/import/image" },
+      { type: "item", name: "Text", href: "/data/import/text" },
+    ],
+  },
+  {
+    type: "section",
+    name: "Tabular",
+    href: "/data/import",
+    items: [
+      { type: "item", name: "Tabular", href: "/data/import/tabular" },
+      { type: "item", name: "Image", href: "/data/import/image" },
+      { type: "item", name: "Text", href: "/data/import/text" },
     ],
   },
 ];

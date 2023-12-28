@@ -12,8 +12,8 @@ import {
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
-import { ShowDiagrams } from "../Components/Charts/BarChart_GoogleLib";
-import CardElement from "../Components/Cards/DatasetCard";
+import { ShowDiagrams } from "../../Components/Charts/BarChart_GoogleLib";
+import CardElement from "../../Components/Cards/DatasetCard";
 import { Link } from "react-router-dom";
 // import python from 'python-shell';
 // import path from "path";

@@ -2,6 +2,7 @@ import Landing from "./Pages/Landing";
 import Layout from "./Components/Layout";
 import Page404 from "./Pages/Page404";
 import Datasets from "./Pages/Datasets";
+import ImportDataset from "./Pages/Datasets/ImportDataset"
 import ImportInfo from "./Pages/ImortInfo";
 import InnerLayout from "./Components/Layout/InnerLayout";
 
@@ -19,12 +20,12 @@ const routes = [
         path: "/data",
         element: <InnerLayout type={"data"} />,
         children: [
+          { path: "", element: <Datasets /> },
+          { path: "import", element: <ImportDataset /> },
           {
             path: "tables",
             children: [{ path: "import", element: <ImportInfo /> }],
           },
-          { path: "", element: <Datasets /> },
-          { path: "data2", element: <Datasets /> },
         ],
       },
       {
