@@ -40,6 +40,8 @@ const lightTheme = createTheme({
           style: {
             backgroundColor: primaryMain,
             color: textContrast,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
             ':hover':{
               backgroundColor: primaryDark,
               color: textContrast,
@@ -51,6 +53,8 @@ const lightTheme = createTheme({
           style: {
             backgroundColor: 'rgba(255,255,255,0.02)',
             color: 'inherit',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
             ':hover':{
               filter: 'brightness(120%)',
             },
@@ -62,6 +66,8 @@ const lightTheme = createTheme({
             padding:'0',
             backgroundColor: '',
             color: lightTextDark,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
             ':hover':{
               color: lightTextMain,
               backgroundColor: 'transparent',
@@ -77,6 +83,8 @@ const lightTheme = createTheme({
             padding:'0',
             backgroundColor: '',
             color: 'inherit',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
             ':hover':{
               filter: 'brightness(120%)',
               backgroundColor: 'transparent',
