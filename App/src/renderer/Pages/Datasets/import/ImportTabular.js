@@ -1,34 +1,54 @@
-import { Box, Button, TextField } from "@mui/material"
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next"
+import { Box, Button, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function ImportTabular() {
-
   const { t } = useTranslation();
-  const [file, setFile] = useState(t('select-file'))
+  const [file, setFile] = useState(t('select-file'));
+  const [data, setData] = useState({})
 
-  useEffect(()=>{
+  useEffect(() => {
     window.electronAPI.handleSetTabularFile((event, value) => {
-      setFile(value.filePaths || "error");
-      return value
+      if (!value.canceled) {
+        setFile(value.filePaths);
+      }
     });
-  }, [])
+    window.electronAPI.handleSetTabularFileData((event, value) => {
+      if (!value.error) {
+        setData(value.data);
+      }
+      console.log(value)
+    });
+  }, []);
 
   const handleClick = () => {
     window.electronAPI.selectTabularFile();
-  }
+  };
 
   return (
     <Box display={'flex'} justifyContent={'space-between'} gap={3}>
-      <TextField variant="outlined" value={file} disabled fullWidth/>
-      <Button onClick={handleClick} sx={{
-        overflow:'hidden',
-        whiteSpace:'nowrap'
-      }}>
-        {t("select-file")}
+      <TextField
+        sx={{ input: { cursor: 'pointer' } }}
+        variant="outlined"
+        value={file}
+        fullWidth
+        onClick={handleClick}
+        InputProps={{
+          readOnly: true,
+        }}
+      />
+      <Button
+        onClick={handleClick}
+        sx={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          px: 2,
+        }}
+      >
+        {t('select-file')}
       </Button>
     </Box>
-  )
+  );
 }
 
-export default ImportTabular
+export default ImportTabular;

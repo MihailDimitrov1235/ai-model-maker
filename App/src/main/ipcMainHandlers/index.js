@@ -3,19 +3,44 @@ const path = require('path');
 const fs = require('fs');
 const { PythonShell } = require('python-shell');
 const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
+const XLSX = require('xlsx');
+const { parse } = require('csv-parse/sync');
 
 function setupIPCMain(win) {
   setupIPCMainPyEnv(win);
 
   ipcMain.on('select-tabular-file', (event, arg) => {
     const options = {
-      "filters": [{ "name": 'Tabular', "extensions": ['csv', 'xlsx'] }],
+      filters: [{ name: 'Tabular', extensions: ['csv', 'xlsx'] }],
     };
-    const dial = dialog.showOpenDialog(options);
-    dial
+    dialog
+      .showOpenDialog(options)
       .then((data) => {
         console.log(data);
+        const fileName = data.filePaths[0]
         win.webContents.send('set-tabular-file', data);
+
+        fs.readFile(fileName, 'binary', function (err, data) {
+          let jsonData;
+
+          const ext = path.extname(fileName).toLowerCase();
+
+          if (ext === '.xlsx') {
+            const workbook = XLSX.read(data, { type: 'binary' });
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            jsonData = XLSX.utils.sheet_to_json(sheet, {header:1});
+          } else if (ext === '.csv') {
+            const csvData = data.toString();
+            jsonData = parse(csvData, {delimiter:';'})
+            console.log(jsonData)
+          } else {
+            win.webContents.send('set-tabular-file-data', { error: 'Unsupported file format' });
+            return;
+          }
+
+          win.webContents.send('set-tabular-file-data', { data: jsonData });
+        });
       })
       .catch((err) => {
         console.log(err);

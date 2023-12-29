@@ -11,4 +11,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
   handleChangeCreateEnvText: (callback) => ipcRenderer.on('change-create-env-text', callback),
   handleCloseCreateEnv: (callback) => ipcRenderer.on('close-create-env', callback),
   handleSetTabularFile: (callback) => ipcRenderer.on('set-tabular-file', callback),
+  handleSetTabularFileData: (callback) => ipcRenderer.on('set-tabular-file-data', callback),
 })
