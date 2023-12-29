@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron');
+const { ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { PythonShell } = require('python-shell');
@@ -6,6 +6,21 @@ const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 
 function setupIPCMain(win) {
   setupIPCMainPyEnv(win) 
+
+  ipcMain.on('select-tabular-file', (event, arg) => {
+    const options = {filters: [
+      { name: 'Tabular', extensions: ['csv', 'xlsx'] },
+    ]}
+    const dial = dialog.showOpenDialog({ options: options,properties: ['openFile', 'multiSelections'] })
+    dial.then(data => {
+      console.log(data)
+      win.webContents.send('set-tabular-file', data);
+    })
+    .catch(err => {
+      console.log(err)
+      return false
+    })
+  })
 
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
