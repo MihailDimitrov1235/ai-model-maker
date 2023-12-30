@@ -27,7 +27,7 @@ function ImportTabular() {
   };
 
   return (
-    <Box>
+    <Box display={'flex'} flexDirection={'column'} width={'100%'} height={"100%"} overflow={"hidden"} gap={3}>
       <Box display={'flex'} justifyContent={'space-between'} gap={3}>
         <TextField
           sx={{ input: { cursor: 'pointer' } }}

@@ -32,7 +32,15 @@ function setupIPCMain(win) {
             jsonData = XLSX.utils.sheet_to_json(sheet, {header:1});
           } else if (ext === '.csv') {
             const csvData = data.toString();
-            jsonData = parse(csvData, {delimiter:';'})
+            try{
+              jsonData = parse(csvData, {delimiter:';', skip_empty_lines:true})
+              if(jsonData[0].length == 1){
+                jsonData = parse(csvData, {delimiter:',', skip_empty_lines:true})
+              }
+            }catch(err){
+              console.log(err)
+              jsonData = []
+            }
             console.log(jsonData)
           } else {
             win.webContents.send('set-tabular-file-data', { error: 'Unsupported file format' });

@@ -8,32 +8,29 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function CustomTable({ data }) {
-  const [header, setHeader] = useState([]);
-  useEffect(() => {
-    setHeader(data.shift());
-  }, []);
+
+  const header = data[0]; // First row is the header
+  const bodyData = data.slice(1); // Rest of the rows are body data
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{  width:'100%', maxHeight:'500px'}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            {header.map((cell) => (
-              <TableCell align="right">{cell}</TableCell>
+          {header.map((column, index) => (
+              <TableCell key={index}>{column}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {data.map((row) => (
-            <TableRow
-              key={row}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              {row.map((cell) => (
-                <TableCell align="right">{cell}</TableCell>
+          {bodyData.map((row, rowIndex) => (
+            <TableRow key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <TableCell key={cellIndex}>{cell}</TableCell>
+                
               ))}
             </TableRow>
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
