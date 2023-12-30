@@ -8,6 +8,7 @@ import {
   TableRow,
   TablePagination,
   Paper,
+  Tooltip,
 } from '@mui/material';
 
 export default function CustomTable({ data }) {
@@ -29,13 +30,29 @@ export default function CustomTable({ data }) {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ width: '100%', maxHeight: '500px' }}>
-        <Table stickyHeader sx={{ minWidth: 650 }}>
+        <Table
+          stickyHeader
+          sx={{ minWidth: 650, tableLayout: 'fixed', overflow: 'scroll' }}
+        >
           <TableHead>
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               {header.map((column, index) => (
-                <TableCell sx={{ bgcolor:'primary.dark', color:'text.contrast'}} key={index}>{column}</TableCell>
+                <TableCell
+                  sx={{
+                    bgcolor: 'primary.dark',
+                    color: 'text.contrast',
+                    width: '100%',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  <Tooltip key={index} title={column} placement="top">
+                    {column}
+                  </Tooltip>
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -45,7 +62,19 @@ export default function CustomTable({ data }) {
               .map((row, rowIndex) => (
                 <TableRow key={rowIndex}>
                   {row.map((cell, cellIndex) => (
-                    <TableCell key={cellIndex}>{cell}</TableCell>
+                    <TableCell
+                      key={cellIndex}
+                      sx={{
+                        width: '100%',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      <Tooltip title={cell} placement="top">
+                        {cell}
+                      </Tooltip>
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}
