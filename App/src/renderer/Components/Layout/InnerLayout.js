@@ -116,7 +116,7 @@ export default function InnerLayout({ type = null }) {
           ml: 0,
           py: 1,
           px: 2,
-          overflow:'scroll',
+          overflowY:'scroll',
         }}
       >
         <Outlet />
