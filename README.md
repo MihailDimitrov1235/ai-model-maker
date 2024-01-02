@@ -1,3 +1,7 @@
+## Install Dependancies
+```bash
+cd ./App && npm i --legacy-peer-deps
+```
 
 ## Start App
 ```bash

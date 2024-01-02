@@ -1,10 +1,8 @@
 {
-  "description": "A foundation for scalable desktop apps",
+  "description": "An app for creating ai models using ui.",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "Mihail Dimitrov"
   },
   "main": "./src/main/main.js",
   "scripts": {
