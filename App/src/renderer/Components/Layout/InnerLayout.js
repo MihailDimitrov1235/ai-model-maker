@@ -73,7 +73,7 @@ export default function InnerLayout({ type = null }) {
   const items = itemMap[type] || [];
 
   return (
-    <Box display={"flex"} flex={1}>
+    <Box display={"flex"} sx={{ width:'calc(100% - 78px)'}}>
       
         {type && 
         <Box

@@ -10,11 +10,19 @@ import {
   Paper,
   Tooltip,
   Typography,
+  Checkbox,
+  Box,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export default function CustomTable({ data }) {
   const header = data[0];
   const bodyData = data.slice(1);
+  const [headerCheckboxes, setHeaderCheckboxes] = useState(
+    new Array(header.length).fill(true),
+  );
+
+  const { t } = useTranslation()
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -28,12 +36,24 @@ export default function CustomTable({ data }) {
     setPage(0);
   };
 
+  const handleClickCheckbox = (index) => {
+    const nextCheckboxes = headerCheckboxes.map((c, i) => {
+      if (i === index) {
+        return !c;
+      } else {
+        return c;
+      }
+    });
+    console.log(nextCheckboxes);
+    setHeaderCheckboxes(nextCheckboxes);
+  };
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ width: '100%', maxHeight: '500px' }}>
+      <TableContainer sx={{ maxHeight: '500px' }}>
         <Table
           stickyHeader
-          sx={{ minWidth: 650, tableLayout: 'fixed', overflow: 'scroll' }}
+          sx={{ minWidth: 650, overflow: 'scroll' }}
         >
           <TableHead>
             <TableRow
@@ -48,18 +68,30 @@ export default function CustomTable({ data }) {
                     width: '100%',
                   }}
                 >
-                  <Tooltip title={column} placement="top" followCursor>
-                    <Typography
-                      sx={{
-                        width: '100%',
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                      }}
-                    >
-                      {column}
-                    </Typography>
-                  </Tooltip>
+                  <Box
+                    display={'flex'}
+                    justifyContent={'space-between'}
+                    alignItems={'center'}
+                    width={'150px'}
+                  >
+                    <Tooltip title={column} placement="top" followCursor>
+                      <Typography
+                        sx={{
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {column}
+                      </Typography>
+                    </Tooltip>
+                    <Tooltip title={t('include') + '?'} placement="top" followCursor>
+                    <Checkbox
+                      defaultChecked
+                      onClick={(event) => handleClickCheckbox(index)}
+                    />
+                    </Tooltip>
+                  </Box>
                 </TableCell>
               ))}
             </TableRow>

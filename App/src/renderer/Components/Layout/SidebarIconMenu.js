@@ -43,7 +43,7 @@ export default function SidebarIconMenu({ items }) {
                 }
               }}
             >
-              <Tooltip title={item.name} TransitionComponent={Zoom} placement="right" >
+              <Tooltip title={item.name} TransitionComponent={Zoom} placement="right" enterDelay={0} leaveDelay={100} >
                 <item.icon sx={{ color: isActive?"text.contrast" : "text.main", }} style={{ fontSize: "220%" }} />
               </Tooltip>
               {/* <Typography sx={{ color: isActive?"text.contrast" : "text.main", fontSize: "16px", fontWeight:500 }}>
