@@ -9,6 +9,7 @@ import {
   TablePagination,
   Paper,
   Tooltip,
+  Typography,
 } from '@mui/material';
 
 export default function CustomTable({ data }) {
@@ -45,13 +46,19 @@ export default function CustomTable({ data }) {
                     bgcolor: 'primary.dark',
                     color: 'text.contrast',
                     width: '100%',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
                   }}
                 >
-                  <Tooltip title={column} placement="top">
-                    <>{column}</>
+                  <Tooltip title={column} placement="top" followCursor>
+                    <Typography
+                      sx={{
+                        width: '100%',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {column}
+                    </Typography>
                   </Tooltip>
                 </TableCell>
               ))}
@@ -67,13 +74,18 @@ export default function CustomTable({ data }) {
                       key={cellIndex}
                       sx={{
                         width: '100%',
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
                       }}
                     >
-                      <Tooltip title={cell} placement="top">
-                        <>{cell}</>
+                      <Tooltip title={cell} placement="top" followCursor>
+                        <Typography
+                          sx={{
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {cell}
+                        </Typography>
                       </Tooltip>
                     </TableCell>
                   ))}
