@@ -40,6 +40,7 @@ export default function CustomTable({ data }) {
             >
               {header.map((column, index) => (
                 <TableCell
+                  key={index}
                   sx={{
                     bgcolor: 'primary.dark',
                     color: 'text.contrast',
@@ -49,8 +50,8 @@ export default function CustomTable({ data }) {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  <Tooltip key={index} title={column} placement="top">
-                    {column}
+                  <Tooltip title={column} placement="top">
+                    <>{column}</>
                   </Tooltip>
                 </TableCell>
               ))}
@@ -72,7 +73,7 @@ export default function CustomTable({ data }) {
                       }}
                     >
                       <Tooltip title={cell} placement="top">
-                        {cell}
+                        <>{cell}</>
                       </Tooltip>
                     </TableCell>
                   ))}
