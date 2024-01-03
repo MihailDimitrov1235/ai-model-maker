@@ -17,7 +17,7 @@ function setupIPCMain(win) {
       .showOpenDialog(options)
       .then((data) => {
         console.log(data);
-        const fileName = data.filePaths[0]
+        const fileName = data.filePaths[0];
         win.webContents.send('set-tabular-file', data);
 
         fs.readFile(fileName, 'binary', function (err, data) {
@@ -29,20 +29,25 @@ function setupIPCMain(win) {
             const workbook = XLSX.read(data, { type: 'binary' });
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
-            jsonData = XLSX.utils.sheet_to_json(sheet, {header:1});
+            jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
           } else if (ext === '.csv') {
             const csvData = data.toString();
-            try{
-              jsonData = parse(csvData, {delimiter:';', skip_empty_lines:true})
-            }catch(err){
+            try {
               jsonData = parse(csvData, {
-                skip_empty_lines: true
-              })
-              console.log(err)
+                delimiter: ';',
+                skip_empty_lines: true,
+              });
+            } catch (err) {
+              jsonData = parse(csvData, {
+                skip_empty_lines: true,
+              });
+              console.log(err);
             }
-            console.log(jsonData)
+            console.log(jsonData);
           } else {
-            win.webContents.send('set-tabular-file-data', { error: 'Unsupported file format' });
+            win.webContents.send('set-tabular-file-data', {
+              error: 'Unsupported file format',
+            });
             return;
           }
 
