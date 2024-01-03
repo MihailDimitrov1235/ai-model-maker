@@ -16,7 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export default function CustomTable({ data }) {
-  const header = data[0];
+  const header = data[0] || [];
   const bodyData = data.slice(1);
   const [headerCheckboxes, setHeaderCheckboxes] = useState(
     new Array(header.length).fill(true),

@@ -34,12 +34,11 @@ function setupIPCMain(win) {
             const csvData = data.toString();
             try{
               jsonData = parse(csvData, {delimiter:';', skip_empty_lines:true})
-              if(jsonData[0].length == 1){
-                jsonData = parse(csvData, {delimiter:',', skip_empty_lines:true})
-              }
             }catch(err){
+              jsonData = parse(csvData, {
+                skip_empty_lines: true
+              })
               console.log(err)
-              jsonData = []
             }
             console.log(jsonData)
           } else {
