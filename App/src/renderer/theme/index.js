@@ -5,7 +5,7 @@ const primaryMain = '#15A4C1'
 const primaryDark = '#10839A'
 const textContrast = '#ffffff'
 
-const lightBackgroundMain = '#C1C1C1'
+const lightBackgroundMain = '#D1D1D1'
 const lightBackgroundStandOut = '#ffffff'
 const lightTextMain = '#000000'
 const lightTextDark = '#333333'

@@ -42,7 +42,7 @@ function ImportDataset() {
         <h2>{t('create-dataset')}</h2>
         <FormControl fullWidth>
           <InputLabel>{t('type')}</InputLabel>
-          <Select value={type} onChange={handleChange}>
+          <Select label={t('type')} value={type} onChange={handleChange}>
             <MenuItem value={'tabular'}>{t('tabular')}</MenuItem>
             <MenuItem value={'image'}>{t('image')}</MenuItem>
             <MenuItem value={'text'}>{t('text')}</MenuItem>

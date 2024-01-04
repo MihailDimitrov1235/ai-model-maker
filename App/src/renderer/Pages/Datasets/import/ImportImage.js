@@ -32,7 +32,7 @@ function ImportImage() {
         >
           <FormControl sx={{ width: '20%', margin: 2 }}>
             <InputLabel>type</InputLabel>
-            <Select>
+            <Select label={"type"}>
               <MenuItem value={'classification'}>Image classification</MenuItem>
               <MenuItem value={'detection'}>Object detection</MenuItem>
               <MenuItem value={'captioning'}>Captioning</MenuItem>
