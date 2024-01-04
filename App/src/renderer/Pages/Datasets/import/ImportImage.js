@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+
 function ImportImage() {
   return (
     <Box
@@ -47,6 +48,7 @@ function ImportImage() {
             <Button variant="contrast">Create labels</Button>
           </Box>
         </Box>
+        <Button onClick={() => {window.electronAPI.selectImageFolder()}}>Select Folder</Button>
       </Box>
     </Box>
   );
