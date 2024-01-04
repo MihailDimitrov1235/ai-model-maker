@@ -12,6 +12,7 @@ import {
   Typography,
   Checkbox,
   Box,
+  Card,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -67,7 +68,7 @@ export default function CustomTable({ data }) {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden', mb:1 }}>
       <TableContainer sx={{ maxHeight: '500px' }}>
         <Table
           stickyHeader

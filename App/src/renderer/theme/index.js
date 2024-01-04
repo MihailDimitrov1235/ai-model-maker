@@ -5,7 +5,7 @@ import { grey } from "@mui/material/colors";
 const primaryMain = '#15A4C1';
 const primaryDark = '#10839A';
 const textContrast = '#ffffff';
-const lightBackgroundMain = '#D1D1D1';
+const lightBackgroundMain = '#E9E9E9';
 const lightBackgroundStandOut = '#ffffff';
 const lightTextMain = '#000000';
 const lightTextDark = '#333333';
