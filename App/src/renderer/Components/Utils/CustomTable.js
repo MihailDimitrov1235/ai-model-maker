@@ -16,11 +16,29 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export default function CustomTable({ data }) {
-  const header = data[0] || [];
-  const bodyData = data.slice(1);
-  const [headerCheckboxes, setHeaderCheckboxes] = useState(
-    new Array(header.length).fill(true),
-  );
+
+  const [header, setHeader] = useState([]);
+  const [bodyData, setBodyData] = useState([]);
+  const [headerCheckboxes, setHeaderCheckboxes] = useState([]);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const firstRowLength = data[0].length;
+      for (let i = 0; i < firstRowLength; i++) {
+        if (!data[0][i] && (data[0][i]!==false && data[0][i]!==0)) {
+          data[0].splice(i);
+          break; 
+        }
+      }
+      data.forEach(row => row.splice(data[0].length));
+    }
+    setHeader(data[0] || [])
+    setBodyData(data.slice(1))
+    setHeaderCheckboxes(new Array(data[0].length || 0).fill(true))
+    
+  },[data])
+  
+  
 
   const { t } = useTranslation()
 
@@ -65,14 +83,14 @@ export default function CustomTable({ data }) {
                   sx={{
                     bgcolor: 'primary.dark',
                     color: 'text.contrast',
-                    width: '100%',
+                    minWidth: '150px',
+                    flex:1,
                   }}
                 >
                   <Box
                     display={'flex'}
                     justifyContent={'space-between'}
                     alignItems={'center'}
-                    width={'150px'}
                   >
                     <Tooltip title={column} placement="top" followCursor>
                       <Typography
@@ -105,7 +123,8 @@ export default function CustomTable({ data }) {
                     <TableCell
                       key={cellIndex}
                       sx={{
-                        width: '100%',
+                        minWidth: '150px',
+                        flex:1,
                       }}
                     >
                       <Tooltip title={cell} placement="top" followCursor>
