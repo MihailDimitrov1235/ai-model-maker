@@ -8,8 +8,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import UploadButton from '../../../Components/Utils/UploadButton';
+import { useTranslation } from 'react-i18next';
 
 function ImportImage() {
+  const handleClick = () => {
+    window.electronAPI.selectImageFolder();
+  };
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -33,22 +39,31 @@ function ImportImage() {
           }}
         >
           <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'row' }}>
-            <InputLabel>type</InputLabel>
+            <InputLabel>{t("type")}</InputLabel>
             <Select label={'type'} sx={{ minWidth: '200px' }}>
-              <MenuItem value={'classification'}>Image classification</MenuItem>
-              <MenuItem value={'detection'}>Object detection</MenuItem>
-              <MenuItem value={'captioning'}>Captioning</MenuItem>
+              <MenuItem value={'classification'}>{t("image-classification")}</MenuItem>
+              <MenuItem value={'detection'}>{t("object-detection")}</MenuItem>
+              <MenuItem value={'captioning'}>{t("captioning")}</MenuItem>
             </Select>
 
-            <TextField variant="outlined" placeholder="1920px" />
-            <TextField variant="outlined" placeholder="1080px" />
+            <TextField variant="outlined" placeholder="Width" />
+            <TextField variant="outlined" placeholder="Height" />
           </FormControl>
           <Box>
-            <Typography color={'text.main'}>Don't have labels?</Typography>
-            <Button variant="contrast">Create labels</Button>
+            <Typography color={'text.main'}>{t("no-labels")}</Typography>
+            <Button variant="contrast">{t("create-labels")}</Button>
           </Box>
         </Box>
-        <Button onClick={() => {window.electronAPI.selectImageFolder()}}>Select Folder</Button>
+        <Box sx={{ display: 'flex',
+          gap: 3,
+          mt: 4
+          
+      }}>
+          <UploadButton text={t("choose-image-folder")}/>
+          <UploadButton text={t("choose-labels")}/>
+        </Box>
+        
+        <Button onClick={() => {handleClick}}>{t("select-folder")}</Button>
       </Box>
     </Box>
   );
