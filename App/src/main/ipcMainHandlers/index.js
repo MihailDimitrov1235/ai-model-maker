@@ -60,6 +60,52 @@ function setupIPCMain(win) {
       });
   });
 
+  ipcMain.on('select-image-folder', (event, arg) => {
+  
+    
+    //const [imagePaths, setImagePaths] = useState([]);
+
+      dialog.showOpenDialog({
+        properties: ['openDirectory'],
+      }).then((result) => { if (!result.canceled) {
+        const folderPath = result.filePaths[0];
+
+      fs.readdir(folderPath, (err, files) => {
+        
+
+        if (err) {
+          console.error(`Error reading folder: ${folderPath}`, err);
+          
+          return;
+          
+        } else {
+          // Filter only image files (you may customize this logic)
+          const imageFiles = files.filter(file =>
+            /\.(jpg|png)$/i.test(path.extname(file))
+          );
+
+          // Construct full paths for image files
+          const newImagePaths = imageFiles.map(file =>
+            path.join(folderPath, file)
+          );
+          console.log(newImagePaths);
+          // Update state with the list of image paths
+          //setImagePaths(newImagePaths);
+        }
+      });
+      
+
+
+     
+    }
+
+  }).catch(err => {
+    console.log(err)
+  });
+      
+
+});
+
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
     // dial.then(data => {
@@ -81,5 +127,8 @@ function setupIPCMain(win) {
     // });
   });
 }
+
+
+
 
 module.exports = { setupIPCMain };
