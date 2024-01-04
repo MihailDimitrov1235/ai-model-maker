@@ -28,41 +28,31 @@ function ImportImage() {
           sx={{
             display: 'flex',
             alignItems: 'center',
+            justifyContent:'space-between'
           }}
         >
-          <FormControl sx={{ width: '20%', margin: 2 }}>
+            
+          <FormControl sx={{display:'flex', gap:3, flexDirection:'row'}}>
             <InputLabel>type</InputLabel>
-            <Select label={"type"}>
+            <Select label={"type"} sx={{ minWidth:'200px'}}>
               <MenuItem value={'classification'}>Image classification</MenuItem>
               <MenuItem value={'detection'}>Object detection</MenuItem>
               <MenuItem value={'captioning'}>Captioning</MenuItem>
             </Select>
-          </FormControl>
 
           <TextField
             variant="outlined"
             placeholder="1920px"
-            sx={{
-              input: {
-                padding: '8px',
-              },
-            }}
           />
           <TextField
             variant="outlined"
             placeholder="1080px"
-            sx={{
-              margin: 1,
-              input: {
-                padding: '8px',
-              },
-            }}
           />
+          
+          </FormControl>
           <Box>
             <Typography
-              sx={{
-                color: 'black',
-              }}
+            color={'text.main'}
             >
               Don't have labels?
             </Typography>
