@@ -107,19 +107,24 @@ export default function InnerLayout({ type = null }) {
 
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
+          overflow:'hidden',
           flex: 1,
+          borderRadius: "20px", 
           bgcolor: "background.standOut",
-          borderRadius: "20px",
           m: 1,
           ml: 0,
-          py: 1,
-          px: 2,
-          overflowY:'scroll',
         }}
       >
+        <Box sx={{
+          overflowY:'scroll',
+          display: "flex",
+          flexDirection: "column",
+          py: 1,
+          px: 2,
+          height:'100%'
+        }}>
         <Outlet />
+        </Box>
       </Box>
     </Box>
   );
