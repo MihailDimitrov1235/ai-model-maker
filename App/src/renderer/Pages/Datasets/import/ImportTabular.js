@@ -50,7 +50,7 @@ function ImportTabular() {
           }}
         />
       </Box>
-      {data && <CustomTable data={data} />}
+      {data && <CustomTable headerButton data={data} />}
     </Box>
   );
 }
