@@ -9,24 +9,51 @@ import {
   Typography,
 } from '@mui/material';
 import UploadButton from '../../../Components/Utils/UploadButton';
+
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function ImportImage() {
+  const [showButton, setShowButton] = useState(false);
+
+  const [images, setImages] = useState([]);
+  const [label, setLabel] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('');
+
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedValue(value);
+
+    // You can perform additional actions based on the selected value here
+    console.log('Selected value:', value);
+  };
+
   useEffect(() => {
+    //Setting images variable
     window.electronAPI.handleSetImageFolder((event, value) => {
-      console.log(value);
-      /*if (!value.canceled) {
-        setFile(value.filePaths);
-      }*/
+      if (value.data && value.data.length > 0) {
+        setImages(value.data);
+      }
+    });
+    window.electronAPI.handleSetImageLabel((event, value) => {
+      if (!value.canceled) {
+        setLabel(value.data);
+      }
+      console.log(value.data);
     });
   }, []);
+  useEffect(() => {
+    // Check labels
+    if (images && label && images.length > 0 && label.length > 0) {
+      setShowButton(true);
+    }
+  }, [images, label]);
 
   const handleClick = () => {
     window.electronAPI.selectImageFolder();
   };
-  const handleClickLabels = () => {
-    window.electronAPI.selectLabels();
+  const handleClickLabel = () => {
+    window.electronAPI.selectLabel();
   };
   const { t } = useTranslation();
   return (
@@ -52,7 +79,11 @@ function ImportImage() {
         >
           <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'row' }}>
             <InputLabel>{t('type')}</InputLabel>
-            <Select label={'type'} sx={{ minWidth: '200px' }}>
+            <Select
+              label={'type'}
+              sx={{ minWidth: '200px' }}
+              onChange={handleSelectChange}
+            >
               <MenuItem value={'classification'}>
                 {t('image-classification')}
               </MenuItem>
@@ -70,11 +101,20 @@ function ImportImage() {
         </Box>
         <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
           <UploadButton onClick={handleClick} text={t('choose-image-folder')} />
-          <UploadButton onClick={handleClickLabels} text={t('choose-labels')} />
+          <UploadButton
+            onClick={handleClickLabel}
+            text={t('choose-labels')}
+            disabled={selectedValue ? false : true}
+            icon="file"
+          />
         </Box>
         <Box>
-          <Button>{t('overview-button')}</Button>
-          <Button>{t('finish-button')}</Button>
+          {showButton && (
+            <>
+              <Button>{t('overview-button')}</Button>
+              <Button>{t('finish-button')}</Button>
+            </>
+          )}
         </Box>
       </Box>
     </Box>

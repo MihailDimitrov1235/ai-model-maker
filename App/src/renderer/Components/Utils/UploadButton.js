@@ -9,10 +9,12 @@ import {
   Typography,
 } from '@mui/material';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
-function UploadButton({ text, onClick }) {
+function UploadButton({ text, onClick, disabled = false, icon = 'folder' }) {
   return (
     <Button
+      disabled={disabled}
       onClick={onClick}
       sx={{
         width: '100%',
@@ -23,11 +25,20 @@ function UploadButton({ text, onClick }) {
         flexDirection: 'column',
       }}
     >
-      <DriveFolderUploadIcon
-        sx={{
-          fontSize: '80px',
-        }}
-      />
+      {icon == 'folder' ? (
+        <DriveFolderUploadIcon
+          sx={{
+            fontSize: '80px',
+          }}
+        />
+      ) : (
+        <UploadFileIcon
+          sx={{
+            fontSize: '80px',
+          }}
+        />
+      )}
+
       <Typography>{text}</Typography>
     </Button>
   );

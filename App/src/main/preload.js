@@ -6,7 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   cancelCreateEnv: (arg) => ipcRenderer.send('cancel-create-env', arg),
   selectTabularFile: (arg) => ipcRenderer.send('select-tabular-file', arg),
   selectImageFolder: (arg) => ipcRenderer.send('select-image-folder', arg),
-  selectLabels: (arg) => ipcRenderer.send('select-labels', arg),
+  selectLabel: (arg) => ipcRenderer.send('select-label', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
@@ -20,4 +20,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('set-tabular-file-data', callback),
   handleSetImageFolder: (callback) =>
     ipcRenderer.on('set-image-folder', callback),
+  handleSetImageLabel: (callback) =>
+    ipcRenderer.on('set-image-label', callback),
 });

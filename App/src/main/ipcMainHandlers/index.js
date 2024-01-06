@@ -99,7 +99,7 @@ function setupIPCMain(win) {
       });
   });
 
-  ipcMain.on('select-labels', (event, arg) => {
+  ipcMain.on('select-label', (event, arg) => {
     //const [imagePaths, setImagePaths] = useState([]);
     const options = {
       filters: [{ name: 'Labels', extensions: ['txt'] }],
@@ -113,14 +113,26 @@ function setupIPCMain(win) {
         console.log(data);
         const filePath = data.filePaths[0];
 
-        win.webContents.send('set-text-file', data);
         console.log(data);
         fs.readFile(filePath, 'utf-8', (err, data) => {
           if (err) {
             console.error(`Error reading file: ${filePath}`, err);
           } else {
+            if (data) {
+              // Split the string into an array based on a delimiter (e.g., comma)
+              const dataArray = data.split(',');
+
+              // Handle the array data (e.g., display it)
+              console.log('File content as array:', dataArray);
+              win.webContents.send('set-image-label', dataArray);
+            } else {
+              console.error('File content is undefined.');
+              // Handle the case when the content is undefined
+            }
+            //const dataArray = data.split('\n');
             // Handle the file content (e.g., display it)
-            console.log('File content:', data);
+            //console.log('File content:', dataArray);
+            //win.webContents.send('set-image-label', dataArray);
           }
         });
       })
