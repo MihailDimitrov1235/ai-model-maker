@@ -5,5 +5,10 @@
   "Test": "Test",
   "no-py-env": "Python enviornment not found!",
   "use-existing": "Use Existing",
-  "new-venv":"New VENV"
+  "new-venv":"New VENV",
+  "choose-image-folder" : "Choose Image Folder",
+  "choose-labels" : "Choose Labels",
+  "create-labels" : "Create Labels",
+  "captioning" : "Captioning"
+  
 }

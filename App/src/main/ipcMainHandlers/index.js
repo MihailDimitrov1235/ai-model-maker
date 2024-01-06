@@ -61,50 +61,74 @@ function setupIPCMain(win) {
   });
 
   ipcMain.on('select-image-folder', (event, arg) => {
-  
-    
     //const [imagePaths, setImagePaths] = useState([]);
 
-      dialog.showOpenDialog({
+    dialog
+      .showOpenDialog({
         properties: ['openDirectory'],
-      }).then((result) => { if (!result.canceled) {
-        const folderPath = result.filePaths[0];
+      })
+      .then((result) => {
+        if (!result.canceled) {
+          const folderPath = result.filePaths[0];
 
-      fs.readdir(folderPath, (err, files) => {
-        
+          fs.readdir(folderPath, (err, files) => {
+            if (err) {
+              console.error(`Error reading folder: ${folderPath}`, err);
 
-        if (err) {
-          console.error(`Error reading folder: ${folderPath}`, err);
-          
-          return;
-          
-        } else {
-          // Filter only image files (you may customize this logic)
-          const imageFiles = files.filter(file =>
-            /\.(jpg|png)$/i.test(path.extname(file))
-          );
+              return;
+            } else {
+              // Filter only image files (you may customize this logic)
+              const imageFiles = files.filter((file) =>
+                /\.(jpg|png)$/i.test(path.extname(file)),
+              );
 
-          // Construct full paths for image files
-          const newImagePaths = imageFiles.map(file =>
-            path.join(folderPath, file)
-          );
-          console.log(newImagePaths);
-          // Update state with the list of image paths
-          //setImagePaths(newImagePaths);
+              // Construct full paths for image files
+              const newImagePaths = imageFiles.map((file) =>
+                path.join(folderPath, file),
+              );
+              win.webContents.send('set-image-folder', { data: newImagePaths });
+              console.log(newImagePaths);
+              // Update state with the list of image paths
+              //setImagePaths(newImagePaths);
+            }
+          });
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      
-
-
-     
-    }
-
-  }).catch(err => {
-    console.log(err)
   });
-      
 
-});
+  ipcMain.on('select-labels', (event, arg) => {
+    //const [imagePaths, setImagePaths] = useState([]);
+    const options = {
+      filters: [{ name: 'Labels', extensions: ['txt'] }],
+    };
+    dialog
+      .showOpenDialog(options)
+      .then((data) => {
+        if (data.canceled) {
+          return;
+        }
+        console.log(data);
+        const filePath = data.filePaths[0];
+
+        win.webContents.send('set-text-file', data);
+        console.log(data);
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+          if (err) {
+            console.error(`Error reading file: ${filePath}`, err);
+          } else {
+            // Handle the file content (e.g., display it)
+            console.log('File content:', data);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  });
 
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
@@ -127,8 +151,5 @@ function setupIPCMain(win) {
     // });
   });
 }
-
-
-
 
 module.exports = { setupIPCMain };

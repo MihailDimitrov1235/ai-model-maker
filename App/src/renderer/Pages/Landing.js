@@ -6,11 +6,11 @@ import {
   TextField,
   alpha,
   InputAdornment,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useTranslation } from "react-i18next";
-import { ShowDiagrams } from "../Components/Charts/BarChart_GoogleLib";
-import CardElement from "../Components/Cards/DatasetCard";
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { useTranslation } from 'react-i18next';
+import { ShowDiagrams } from '../Components/Charts/BarChart_GoogleLib';
+import CardElement from '../Components/Cards/DatasetCard';
 
 // import python from 'python-shell';
 // import path from "path";
@@ -33,32 +33,32 @@ const Landing = function () {
   };
 
   const datasets = [
-    { title: "Road Sign", Miho: "waka waka eee", Alvin: "Chiponoskovci" },
-    { title: "Road Sign" },
-    { title: "Road Sign" },
-    { Miho: "waka waka eee" },
-    { Alvin: "Chiponoskovci" },
+    { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
+    { title: 'Road Sign' },
+    { title: 'Road Sign' },
+    { Miho: 'waka waka eee' },
+    { Alvin: 'Chiponoskovci' },
   ];
 
   return (
     <>
       <Box
         sx={{
-          margin: "50px",
+          margin: '50px',
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
-          <h2>MAINATATA TI</h2>
+          <h2>Homepage</h2>
 
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
+              display: 'flex',
+              alignItems: 'center',
               gap: 3,
             }}
           >
@@ -76,7 +76,7 @@ const Landing = function () {
 
         <Box
           sx={{
-            margin: "50px",
+            margin: '50px',
           }}
         >
           <Grid container spacing={4}>
@@ -89,9 +89,9 @@ const Landing = function () {
           <Box
             sx={{
               flexGrow: 1,
-              display: "flex",
-              justifyContent: "center",
-              margin: "30px",
+              display: 'flex',
+              justifyContent: 'center',
+              margin: '30px',
             }}
           >
             <Pagination count={10} color="primary" />
