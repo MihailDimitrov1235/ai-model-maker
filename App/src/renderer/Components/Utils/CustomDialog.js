@@ -8,7 +8,7 @@ import {
     Button,
   } from '@mui/material';
 
-function CustomDialog({open, title, text, buttons}) {
+function CustomDialog({open, title, text, buttons, loading=true}) {
   return (
     <Dialog open={open} fullWidth sx={{}}>
         <DialogTitle sx={{p:3, pb:0, bgcolor: "background.main", color: "text.main" }}>
@@ -17,9 +17,10 @@ function CustomDialog({open, title, text, buttons}) {
         <DialogContentText
           sx={{ p: 3, bgcolor: "background.main", color: "text.main" }}
         >
+          
           <Box display="flex" flexDirection={'column'} gap={2}>
             {text}
-            <LinearProgress/>
+            {loading && <LinearProgress/>}
           </Box>
 
         </DialogContentText>

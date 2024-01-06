@@ -18,12 +18,11 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-export default function CustomTable({ data, headerButton = true }) {
+export default function CustomTable({ data, bodyData, setBodyData, header, setHeader }) {
 
-  const [header, setHeader] = useState([]);
-  const [bodyData, setBodyData] = useState([]);
   const [headerCheckboxes, setHeaderCheckboxes] = useState([]);
   const [hasHeaders, setHasHeaders] = useState(true)
+
 
   useEffect(() => {
     if (data.length > 0) {
@@ -36,11 +35,15 @@ export default function CustomTable({ data, headerButton = true }) {
       }
       data.forEach(row => row.splice(data[0].length));
     }
-    setHeader(data[0] || [])
+    if(hasHeaders){
+      setHeader(data[0] || [])
+    }else{
+      setHeader(new Array(data[0].length || 0).fill(""))
+    }
     setBodyData(data.slice(1))
     setHeaderCheckboxes(new Array(data[0].length || 0).fill(true))
 
-  }, [data])
+  }, [data, hasHeaders])
 
 
 
@@ -69,6 +72,19 @@ export default function CustomTable({ data, headerButton = true }) {
     console.log(nextCheckboxes);
     setHeaderCheckboxes(nextCheckboxes);
   };
+
+  const handleHeaderChange = (event, index) => {
+    const nextHeader = header.map((c, i) => {
+      if (i === index) {
+        return event.target.value;
+      } else {
+        return c;
+      }
+    });
+    console.log(nextHeader);
+    setHeader(nextHeader);
+    
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -115,7 +131,9 @@ export default function CustomTable({ data, headerButton = true }) {
                           </Typography>
                         </Tooltip>
                         :
-                        <TextField />
+                        <TextField
+                            onChange={(event) => handleHeaderChange(event, index)}
+                        />
                       }
 
                       <Tooltip title={t('include') + '?'} placement="top" followCursor>
