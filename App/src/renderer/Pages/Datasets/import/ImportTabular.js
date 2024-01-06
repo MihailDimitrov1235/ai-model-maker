@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CustomTable from '../../../Components/Utils/CustomTable';
 import CustomDialog from '../../../Components/Utils/CustomDialog';
+import FillTablular from './FillTablular';
 
 function ImportTabular() {
   const { t } = useTranslation();
@@ -10,26 +11,34 @@ function ImportTabular() {
   const [data, setData] = useState(null);
   const [header, setHeader] = useState([]);
   const [bodyData, setBodyData] = useState([]);
-  const nameRef = useRef();
+  const [headerCheckboxes, setHeaderCheckboxes] = useState([]);
   const [openMissingValues, setOpenMissingValues] = useState(false)
+  const [fill, setFill] = useState(false)
+  const nameRef = useRef();
 
   const handleFinish = () => {
     //check for missing values
-    const missingValues = [];
-
     for (let i = 0; i < bodyData.length; i++) {
       for (let j = 0; j < bodyData[i].length; j++) {
-        if (bodyData[i][j] === undefined || bodyData[i][j] === null) {
-          missingValues.push(i);
+        if (headerCheckboxes[j] && (bodyData[i][j] === undefined || bodyData[i][j] === null)) {
+          setOpenMissingValues(true)
+          return
         }
       }
     }
 
-    if(missingValues){
-      setOpenMissingValues(true)
-    }else{
+    console.log('all goood')
       //create dataset
-    }
+    
+  }
+
+  const handleDeleteMissingValueRows = () => {
+    setData(data.filter((row) => row.every((value) => value !== undefined && value !== null)))
+    setOpenMissingValues(false)
+  }
+
+  const handleFillMissingValues = () => {
+    setFill(true)
   }
 
   useEffect(() => {
@@ -59,39 +68,48 @@ function ImportTabular() {
       overflow={'visible'}
       gap={3}
     >
-      <CustomDialog open={openMissingValues} loading={false} title={t('missing-values-title')} text={t('missing-values-text')} buttons={[
-          { text: t('fill-manually'), variant:'main', handleClick: () => console.log('fill') },
-          { text: t('delete-rows'), variant:'contrast', handleClick: () => console.log('delete') },
-        ]}/>
-      <Box display={'flex'} justifyContent={'space-between'} gap={3}>
-        <TextField
-          ref={nameRef}
-          placeholder={t('name-dataset')}
-          sx={{ flex: 1 }}
-        />
+      {!fill?
+      <>
+      <CustomDialog open={openMissingValues} setOpen={setOpenMissingValues} loading={false} title={t('missing-values-title')} text={t('missing-values-text')} buttons={[
+        { text: t('fill-manually'), variant:'main', handleClick: () => handleFillMissingValues() },
+        { text: t('delete-rows'), variant:'contrast', handleClick: () => handleDeleteMissingValueRows() },
+      ]}/>
+    <Box display={'flex'} justifyContent={'space-between'} gap={3}>
+      <TextField
+        ref={nameRef}
+        placeholder={t('name-dataset')}
+        sx={{ flex: 1 }}
+      />
 
-        <TextField
-          sx={{ input: { cursor: 'pointer' }, flex: 1 }}
-          variant="outlined"
-          value={file}
-          onClick={handleClick}
-          InputProps={{
-            readOnly: true,
-          }}
+      <TextField
+        sx={{ input: { cursor: 'pointer' }, flex: 1 }}
+        variant="outlined"
+        value={file}
+        onClick={handleClick}
+        InputProps={{
+          readOnly: true,
+        }}
+      />
+    </Box>
+    {data && (
+      <>
+        <CustomTable
+          data={data}
+          bodyData={bodyData}
+          setBodyData={setBodyData}
+          header={header}
+          setHeader={setHeader}
+          headerCheckboxes={headerCheckboxes}
+          setHeaderCheckboxes={setHeaderCheckboxes}
         />
-      </Box>
-      {data && (
-        <>
-          <CustomTable
-            data={data}
-            bodyData={bodyData}
-            setBodyData={setBodyData}
-            header={header}
-            setHeader={setHeader}
-          />
-          <Button onClick={handleFinish} variant='contrast' sx={{ ml: 'auto' }}>{t('finish')}</Button>
-        </>
-      )}
+        <Button onClick={handleFinish} variant='contrast' sx={{ ml: 'auto' }}>{t('finish')}</Button>
+      </>
+    )}
+    </>
+      :
+      <FillTablular/>
+      }
+      
     </Box>
   );
 }

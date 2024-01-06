@@ -2,19 +2,26 @@ import {
     Box,
     LinearProgress,
     Dialog,
-    DialogContentText,
+    DialogContent,
     DialogActions,
     DialogTitle,
     Button,
   } from '@mui/material';
 
-function CustomDialog({open, title, text, buttons, loading=true}) {
+function CustomDialog({open, setOpen, title, text, buttons, loading=true}) {
+
+  const handleClose = () => {
+    if(setOpen){
+      setOpen(false);
+    }
+  };
+  
   return (
-    <Dialog open={open} fullWidth sx={{}}>
+    <Dialog open={open} fullWidth onClose={handleClose}>
         <DialogTitle sx={{p:3, pb:0, bgcolor: "background.main", color: "text.main" }}>
           {title}
         </DialogTitle>
-        <DialogContentText
+        <DialogContent
           sx={{ p: 3, bgcolor: "background.main", color: "text.main" }}
         >
           
@@ -23,7 +30,7 @@ function CustomDialog({open, title, text, buttons, loading=true}) {
             {loading && <LinearProgress/>}
           </Box>
 
-        </DialogContentText>
+        </DialogContent>
         <DialogActions
           sx={{ bgcolor: "background.main", py: 2, px: 3, gap: 5 }}
         >

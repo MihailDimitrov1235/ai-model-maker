@@ -18,9 +18,8 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-export default function CustomTable({ data, bodyData, setBodyData, header, setHeader }) {
+export default function CustomTable({ data, bodyData, setBodyData, header, setHeader, headerCheckboxes, setHeaderCheckboxes }) {
 
-  const [headerCheckboxes, setHeaderCheckboxes] = useState([]);
   const [hasHeaders, setHasHeaders] = useState(true)
 
 
