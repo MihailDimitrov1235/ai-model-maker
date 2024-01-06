@@ -2,5 +2,33 @@
   "Home": "Начало",
   "Data": "Данни",
   "Train": "Трениране",
-  "Test": "Тестване"
+  "Test": "Тестване",
+  "type": "Тип",
+  "no-py-env": "Не Намерен Python enviornment!",
+  "new-venv":"Нов VENV",
+  "use-existing": "Използвай съществуващ",
+  "image-classification": "Kласификация На Изображения",
+  "object-detection": "Засичане На Обекти",
+  "captioning": "Поставяне На Надписи",
+  "choose-image-folder": "Избери папка със снимки",
+  "choose-labels": "Избери етикет",
+  "no-labels": "Нямаш етикет",
+  "overview-button": "Преглед",
+  "finish-button": "Приключи",
+  "fill-manually": "Попълни ръчно",
+  "delete-rows": "Изтрий редове",
+  "missing-values-text": "Липсват стойности",
+  "name-dataset": "Име на набор от данни",
+  "tabular": "Табличен",
+  "image": "Снимков",
+  "text": "Текстов",
+  "homepage": "Главна страница",
+  "new-datasets": "Нов набор от данни",
+  "create-tabular-dataset": "Създай табличен набор отданни"
+  
+
+
+
+
+
 }

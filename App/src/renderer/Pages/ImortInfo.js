@@ -19,13 +19,13 @@ import {
   TableCell,
   tableCellClasses,
   Paper,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useTranslation } from "react-i18next";
-import { ShowDiagrams } from "../Components/Charts/BarChart_GoogleLib";
-import CardElement from "../Components/Cards/DatasetCard";
-import { Link } from "react-router-dom";
-import React from "react";
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { useTranslation } from 'react-i18next';
+import { ShowDiagrams } from '../Components/Charts/BarChart_GoogleLib';
+import CardElement from '../Components/Cards/DatasetCard';
+import { Link } from 'react-router-dom';
+import React from 'react';
 // import python from 'python-shell';
 // import path from "path";
 
@@ -51,11 +51,11 @@ const Datasets = function () {
   }
 
   const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -70,29 +70,29 @@ const Datasets = function () {
     <>
       <Box
         sx={{
-          margin: "50px",
+          margin: '50px',
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
-          <h2>Create Tabular Dataset</h2>
+          <h2>{t('create-tabular-dataset')}</h2>
         </Box>
 
         <Box
           sx={{
-            marginTop: "55px",
+            marginTop: '55px',
           }}
         >
           <Card
             sx={{
-              display: "flex",
-              padding: "10px",
-              justifyContent: "space-between",
-              alignItems: "center",
+              display: 'flex',
+              padding: '10px',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
             <CardContent>
@@ -102,7 +102,7 @@ const Datasets = function () {
               </Typography>
               <ul
                 sx={{
-                  margin: "10px",
+                  margin: '10px',
                 }}
               >
                 <li>
@@ -130,19 +130,19 @@ const Datasets = function () {
         <TableContainer
           component={Paper}
           sx={{
-            marginTop: "50px",
+            marginTop: '50px',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead
               sx={{
-                background: "#000",
+                background: '#000',
               }}
             >
               <TableRow>
                 <TableCell
                   sx={{
-                    color: "#FFF",
+                    color: '#FFF',
                   }}
                 >
                   Dessert (100g serving)
@@ -150,7 +150,7 @@ const Datasets = function () {
                 <TableCell
                   align="right"
                   sx={{
-                    color: "#FFF",
+                    color: '#FFF',
                   }}
                 >
                   Calories
@@ -158,7 +158,7 @@ const Datasets = function () {
                 <TableCell
                   align="right"
                   sx={{
-                    color: "#FFF",
+                    color: '#FFF',
                   }}
                 >
                   Fat&nbsp;(g)
@@ -166,7 +166,7 @@ const Datasets = function () {
                 <TableCell
                   align="right"
                   sx={{
-                    color: "#FFF",
+                    color: '#FFF',
                   }}
                 >
                   Carbs&nbsp;(g)
@@ -174,7 +174,7 @@ const Datasets = function () {
                 <TableCell
                   align="right"
                   sx={{
-                    color: "#FFF",
+                    color: '#FFF',
                   }}
                 >
                   Protein&nbsp;(g)
@@ -185,7 +185,7 @@ const Datasets = function () {
               {rows.map((row) => (
                 <TableRow
                   key={row.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
                     {row.name}

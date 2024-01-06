@@ -16,8 +16,6 @@ function ImportImage() {
   useEffect(() => {
     window.electronAPI.handleSetImageFolder((event, value) => {
       console.log(value);
-      if (value.data == null) {
-      }
       /*if (!value.canceled) {
         setFile(value.filePaths);
       }*/

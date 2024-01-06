@@ -9,6 +9,26 @@
   "choose-image-folder" : "Choose Image Folder",
   "choose-labels" : "Choose Labels",
   "create-labels" : "Create Labels",
-  "captioning" : "Captioning"
+  "captioning" : "Captioning",
+  "image-classification": "Image Classification",
+  "object-detection": "Object Detection",
+  "type": "Type",
+  "overview-button": "Overview",
+  "finish-button": "Finish",
+  "fill-manually": "Fill Manually",
+  "no-labels": "No Labels",
+  "delete-rows": "Delete Rows",
+  "missing-values-text": "Missing Values Text",
+  "name-dataset": "Dataset Name",
+  "finish": "Finish",
+  "tabular": "Тabular",
+  "image": "Image",
+  "text": "Text",
+  "homepage": "Homepage",
+  "new-datasets": "New Datasets",
+  "create-tabular-dataset": "Create Tabular Dataset"
+
+
+
   
 }

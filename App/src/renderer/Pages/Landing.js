@@ -53,7 +53,7 @@ const Landing = function () {
             justifyContent: 'space-between',
           }}
         >
-          <h2>Homepage</h2>
+          <h2>{t('homepage')}</h2>
 
           <Box
             sx={{
@@ -70,7 +70,7 @@ const Landing = function () {
                 startAdornment: <SearchIcon />,
               }}
             />
-            <Button variant="contrast">New Datasets</Button>
+            <Button variant="contrast">{t('new-datasets')}</Button>
           </Box>
         </Box>
 
