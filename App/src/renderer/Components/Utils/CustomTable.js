@@ -119,11 +119,17 @@ export default function CustomTable({
   const handleChangeSelectedDataType = (event, index) => {
     const nextDataTypes = selectedTypes.map((c, i) => {
       if (i === index) {
+        for (let types of headerTypes[index]) {
+          if (types?.type == event.target.value) {
+            return types;
+          }
+        }
         return event.target.value;
       } else {
         return c;
       }
     });
+    console.log(nextDataTypes);
     setSelectedTypes(nextDataTypes);
   };
 
@@ -198,7 +204,7 @@ export default function CustomTable({
                       >
                         {headerTypes[index] &&
                           headerTypes[index].map((item, idx) => (
-                            <MenuItem value={item?.type || ''}>
+                            <MenuItem value={item?.type || {}}>
                               {item?.type || ''}
                             </MenuItem>
                           ))}
