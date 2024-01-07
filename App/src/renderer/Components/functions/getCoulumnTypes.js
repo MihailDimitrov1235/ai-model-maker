@@ -1,5 +1,4 @@
 export default function getColumnTypes(table) {
-  console.log('kkkk');
   const numCols = table[0].length;
 
   const columnsTypes = [];
@@ -20,7 +19,6 @@ export default function getColumnTypes(table) {
       }
 
       if (typeof val !== 'number') {
-        console.log(val);
         isNumeric = false;
       }
 
@@ -68,7 +66,5 @@ export default function getColumnTypes(table) {
     columnsTypes.push(columnTypes);
   }
 
-  console.log('trtr');
-  console.log(columnsTypes);
   return columnsTypes;
 }

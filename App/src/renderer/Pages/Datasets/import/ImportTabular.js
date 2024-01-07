@@ -45,7 +45,10 @@ function ImportTabular() {
   const handleDeleteMissingValueRows = () => {
     setData(
       data.filter((row) =>
-        row.every((value) => value !== undefined && value !== null),
+        row.every(
+          (value, index) =>
+            !headerCheckboxes[index] || (value !== undefined && value !== null),
+        ),
       ),
     );
     setOpenMissingValues(false);

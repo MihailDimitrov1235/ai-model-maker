@@ -33,6 +33,7 @@ export default function CustomTable({
 }) {
   const [hasHeaders, setHasHeaders] = useState(true);
   const [headerTypes, setHeaderTypes] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -44,17 +45,34 @@ export default function CustomTable({
         }
       }
       data.forEach((row) => row.splice(data[0].length));
+      setBodyData(data.slice(1));
     }
     if (hasHeaders) {
       setHeader(data[0] || []);
     } else {
       setHeader(new Array(data[0].length || 0).fill(''));
     }
-    setBodyData(data.slice(1));
     if (data && data.length && data[0].length) {
-      let vari = getColumnTypes(hasHeaders ? data.slice(1) : data);
-      setHeaderTypes(vari);
-      console.log(vari);
+      let columnsTypes = getColumnTypes(hasHeaders ? data.slice(1) : data);
+      if (columnsTypes.length != selectedTypes.length) {
+        let nextSelectedTypes = [];
+        for (let i = 0; i < columnsTypes.length; i++) {
+          const types = columnsTypes[i];
+          nextSelectedTypes.push(types[0]);
+        }
+        setSelectedTypes(nextSelectedTypes);
+      } else {
+        let nextSelectedTypes = [...selectedTypes];
+        for (let i = 0; i < columnsTypes.length; i++) {
+          const types = columnsTypes[i];
+          if (!nextSelectedTypes[i] || !types.includes(nextSelectedTypes[i])) {
+            nextSelectedTypes[i] = types[0];
+          }
+        }
+        setSelectedTypes(nextSelectedTypes);
+      }
+      setHeaderTypes(columnsTypes);
+      console.log(selectedTypes);
     }
 
     setHeaderCheckboxes(new Array(data[0].length || 0).fill(true));
@@ -94,6 +112,17 @@ export default function CustomTable({
       }
     });
     setHeader(nextHeader);
+  };
+
+  const handleChangeSelectedDataType = (event, index) => {
+    const nextDataTypes = selectedTypes.map((c, i) => {
+      if (i === index) {
+        return event.target.value;
+      } else {
+        return c;
+      }
+    });
+    setSelectedTypes(nextDataTypes);
   };
 
   return (
@@ -158,10 +187,17 @@ export default function CustomTable({
                     </Box>
                     <FormControl fullWidth sx={{ mt: 3 }}>
                       <InputLabel>{t('data-type')}</InputLabel>
-                      <Select label={t('data-type')}>
-                        {headerTypes[index].map((item, idx) => (
-                          <MenuItem value={item.type}>{item.type}</MenuItem>
-                        ))}
+                      <Select
+                        label={t('data-type')}
+                        value={selectedTypes[index].type}
+                        onChange={(event) =>
+                          handleChangeSelectedDataType(event, index)
+                        }
+                      >
+                        {headerTypes[index] &&
+                          headerTypes[index].map((item, idx) => (
+                            <MenuItem value={item.type}>{item.type}</MenuItem>
+                          ))}
                       </Select>
                     </FormControl>
                   </TableCell>
