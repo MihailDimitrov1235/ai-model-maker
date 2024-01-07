@@ -33,13 +33,18 @@ function ImportImage() {
     window.electronAPI.handleSetImageFolder((event, value) => {
       if (value.data && value.data.length > 0) {
         setImages(value.data);
+        console.log('valueImageFolder=' + value.data);
+      } else {
+        console.log('valueImageFolderELSE=' + value.data);
       }
     });
     window.electronAPI.handleSetImageLabel((event, value) => {
-      if (!value.canceled) {
+      if (!value.canceled && value.data) {
         setLabel(value.data);
+        console.log('valueImageLabel=' + value.data);
+      } else {
+        console.log('valueImageLabelELSE=' + value.data);
       }
-      console.log(value.data);
     });
   }, []);
   useEffect(() => {
@@ -52,6 +57,7 @@ function ImportImage() {
   const handleClick = () => {
     window.electronAPI.selectImageFolder();
   };
+
   const handleClickLabel = () => {
     window.electronAPI.selectLabel();
   };

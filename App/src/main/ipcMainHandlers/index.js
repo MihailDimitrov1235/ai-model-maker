@@ -124,7 +124,8 @@ function setupIPCMain(win) {
 
               // Handle the array data (e.g., display it)
               console.log('File content as array:', dataArray);
-              win.webContents.send('set-image-label', dataArray);
+              //win.webContents.send('set-select-label', dataArray);
+              win.webContents.send('set-image-label', { data: dataArray });
             } else {
               console.error('File content is undefined.');
               // Handle the case when the content is undefined
