@@ -46,6 +46,8 @@ export default function CustomTable({
       }
       data.forEach((row) => row.splice(data[0].length));
       setBodyData(data.slice(1));
+    } else {
+      setBodyData([]);
     }
     if (hasHeaders) {
       setHeader(data[0] || []);
@@ -189,14 +191,16 @@ export default function CustomTable({
                       <InputLabel>{t('data-type')}</InputLabel>
                       <Select
                         label={t('data-type')}
-                        value={selectedTypes[index].type}
+                        value={selectedTypes[index]?.type || ''}
                         onChange={(event) =>
                           handleChangeSelectedDataType(event, index)
                         }
                       >
                         {headerTypes[index] &&
                           headerTypes[index].map((item, idx) => (
-                            <MenuItem value={item.type}>{item.type}</MenuItem>
+                            <MenuItem value={item?.type || ''}>
+                              {item?.type || ''}
+                            </MenuItem>
                           ))}
                       </Select>
                     </FormControl>

@@ -1,4 +1,7 @@
 export default function getColumnTypes(table) {
+  if (!table[0]) {
+    return [];
+  }
   const numCols = table[0].length;
 
   const columnsTypes = [];
