@@ -139,8 +139,9 @@ export default function CustomTable({
   };
 
   const handleDeleteRow = (index) => {
+    const actualIndex = page * rowsPerPage + index;
     let newBodyData = [...bodyData];
-    newBodyData.splice(index, 1);
+    newBodyData.splice(actualIndex, 1);
     setBodyData(newBodyData);
     setData([header, ...newBodyData]);
   };

@@ -1,6 +1,7 @@
 import {
   Box,
   Pagination,
+  PaginationItem,
   Grid,
   InputLabel,
   TextField,
@@ -52,17 +53,28 @@ export default function FillTablular({
     setMissingRows(newMissingRows);
   };
 
+  const handleFinish = () => {
+    setFill(false);
+    setData([header, ...bodyData]);
+  };
+
   return (
     <>
       {missingRows.length && (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <Box display={'flex'} justifyContent={'center'}>
+          <Box display={'flex'} justifyContent={'space-between'}>
             <Pagination
               count={missingRows.length}
               page={page}
               onChange={handleChangePage}
+              // renderItem={(item) => (
+              //   <PaginationItem sx={{ bgcolor: 'red' }} {...item} />
+              // )}
             />
-            <Button onClick={handleDeleteRow}>{t('delete-row')}</Button>
+            <Box>
+              <Button onClick={handleDeleteRow}>{t('delete-row')}</Button>
+              <Button onClick={handleFinish}>{t('finish')}</Button>
+            </Box>
           </Box>
           <Box>
             <Grid container spacing={3} alignItems={'center'}>
