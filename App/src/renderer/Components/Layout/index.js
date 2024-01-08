@@ -19,11 +19,9 @@ import LanguageChanger from './LanguageChanger';
 import { useEffect, useState } from 'react';
 import logo from '../../../../assets/logo-placeholder-image.png';
 import Snack from '../Utils/Snack';
-import { useNavigate } from 'react-router-dom';
 import CustomDialog from '../Utils/CustomDialog';
 
 export default function Layout() {
-  const { navigate } = useNavigate()
   const { t } = useTranslation();
   const [openNoPython, setOpenNoPython] = useState(false);
   const [openNoConda, setOpenNoConda] = useState(false);
