@@ -18,12 +18,15 @@ import {
   FormControl,
   Select,
   MenuItem,
+  IconButton,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import getColumnTypes from '../functions/getCoulumnTypes';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function CustomTable({
   data,
+  setData,
   bodyData,
   setBodyData,
   header,
@@ -135,6 +138,13 @@ export default function CustomTable({
     setSelectedTypes(nextDataTypes);
   };
 
+  const handleDeleteRow = (index) => {
+    let newBodyData = [...bodyData];
+    newBodyData.splice(index, 1);
+    setBodyData(newBodyData);
+    setData([header, ...newBodyData]);
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
@@ -149,7 +159,9 @@ export default function CustomTable({
           <Table stickyHeader sx={{ minWidth: 650, overflow: 'scroll' }}>
             <TableHead>
               <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{
+                  '&:last-child td, &:last-child th': { border: 0 },
+                }}
               >
                 {header.map((column, index) => (
                   <TableCell
@@ -217,6 +229,13 @@ export default function CustomTable({
                     </FormControl>
                   </TableCell>
                 ))}
+                <TableCell
+                  sx={{
+                    bgcolor: 'primary.dark',
+                    color: 'text.contrast',
+                    width: '32px',
+                  }}
+                />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -245,6 +264,11 @@ export default function CustomTable({
                         </Tooltip>
                       </TableCell>
                     ))}
+                    <TableCell sx={{ width: '32px' }}>
+                      <IconButton onClick={() => handleDeleteRow(rowIndex)}>
+                        <DeleteIcon color="error" />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

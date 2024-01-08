@@ -128,6 +128,7 @@ function ImportTabular() {
             <>
               <CustomTable
                 data={data}
+                setData={setData}
                 bodyData={bodyData}
                 setBodyData={setBodyData}
                 header={header}
