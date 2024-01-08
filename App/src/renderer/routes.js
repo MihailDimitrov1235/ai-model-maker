@@ -31,7 +31,7 @@ const routes = [
             path: 'import',
             element: <ImportDataset />,
             children: [
-              { path: 'tabular', element: <ImportTabular /> },
+              { path: 'tabular', element: <ImportTabular />},
               { path: 'image', element: <ImportImage /> },
               { path: 'text', element: <ImportText /> },
             ],
