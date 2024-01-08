@@ -45,15 +45,18 @@ export default function CustomTable({
         }
       }
       data.forEach((row) => row.splice(data[0].length));
-      setBodyData(data.slice(1));
+
+      if (hasHeaders) {
+        setHeader(data[0] || []);
+        setBodyData(data.slice(1));
+      } else {
+        setHeader(new Array(data[0].length || 0).fill(''));
+        setBodyData(data);
+      }
     } else {
       setBodyData([]);
     }
-    if (hasHeaders) {
-      setHeader(data[0] || []);
-    } else {
-      setHeader(new Array(data[0].length || 0).fill(''));
-    }
+
     if (data && data.length && data[0].length) {
       let columnsTypes = getColumnTypes(hasHeaders ? data.slice(1) : data);
       if (columnsTypes.length != selectedTypes.length) {
@@ -193,14 +196,16 @@ export default function CustomTable({
                       </Tooltip>
                     </Box>
                     <FormControl fullWidth sx={{ mt: 3 }}>
-                      <InputLabel sx={{color:'text.contrast'}}>{t('data-type')}</InputLabel>
+                      <InputLabel sx={{ color: 'text.contrast' }}>
+                        {t('data-type')}
+                      </InputLabel>
                       <Select
                         label={t('data-type')}
                         value={selectedTypes[index]?.type || ''}
                         onChange={(event) =>
                           handleChangeSelectedDataType(event, index)
                         }
-                        sx={{ color: 'text.contrast'}}
+                        sx={{ color: 'text.contrast' }}
                       >
                         {headerTypes[index] &&
                           headerTypes[index].map((item, idx) => (
@@ -215,61 +220,33 @@ export default function CustomTable({
               </TableRow>
             </TableHead>
             <TableBody>
-              {hasHeaders
-                ? bodyData
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, rowIndex) => (
-                      <TableRow key={rowIndex}>
-                        {row.map((cell, cellIndex) => (
-                          <TableCell
-                            key={cellIndex}
+              {bodyData
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, rowIndex) => (
+                  <TableRow key={rowIndex}>
+                    {row.map((cell, cellIndex) => (
+                      <TableCell
+                        key={cellIndex}
+                        sx={{
+                          minWidth: '150px',
+                          flex: 1,
+                        }}
+                      >
+                        <Tooltip title={cell} placement="top" followCursor>
+                          <Typography
                             sx={{
-                              minWidth: '150px',
-                              flex: 1,
+                              overflow: 'hidden',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                           >
-                            <Tooltip title={cell} placement="top" followCursor>
-                              <Typography
-                                sx={{
-                                  overflow: 'hidden',
-                                  whiteSpace: 'nowrap',
-                                  textOverflow: 'ellipsis',
-                                }}
-                              >
-                                {cell}
-                              </Typography>
-                            </Tooltip>
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                : data
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, rowIndex) => (
-                      <TableRow key={rowIndex}>
-                        {row.map((cell, cellIndex) => (
-                          <TableCell
-                            key={cellIndex}
-                            sx={{
-                              minWidth: '150px',
-                              flex: 1,
-                            }}
-                          >
-                            <Tooltip title={cell} placement="top" followCursor>
-                              <Typography
-                                sx={{
-                                  overflow: 'hidden',
-                                  whiteSpace: 'nowrap',
-                                  textOverflow: 'ellipsis',
-                                }}
-                              >
-                                {cell}
-                              </Typography>
-                            </Tooltip>
-                          </TableCell>
-                        ))}
-                      </TableRow>
+                            {cell}
+                          </Typography>
+                        </Tooltip>
+                      </TableCell>
                     ))}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
