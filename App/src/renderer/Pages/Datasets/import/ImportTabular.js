@@ -56,6 +56,7 @@ function ImportTabular() {
 
   const handleFillMissingValues = () => {
     setFill(true);
+    setOpenMissingValues(false);
   };
 
   useEffect(() => {
@@ -123,7 +124,7 @@ function ImportTabular() {
               }}
             />
           </Box>
-          {data && (
+          {data && data.length && (
             <>
               <CustomTable
                 data={data}
@@ -149,8 +150,11 @@ function ImportTabular() {
           bodyData={bodyData}
           setBodyData={setBodyData}
           missingRows={missingRows}
+          setMissingRows={setMissingRows}
           header={header}
           headerCheckboxes={headerCheckboxes}
+          setFill={setFill}
+          setData={setData}
         />
       )}
     </Box>
