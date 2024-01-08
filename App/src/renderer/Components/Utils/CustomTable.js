@@ -124,12 +124,11 @@ export default function CustomTable({
             return types;
           }
         }
-        return event.target.value;
+        return headerTypes[index][0];
       } else {
         return c;
       }
     });
-    console.log(nextDataTypes);
     setSelectedTypes(nextDataTypes);
   };
 
@@ -204,7 +203,7 @@ export default function CustomTable({
                       >
                         {headerTypes[index] &&
                           headerTypes[index].map((item, idx) => (
-                            <MenuItem value={item?.type || {}}>
+                            <MenuItem key={idx} value={item?.type || {}}>
                               {item?.type || ''}
                             </MenuItem>
                           ))}
