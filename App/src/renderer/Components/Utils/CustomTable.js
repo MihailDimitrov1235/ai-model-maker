@@ -193,13 +193,14 @@ export default function CustomTable({
                       </Tooltip>
                     </Box>
                     <FormControl fullWidth sx={{ mt: 3 }}>
-                      <InputLabel>{t('data-type')}</InputLabel>
+                      <InputLabel sx={{color:'text.contrast'}}>{t('data-type')}</InputLabel>
                       <Select
                         label={t('data-type')}
                         value={selectedTypes[index]?.type || ''}
                         onChange={(event) =>
                           handleChangeSelectedDataType(event, index)
                         }
+                        sx={{ color: 'text.contrast'}}
                       >
                         {headerTypes[index] &&
                           headerTypes[index].map((item, idx) => (
