@@ -11,6 +11,7 @@ import ImportImage from './Pages/Datasets/import/ImportImage';
 import ImportText from './Pages/Datasets/import/ImportText';
 
 import ImportInfo from './Pages/ImortInfo';
+import ReviewDatasets from './Pages/Datasets/ReviewDatasets';
 
 const routes = [
   {
@@ -31,8 +32,20 @@ const routes = [
             path: 'import',
             element: <ImportDataset />,
             children: [
-              { path: 'tabular', element: <ImportTabular />},
-              { path: 'image', element: <ImportImage /> },
+              { path: 'tabular', element: <ImportTabular /> },
+              {
+                path: 'image',
+                children: [
+                  {
+                    path: '',
+                    element: <ImportImage />,
+                  },
+                  {
+                    path: 'review',
+                    element: <ReviewDatasets />,
+                  },
+                ],
+              },
               { path: 'text', element: <ImportText /> },
             ],
           },

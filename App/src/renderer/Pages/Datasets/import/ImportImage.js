@@ -9,9 +9,9 @@ import {
   Typography,
 } from '@mui/material';
 import UploadButton from '../../../Components/Utils/UploadButton';
-
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function ImportImage() {
   const [showButton, setShowButton] = useState(false);
@@ -117,7 +117,9 @@ function ImportImage() {
         <Box>
           {showButton && (
             <>
-              <Button>{t('overview-button')}</Button>
+              <Link to="review?array=${encodeURIComponent(JSON.stringify(images))}">
+                <Button>{t('overview-button')}</Button>
+              </Link>
               <Button>{t('finish-button')}</Button>
             </>
           )}
