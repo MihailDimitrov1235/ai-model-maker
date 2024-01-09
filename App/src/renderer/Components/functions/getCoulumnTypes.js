@@ -42,7 +42,8 @@ export default function getColumnTypes(table) {
       if (
         !(
           typeof val === 'boolean' ||
-          (typeof val === 'number' && (val === 0 || val === 1))
+          (typeof val === 'number' && (val === 0 || val === 1)) ||
+          (typeof val === 'string' && (val === '0' || val === '1'))
         )
       ) {
         isBinary = false;

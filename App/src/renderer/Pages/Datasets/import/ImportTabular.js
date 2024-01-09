@@ -25,7 +25,7 @@ function ImportTabular() {
       for (let j = 0; j < bodyData[i].length; j++) {
         if (
           headerCheckboxes[j] &&
-          (bodyData[i][j] === undefined || bodyData[i][j] === null)
+          (bodyData[i][j] === undefined || bodyData[i][j] === null || bodyData[i][j] === '')
         ) {
           rows.push(i);
           break;
