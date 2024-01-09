@@ -22,7 +22,9 @@ export default function getColumnTypes(table) {
       }
 
       if (typeof val !== 'number') {
-        isNumeric = false;
+        if(!(typeof val === 'string' && /^\d+$/.test(val))){
+          isNumeric = false;
+        }
       }
 
       if (!(typeof val === 'string' || typeof val === 'boolean')) {
