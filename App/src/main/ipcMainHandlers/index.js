@@ -143,6 +143,10 @@ function setupIPCMain(win) {
       });
   });
 
+  ipcMain.on('create-dataset-table', (event, arg) => {
+    console.log(arg);
+  });
+
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
     // dial.then(data => {

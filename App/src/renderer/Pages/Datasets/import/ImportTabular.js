@@ -15,7 +15,8 @@ function ImportTabular() {
   const [openMissingValues, setOpenMissingValues] = useState(false);
   const [missingRows, setMissingRows] = useState([]);
   const [fill, setFill] = useState(false);
-  const [nameError, setNameError] = useState(false)
+  const [nameError, setNameError] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const nameRef = useRef();
 
   const handleFinish = () => {
@@ -26,7 +27,9 @@ function ImportTabular() {
       for (let j = 0; j < bodyData[i].length; j++) {
         if (
           headerCheckboxes[j] &&
-          (bodyData[i][j] === undefined || bodyData[i][j] === null || bodyData[i][j] === '')
+          (bodyData[i][j] === undefined ||
+            bodyData[i][j] === null ||
+            bodyData[i][j] === '')
         ) {
           rows.push(i);
           break;
@@ -39,12 +42,43 @@ function ImportTabular() {
       setMissingRows(rows);
       return;
     }
-    if(!nameRef.current.value){
-      setNameError(true)
-      return
+    if (!nameRef.current.value) {
+      setNameError(true);
+      return;
     }
     console.log('all goood');
     //create dataset
+    let finalHeader = [];
+    for (let i = 0; i < header.length; i++) {
+      if (headerCheckboxes[i]) {
+        finalHeader.push(header[i]);
+      }
+    }
+
+    let finalBodyData = [];
+    for (let i = 0; i < bodyData.length; i++) {
+      let row = [];
+      for (let j = 0; j < bodyData[i].length; j++) {
+        if (headerCheckboxes[j]) {
+          row.push(bodyData[i][j]);
+        }
+      }
+      finalBodyData.push(row);
+    }
+
+    let finalSelectedTypes = [];
+    for (let i = 0; i < selectedTypes.length; i++) {
+      if (headerCheckboxes[i]) {
+        finalSelectedTypes.push(selectedTypes[i]);
+      }
+    }
+
+    window.electronAPI.createDatasetTable({
+      name: nameRef.current.value,
+      header: finalHeader,
+      selectedTypes: finalSelectedTypes,
+      bodyData: finalBodyData,
+    });
   };
 
   const handleDeleteMissingValueRows = () => {
@@ -52,7 +86,8 @@ function ImportTabular() {
       data.filter((row) =>
         row.every(
           (value, index) =>
-            !headerCheckboxes[index] || (value !== undefined && value !== null && value !== ''),
+            !headerCheckboxes[index] ||
+            (value !== undefined && value !== null && value !== ''),
         ),
       ),
     );
@@ -116,10 +151,12 @@ function ImportTabular() {
             <TextField
               error={nameError}
               inputRef={nameRef}
-              helperText={nameError?t('missing-name'):''}
+              helperText={nameError ? t('missing-name') : ''}
               placeholder={t('name-dataset')}
               sx={{ flex: 1 }}
-              onBlur={() => setNameError(nameRef.current.value===''? true : false )}
+              onBlur={() =>
+                setNameError(nameRef.current.value === '' ? true : false)
+              }
             />
 
             <TextField
@@ -143,6 +180,8 @@ function ImportTabular() {
                 setHeader={setHeader}
                 headerCheckboxes={headerCheckboxes}
                 setHeaderCheckboxes={setHeaderCheckboxes}
+                selectedTypes={selectedTypes}
+                setSelectedTypes={setSelectedTypes}
               />
               <Button
                 onClick={handleFinish}

@@ -33,10 +33,11 @@ export default function CustomTable({
   setHeader,
   headerCheckboxes,
   setHeaderCheckboxes,
+  selectedTypes,
+  setSelectedTypes,
 }) {
   const [hasHeaders, setHasHeaders] = useState(true);
   const [headerTypes, setHeaderTypes] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
 
   useEffect(() => {
     if (data.length > 0) {

@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   selectTabularFile: (arg) => ipcRenderer.send('select-tabular-file', arg),
   selectImageFolder: (arg) => ipcRenderer.send('select-image-folder', arg),
   selectLabel: (arg) => ipcRenderer.send('select-label', arg),
+  createDatasetTable: (arg) => ipcRenderer.send('create-dataset-table', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
