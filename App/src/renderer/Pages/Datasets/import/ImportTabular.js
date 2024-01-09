@@ -15,6 +15,7 @@ function ImportTabular() {
   const [openMissingValues, setOpenMissingValues] = useState(false);
   const [missingRows, setMissingRows] = useState([]);
   const [fill, setFill] = useState(false);
+  const [nameError, setNameError] = useState(false)
   const nameRef = useRef();
 
   const handleFinish = () => {
@@ -38,6 +39,10 @@ function ImportTabular() {
       setMissingRows(rows);
       return;
     }
+    if(!nameRef.current.value){
+      setNameError(true)
+      return
+    }
     console.log('all goood');
     //create dataset
   };
@@ -47,7 +52,7 @@ function ImportTabular() {
       data.filter((row) =>
         row.every(
           (value, index) =>
-            !headerCheckboxes[index] || (value !== undefined && value !== null),
+            !headerCheckboxes[index] || (value !== undefined && value !== null && value !== ''),
         ),
       ),
     );
@@ -109,9 +114,12 @@ function ImportTabular() {
           />
           <Box display={'flex'} justifyContent={'space-between'} gap={3}>
             <TextField
-              ref={nameRef}
+              error={nameError}
+              inputRef={nameRef}
+              helperText={nameError?t('missing-name'):''}
               placeholder={t('name-dataset')}
               sx={{ flex: 1 }}
+              onBlur={() => setNameError(nameRef.current.value===''? true : false )}
             />
 
             <TextField
