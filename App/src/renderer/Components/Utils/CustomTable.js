@@ -158,7 +158,7 @@ export default function CustomTable({
           onClick={(event) => setHasHeaders(event.target.checked)}
         />
         <Button onClick={handleFinish} variant="contrast" sx={{ ml: 'auto' }}>
-          {t('finish')}
+          {t('finish-button')}
         </Button>
       </Box>
       <Paper sx={{ width: '100%', overflow: 'hidden', mb: 1 }}>

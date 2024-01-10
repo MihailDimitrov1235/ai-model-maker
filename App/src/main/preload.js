@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   selectLabel: (arg) => ipcRenderer.send('select-label', arg),
   createDatasetTable: (arg) => ipcRenderer.send('create-dataset-table', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
+  requestImage: (arg) => ipcRenderer.send('requestImage', arg),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
   handleChangeCreateEnvText: (callback) =>
@@ -23,4 +24,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('set-image-folder', callback),
   handleSetImageLabel: (callback) =>
     ipcRenderer.on('set-image-label', callback),
+  handleRequestImage: (callback) =>
+    ipcRenderer.on('set-request-image', callback),
 });

@@ -176,6 +176,27 @@ function setupIPCMain(win) {
     //   console.log('results: %j', messages);
     // });
   });
+
+  ipcMain.on('requestImage', (event, data) => {
+    const imagePath = data.path;
+    console.log('imagePath' + imagePath);
+    // Read the image file
+    fs.readFile(imagePath, (err, imageBuffer) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        return;
+      }
+
+      // Convert the image buffer to a data URL
+      const imageDataURL = `data:image/png;base64,${imageBuffer.toString(
+        'base64',
+      )}`;
+
+      // Send the image data back to the renderer process
+      win.webContents.send('set-request-image', { data: imageDataURL });
+    });
+  });
 }
 
 module.exports = { setupIPCMain };

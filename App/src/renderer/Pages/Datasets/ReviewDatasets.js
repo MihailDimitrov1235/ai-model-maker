@@ -13,23 +13,35 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import { useSearchParams } from 'react-router-dom';
 
-function ReviewDatasets(props) {
+function ReviewDatasets() {
   const handleClickLabel = () => {
     window.electronAPI.selectLabel();
   };
   const { t } = useTranslation();
-  /*const { location } = props;
-  const searchParams = new URLSearchParams(location.search);
-  const arrayString = searchParams.get('array');
-  const decodedArray = JSON.parse(decodeURIComponent(arrayString));
+  const [queryParameters] = useSearchParams();
+
+  const imagesPaths = JSON.parse(
+    decodeURIComponent(queryParameters.get('array')),
+  );
+  const [imageSrc, setImageSrc] = useState('');
+
   useEffect(() => {
-    // Check labels
-    if (images && label && images.length > 0 && label.length > 0) {
-      setShowButton(true);
-    }
+    // Send a request to the main process with the absolute path
+    window.electronAPI.requestImage({
+      path: imagesPaths[0],
+    });
+
+    // Listen for the response from the main process
+    window.electronAPI.handleRequestImage((event, image) => {
+      console.log(image);
+      setImageSrc(image.data);
+    });
+
+    // Clean up the event listener when the component unmounts
   }, []);
-*/
+
   return (
     <Box
       sx={{
@@ -63,14 +75,21 @@ function ReviewDatasets(props) {
       >
         <Box
           sx={{
-            background: 'gray',
             width: '50%',
             height: '500px',
             border: 'solid',
             alignContent: 'center',
           }}
         >
-          <img src="C:\AI-MakerProject\ai-model-maker\App\assets\images\bulgaria.svg" />
+          {imageSrc && (
+            <img
+              src={imageSrc}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+            />
+          )}
         </Box>
         <Box sx={{ display: 'inline' }}>
           <h3>{t('classes')}</h3>

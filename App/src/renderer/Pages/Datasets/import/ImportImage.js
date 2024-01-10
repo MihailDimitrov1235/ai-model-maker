@@ -117,7 +117,11 @@ function ImportImage() {
         <Box>
           {showButton && (
             <>
-              <Link to="review?array=${encodeURIComponent(JSON.stringify(images))}">
+              <Link
+                to={`review?array=${encodeURIComponent(
+                  JSON.stringify(images),
+                )}`}
+              >
                 <Button>{t('overview-button')}</Button>
               </Link>
               <Button>{t('finish-button')}</Button>
