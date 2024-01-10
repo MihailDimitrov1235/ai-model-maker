@@ -19,6 +19,7 @@ import {
   Select,
   MenuItem,
   IconButton,
+  Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import getColumnTypes from '../functions/getCoulumnTypes';
@@ -35,6 +36,7 @@ export default function CustomTable({
   setHeaderCheckboxes,
   selectedTypes,
   setSelectedTypes,
+  handleFinish,
 }) {
   const [hasHeaders, setHasHeaders] = useState(true);
   const [headerTypes, setHeaderTypes] = useState([]);
@@ -155,6 +157,9 @@ export default function CustomTable({
           checked={hasHeaders}
           onClick={(event) => setHasHeaders(event.target.checked)}
         />
+        <Button onClick={handleFinish} variant="contrast" sx={{ ml: 'auto' }}>
+          {t('finish')}
+        </Button>
       </Box>
       <Paper sx={{ width: '100%', overflow: 'hidden', mb: 1 }}>
         <TableContainer sx={{ maxHeight: '500px' }}>

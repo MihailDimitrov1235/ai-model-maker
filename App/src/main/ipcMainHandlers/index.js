@@ -5,6 +5,7 @@ const { PythonShell } = require('python-shell');
 const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 const XLSX = require('xlsx');
 const { parse } = require('csv-parse/sync');
+const { getAssetPath } = require('../utils');
 
 function setupIPCMain(win) {
   setupIPCMainPyEnv(win);
@@ -144,7 +145,15 @@ function setupIPCMain(win) {
   });
 
   ipcMain.on('create-dataset-table', (event, arg) => {
-    console.log(arg);
+    const csvData = arg.bodyData.map((row) => row.join(','));
+    const dir = getAssetPath(`datasets/table/${arg.name}`);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      console.log('made');
+    }
+    console.log('yes');
+    const csvFilePath = path.join(dir, 'data.csv');
+    fs.writeFileSync(csvFilePath, csvData.join('\n'), 'utf-8');
   });
 
   ipcMain.on('run-python', (event, arg) => {

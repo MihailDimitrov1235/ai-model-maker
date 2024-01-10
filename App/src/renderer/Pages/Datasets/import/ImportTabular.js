@@ -170,27 +170,19 @@ function ImportTabular() {
             />
           </Box>
           {data && data.length && (
-            <>
-              <CustomTable
-                data={data}
-                setData={setData}
-                bodyData={bodyData}
-                setBodyData={setBodyData}
-                header={header}
-                setHeader={setHeader}
-                headerCheckboxes={headerCheckboxes}
-                setHeaderCheckboxes={setHeaderCheckboxes}
-                selectedTypes={selectedTypes}
-                setSelectedTypes={setSelectedTypes}
-              />
-              <Button
-                onClick={handleFinish}
-                variant="contrast"
-                sx={{ ml: 'auto' }}
-              >
-                {t('finish')}
-              </Button>
-            </>
+            <CustomTable
+              data={data}
+              setData={setData}
+              bodyData={bodyData}
+              setBodyData={setBodyData}
+              header={header}
+              setHeader={setHeader}
+              headerCheckboxes={headerCheckboxes}
+              setHeaderCheckboxes={setHeaderCheckboxes}
+              selectedTypes={selectedTypes}
+              setSelectedTypes={setSelectedTypes}
+              handleFinish={handleFinish}
+            />
           )}
         </>
       ) : (
