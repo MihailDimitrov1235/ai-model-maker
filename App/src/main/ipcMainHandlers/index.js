@@ -7,6 +7,44 @@ const XLSX = require('xlsx');
 const { parse } = require('csv-parse/sync');
 const { getAssetPath } = require('../utils');
 
+function convertCsvToArray(csvString) {
+  const rows = csvString.split('\n').filter(row => row.trim() !== '');
+
+  let delimiter = ',';
+  if (csvString.indexOf(';') !== -1) {
+    delimiter = ';';
+  }
+
+  const data = rows.map(row => {
+    let insideQuotes = false;
+    let field = '';
+    const fields = [];
+
+    for (let char of row) {
+      if (char === '"') {
+        insideQuotes = !insideQuotes;
+      } else if (char === delimiter && !insideQuotes) {
+        fields.push(field.trim());
+        field = '';
+      } else {
+        field += char;
+      }
+    }
+
+    fields.push(field.trim());
+    return fields.map(value => {
+      if (value === '') {
+        return '';
+      }
+      const num = Number(value);
+      return isNaN(num) ? value : num;
+    });
+  });
+
+  return data;
+  
+}
+
 function setupIPCMain(win) {
   setupIPCMainPyEnv(win);
 
@@ -20,45 +58,30 @@ function setupIPCMain(win) {
         console.log(data);
         const fileName = data.filePaths[0];
         win.webContents.send('set-tabular-file', data);
-
-        fs.readFile(fileName, 'binary', function (err, data) {
-          let jsonData;
-
-          const ext = path.extname(fileName).toLowerCase();
-
-          if (ext === '.xlsx') {
-            const workbook = XLSX.read(data, { type: 'binary' });
-            const sheetName = workbook.SheetNames[0];
-            const sheet = workbook.Sheets[sheetName];
-            jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-          } else if (ext === '.csv') {
-            const csvData = data.toString();
-            try {
-              jsonData = parse(csvData, {
-                delimiter: ';',
-                skip_empty_lines: true,
-              });
-            } catch (err) {
-              jsonData = parse(csvData, {
-                skip_empty_lines: true,
-              });
-              console.log(err);
-            }
-            console.log(jsonData);
-          } else {
+ 
+        const ext = path.extname(fileName).toLowerCase();
+ 
+        let jsonData;
+ 
+        if (ext === '.xlsx') {
+          const data = fs.readFileSync(fileName, 'binary')
+          const workbook = XLSX.read(data, { type: 'binary' });
+          const sheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[sheetName];
+          jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+          win.webContents.send('set-tabular-file-data', { data: jsonData });
+        } else if (ext === '.csv') {
+          const content = fs.readFileSync(fileName, 'utf-8');
+          jsonData = convertCsvToArray(content)
+          win.webContents.send('set-tabular-file-data', { data: jsonData });
+         } else {
             win.webContents.send('set-tabular-file-data', {
               error: 'Unsupported file format',
             });
             return;
           }
-
-          win.webContents.send('set-tabular-file-data', { data: jsonData });
+ 
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        return false;
-      });
   });
 
   ipcMain.on('select-image-folder', (event, arg) => {
