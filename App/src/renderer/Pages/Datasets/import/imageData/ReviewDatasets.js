@@ -23,6 +23,7 @@ function ReviewDatasets() {
   const imagesPaths = JSON.parse(
     decodeURIComponent(queryParameters.get('array')),
   );
+
   console.log('LABELS=====' + queryParameters.get('label'));
 
   const handleClickLabel = () => {
@@ -30,12 +31,7 @@ function ReviewDatasets() {
   };
 
   const [page, setPage] = useState(1);
-  const [labels, setLabels] = useState([
-    'MAGARE',
-    'MULE',
-    'KON-ALEX',
-    'MAGARE1-MIHO',
-  ]);
+  const [labels, setLabels] = useState([]);
 
   const handleChangePage = (event, value) => {
     setPage(value);
@@ -46,6 +42,7 @@ function ReviewDatasets() {
     window.electronAPI.requestImage({
       path: imagesPaths[page - 1],
     });
+    setLabels(queryParameters.get('label').split('\\r'));
     // Listen for the response from the main process
     window.electronAPI.handleRequestImage((event, image) => {
       setImageSrc(image.data);
