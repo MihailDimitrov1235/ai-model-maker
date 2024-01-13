@@ -33,17 +33,11 @@ function ImportImage() {
     window.electronAPI.handleSetImageFolder((event, value) => {
       if (value.data && value.data.length > 0) {
         setImages(value.data);
-        console.log('valueImageFolder=' + value.data);
-      } else {
-        console.log('valueImageFolderELSE=' + value.data);
       }
     });
     window.electronAPI.handleSetImageLabel((event, value) => {
       if (!value.canceled && value.data) {
         setLabel(value.data);
-        console.log('valueImageLabel=' + value.data);
-      } else {
-        console.log('valueImageLabelELSE=' + value.data);
       }
     });
   }, []);
@@ -118,9 +112,9 @@ function ImportImage() {
           {showButton && (
             <>
               <Link
-                to={`review?array=${encodeURIComponent(
+                to={`review/${selectedValue}?array=${encodeURIComponent(
                   JSON.stringify(images),
-                )}`}
+                )}&label=${encodeURIComponent(JSON.stringify(label))}`}
               >
                 <Button>{t('overview-button')}</Button>
               </Link>

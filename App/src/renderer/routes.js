@@ -11,7 +11,8 @@ import ImportImage from './Pages/Datasets/import/ImportImage';
 import ImportText from './Pages/Datasets/import/ImportText';
 
 import ImportInfo from './Pages/ImortInfo';
-import ReviewDatasets from './Pages/Datasets/ReviewDatasets';
+import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
+import Classification from './Pages/Datasets/import/imageData/Classification';
 
 const routes = [
   {
@@ -43,6 +44,20 @@ const routes = [
                   {
                     path: 'review',
                     element: <ReviewDatasets />,
+                    children: [
+                      {
+                        path: 'classification',
+                        element: <Classification />,
+                      },
+                      {
+                        path: 'detection',
+                        element: <ReviewDatasets />,
+                      },
+                      {
+                        path: 'captioning',
+                        element: <ReviewDatasets />,
+                      },
+                    ],
                   },
                 ],
               },
