@@ -42,7 +42,15 @@ function ReviewDatasets() {
     window.electronAPI.requestImage({
       path: imagesPaths[page - 1],
     });
-    setLabels(queryParameters.get('label').split('\\r'));
+    //setLabels(queryParameters.get('label').replace('n', ''));
+    //setLabels(queryParameters.get('label').replace(/["\[\]]/g, ''));
+    console.log('REAMKE=' + labels);
+    setLabels(
+      queryParameters
+        .get('label')
+        .replace(/["\[\]]/g, '')
+        .split('\\r\\n'),
+    );
     // Listen for the response from the main process
     window.electronAPI.handleRequestImage((event, image) => {
       setImageSrc(image.data);

@@ -35,6 +35,7 @@ function Classification() {
           {labels.map((item) => (
             <FormControlLabel value={item} control={<Radio />} label={item} />
           ))}
+          {labels}
         </RadioGroup>
       </FormControl>
       <TextField
