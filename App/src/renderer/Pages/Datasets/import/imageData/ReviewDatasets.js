@@ -19,6 +19,7 @@ function ReviewDatasets() {
   const { t } = useTranslation();
   const [queryParameters] = useSearchParams();
   const [imageSrc, setImageSrc] = useState('');
+  const [value, setValue] = useState('');
 
   const imagesPaths = JSON.parse(
     decodeURIComponent(queryParameters.get('array')),
@@ -32,8 +33,11 @@ function ReviewDatasets() {
 
   const [page, setPage] = useState(1);
   const [labels, setLabels] = useState([]);
+  const [classes, setClasses] = useState([]);
 
   const handleChangePage = (event, value) => {
+    setValue(labels[page - 1] | '');
+    console.log(labels);
     setPage(value);
   };
 
@@ -42,15 +46,24 @@ function ReviewDatasets() {
     window.electronAPI.requestImage({
       path: imagesPaths[page - 1],
     });
-    //setLabels(queryParameters.get('label').replace('n', ''));
-    //setLabels(queryParameters.get('label').replace(/["\[\]]/g, ''));
-    console.log('REAMKE=' + labels);
-    setLabels(
-      queryParameters
-        .get('label')
-        .replace(/["\[\]]/g, '')
-        .split('\\r\\n'),
-    );
+
+    let labelsParam = queryParameters
+      .get('label')
+      .replace(/["\[\]]/g, '')
+      .split('\\r\\n');
+    //setLabels(labelsParam);
+    let newLabel = [];
+    let classSet = new Set();
+    labelsParam.map((item) => {
+      if (item != '') {
+        newLabel.push(item);
+        classSet.add(item);
+      }
+    });
+    setClasses(Array.from(classSet));
+    console.log('classes=' + Array.from(classSet));
+    setLabels(newLabel);
+
     // Listen for the response from the main process
     window.electronAPI.handleRequestImage((event, image) => {
       setImageSrc(image.data);
@@ -119,7 +132,9 @@ function ReviewDatasets() {
           )}
         </Box>
         <Box sx={{ width: '50%', p: 3 }}>
-          <Outlet context={[labels, setLabels]} />
+          <Outlet
+            context={[labels, setLabels, classes, page, value, setValue]}
+          />
         </Box>
       </Box>
     </Box>

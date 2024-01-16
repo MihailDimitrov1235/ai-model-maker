@@ -14,9 +14,19 @@ import { useOutletContext } from 'react-router-dom';
 
 function Classification() {
   const { t } = useTranslation();
-  const [labels, setLabels] = useOutletContext();
+  const [labels, setLabels, classes, page, value, setValue] =
+    useOutletContext();
 
   console.log(labels);
+  const handleChangeLabel = (event, value) => {
+    //setLabels(value);
+    let newLabels = [...labels];
+    newLabels[page - 1] = event.target.value;
+    setValue(event.target.value);
+    setLabels(newLabels);
+    console.log(event.target.value);
+    console.log(page);
+  };
   return (
     <Box
       sx={{
@@ -31,11 +41,10 @@ function Classification() {
         }}
       >
         <FormLabel sx={{ color: 'text.main' }}>Classes</FormLabel>
-        <RadioGroup>
-          {labels.map((item) => (
+        <RadioGroup value={labels[page - 1]} onChange={handleChangeLabel}>
+          {classes.map((item) => (
             <FormControlLabel value={item} control={<Radio />} label={item} />
           ))}
-          {labels}
         </RadioGroup>
       </FormControl>
       <TextField
