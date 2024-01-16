@@ -1,39 +1,22 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  Typography,
-  Pagination,
-  PaginationItem,
-} from '@mui/material';
+import { Box, Button, Pagination } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
 import { Outlet, useSearchParams } from 'react-router-dom';
 
 function ReviewDatasets() {
   const { t } = useTranslation();
   const [queryParameters] = useSearchParams();
   const [imageSrc, setImageSrc] = useState('');
-  const [value, setValue] = useState('');
 
   const imagesPaths = JSON.parse(
     decodeURIComponent(queryParameters.get('array')),
   );
-
-  console.log('LABELS=====' + queryParameters.get('label'));
 
   const [page, setPage] = useState(1);
   const [labels, setLabels] = useState([]);
   const [classes, setClasses] = useState([]);
 
   const handleChangePage = (event, value) => {
-    setValue(labels[page - 1] | '');
-    console.log(labels);
     setPage(value);
   };
 
@@ -47,7 +30,6 @@ function ReviewDatasets() {
       .get('label')
       .replace(/["\[\]]/g, '')
       .split('\\r\\n');
-    //setLabels(labelsParam);
     let newLabel = [];
     let classSet = new Set();
     labelsParam.map((item) => {
@@ -57,7 +39,6 @@ function ReviewDatasets() {
       }
     });
     setClasses(Array.from(classSet));
-    console.log('classes=' + Array.from(classSet));
     setLabels(newLabel);
 
     // Listen for the response from the main process
@@ -127,9 +108,7 @@ function ReviewDatasets() {
           )}
         </Box>
         <Box sx={{ width: '50%', p: 3 }}>
-          <Outlet
-            context={[labels, setLabels, classes, page, value, setValue]}
-          />
+          <Outlet context={[labels, setLabels, classes, page]} />
         </Box>
       </Box>
     </Box>
