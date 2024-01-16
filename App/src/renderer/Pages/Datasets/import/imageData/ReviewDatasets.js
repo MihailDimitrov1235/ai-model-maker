@@ -26,10 +26,6 @@ function ReviewDatasets() {
 
   console.log('LABELS=====' + queryParameters.get('label'));
 
-  const handleClickLabel = () => {
-    window.electronAPI.selectLabel();
-  };
-
   const [page, setPage] = useState(1);
   const [labels, setLabels] = useState([]);
 
@@ -77,7 +73,6 @@ function ReviewDatasets() {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '5%',
           borderRadius: '16px',
           color: 'white',
         }}
@@ -88,7 +83,7 @@ function ReviewDatasets() {
           onChange={handleChangePage}
         />
 
-        <Box>
+        <Box display={'flex'} gap={3}>
           <Button variant="contrast">{t('Delete-image')}</Button>
           <Button variant="contrast">{t('finish-button')}</Button>
         </Box>
@@ -97,7 +92,7 @@ function ReviewDatasets() {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '10%',
+          mt: 3,
           border: 'solid',
         }}
       >
