@@ -18,9 +18,9 @@ function UploadButton({ text, onClick, disabled = false, icon = 'folder' }) {
       onClick={onClick}
       sx={{
         width: '100%',
-        height: '200px',
+        aspectRatio: '2/1',
         border: 'dashed 1px red',
-        borderColor: 'primary.main',
+        borderColor: disabled ? 'border.main' : 'primary.main',
         display: 'flex',
         flexDirection: 'column',
       }}

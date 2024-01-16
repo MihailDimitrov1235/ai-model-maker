@@ -26,7 +26,7 @@ export default function Layout() {
   const [openNoPython, setOpenNoPython] = useState(false);
   const [openNoConda, setOpenNoConda] = useState(false);
   const [openCreateEnv, setOpenCreateEnv] = useState(false);
-  const [createEnvText, setCreateEnvText] = useState(t("create-env-init"))
+  const [createEnvText, setCreateEnvText] = useState(t('create-env-init'));
 
   useEffect(() => {
     window.electronAPI.checkEnv();
@@ -37,8 +37,8 @@ export default function Layout() {
       setOpenNoPython(true);
     });
     window.electronAPI.handleChangeCreateEnvText((event, value) => {
-      if(value == "cancel"){
-        setCreateEnvText(t("cancel"));
+      if (value == 'cancel') {
+        setCreateEnvText(t('cancel'));
       }
       setCreateEnvText(value);
     });
@@ -58,14 +58,14 @@ export default function Layout() {
   const handleCreateEnv = () => {
     window.electronAPI.createEnv();
     handleCloseNoPython();
-    setOpenCreateEnv(true)
+    setOpenCreateEnv(true);
   };
 
   const handleCancelCreateEnv = () => {
     window.electronAPI.cancelCreateEnv();
     // setOpenCreateEnv(false)
-    setCreateEnvText(t("create-env-init"))
-  }
+    setCreateEnvText(t('create-env-init'));
+  };
 
   const items = [
     { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
@@ -89,8 +89,16 @@ export default function Layout() {
         title={t('no-py-env-title')}
         variant="warning"
         buttons={[
-          { text: t('use-existing'), variant:'main-inherit', handleClick: () => console.log('test') },
-          { text: t('new-venv'), variant:'contrast-inherit', handleClick: () => handleCreateEnv() },
+          {
+            text: t('use-existing'),
+            variant: 'main-inherit',
+            handleClick: () => console.log('test'),
+          },
+          {
+            text: t('new-venv'),
+            variant: 'contrast-inherit',
+            handleClick: () => handleCreateEnv(),
+          },
         ]}
       />
       <Snack
@@ -100,22 +108,32 @@ export default function Layout() {
         title={t('no-conda-title')}
         variant="warning"
         buttons={[
-          { text: t('download-conda'), downloadLink:`https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Windows-x86_64.exe`, handleClick: () => handleCloseNoConda() },
+          {
+            text: t('download-conda'),
+            downloadLink: `https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Windows-x86_64.exe`,
+            handleClick: () => handleCloseNoConda(),
+          },
         ]}
       />
 
-      <CustomDialog 
-        open={openCreateEnv}  
-        title={t('create-env-title')} 
+      <CustomDialog
+        open={openCreateEnv}
+        title={t('create-env-title')}
         text={createEnvText}
-        buttons={[{text:t("cancel"), variant:'main', handleClick: () => handleCancelCreateEnv()}]}
+        buttons={[
+          {
+            text: t('cancel'),
+            variant: 'main',
+            handleClick: () => handleCancelCreateEnv(),
+          },
+        ]}
       />
 
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          width:'70px',
+          width: '70px',
           bgcolor: 'background.standOut',
           m: 1,
           borderRadius: '20px',
