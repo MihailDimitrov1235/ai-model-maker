@@ -14,10 +14,12 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function ImportImage() {
+  const { t } = useTranslation();
   const [showButton, setShowButton] = useState(false);
-
   const [images, setImages] = useState([]);
   const [label, setLabel] = useState([]);
+  const [uploadLabelsError, setUploadLabelsError] = useState('');
+  const [uploadImagesError, setUploadImagesError] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
 
   const handleSelectChange = (event) => {
@@ -33,11 +35,17 @@ function ImportImage() {
     window.electronAPI.handleSetImageFolder((event, value) => {
       if (value.data && value.data.length > 0) {
         setImages(value.data);
+        setUploadImagesError('');
+      } else {
+        setUploadImagesError('no-images-found');
       }
     });
     window.electronAPI.handleSetImageLabel((event, value) => {
-      if (!value.canceled && value.data) {
+      if (!value.canceled && value.data != '') {
         setLabel(value.data);
+        setUploadLabelsError('');
+      } else {
+        setUploadLabelsError(t('no-labels-found'));
       }
     });
   }, []);
@@ -55,7 +63,7 @@ function ImportImage() {
   const handleClickLabel = () => {
     window.electronAPI.selectLabel();
   };
-  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -100,17 +108,24 @@ function ImportImage() {
           </Box>
         </Box>
         <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
-          <UploadButton onClick={handleClick} text={t('choose-image-folder')} />
+          <UploadButton
+            onClick={handleClick}
+            text={t('choose-image-folder')}
+            error={uploadImagesError}
+          />
           <UploadButton
             onClick={handleClickLabel}
             text={t('choose-labels')}
             disabled={selectedValue ? false : true}
             icon="file"
+            error={uploadLabelsError}
           />
         </Box>
         <Box>
           {showButton && (
-            <>
+            <Box
+              sx={{ width: '100%', display: 'flex', justifyContent: 'right' }}
+            >
               <Link
                 to={`review/${selectedValue}?array=${encodeURIComponent(
                   JSON.stringify(images),
@@ -119,7 +134,7 @@ function ImportImage() {
                 <Button>{t('overview-button')}</Button>
               </Link>
               <Button>{t('finish-button')}</Button>
-            </>
+            </Box>
           )}
         </Box>
       </Box>

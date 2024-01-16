@@ -8,14 +8,14 @@ const { parse } = require('csv-parse/sync');
 const { getAssetPath } = require('../utils');
 
 function convertCsvToArray(csvString) {
-  const rows = csvString.split('\n').filter(row => row.trim() !== '');
+  const rows = csvString.split('\n').filter((row) => row.trim() !== '');
 
   let delimiter = ',';
   if (csvString.indexOf(';') !== -1) {
     delimiter = ';';
   }
 
-  const data = rows.map(row => {
+  const data = rows.map((row) => {
     let insideQuotes = false;
     let field = '';
     const fields = [];
@@ -32,7 +32,7 @@ function convertCsvToArray(csvString) {
     }
 
     fields.push(field.trim());
-    return fields.map(value => {
+    return fields.map((value) => {
       if (value === '') {
         return '';
       }
@@ -42,7 +42,6 @@ function convertCsvToArray(csvString) {
   });
 
   return data;
-  
 }
 
 function setupIPCMain(win) {
@@ -52,36 +51,33 @@ function setupIPCMain(win) {
     const options = {
       filters: [{ name: 'Tabular', extensions: ['csv', 'xlsx'] }],
     };
-    dialog
-      .showOpenDialog(options)
-      .then((data) => {
-        console.log(data);
-        const fileName = data.filePaths[0];
-        win.webContents.send('set-tabular-file', data);
- 
-        const ext = path.extname(fileName).toLowerCase();
- 
-        let jsonData;
- 
-        if (ext === '.xlsx') {
-          const data = fs.readFileSync(fileName, 'binary')
-          const workbook = XLSX.read(data, { type: 'binary' });
-          const sheetName = workbook.SheetNames[0];
-          const sheet = workbook.Sheets[sheetName];
-          jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-          win.webContents.send('set-tabular-file-data', { data: jsonData });
-        } else if (ext === '.csv') {
-          const content = fs.readFileSync(fileName, 'utf-8');
-          jsonData = convertCsvToArray(content)
-          win.webContents.send('set-tabular-file-data', { data: jsonData });
-         } else {
-            win.webContents.send('set-tabular-file-data', {
-              error: 'Unsupported file format',
-            });
-            return;
-          }
- 
+    dialog.showOpenDialog(options).then((data) => {
+      console.log(data);
+      const fileName = data.filePaths[0];
+      win.webContents.send('set-tabular-file', data);
+
+      const ext = path.extname(fileName).toLowerCase();
+
+      let jsonData;
+
+      if (ext === '.xlsx') {
+        const data = fs.readFileSync(fileName, 'binary');
+        const workbook = XLSX.read(data, { type: 'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        win.webContents.send('set-tabular-file-data', { data: jsonData });
+      } else if (ext === '.csv') {
+        const content = fs.readFileSync(fileName, 'utf-8');
+        jsonData = convertCsvToArray(content);
+        win.webContents.send('set-tabular-file-data', { data: jsonData });
+      } else {
+        win.webContents.send('set-tabular-file-data', {
+          error: 'Unsupported file format',
         });
+        return;
+      }
+    });
   });
 
   ipcMain.on('select-image-folder', (event, arg) => {
@@ -142,22 +138,13 @@ function setupIPCMain(win) {
           if (err) {
             console.error(`Error reading file: ${filePath}`, err);
           } else {
-            if (data) {
-              // Split the string into an array based on a delimiter (e.g., comma)
-              const dataArray = data.split(',');
+            // Split the string into an array based on a delimiter (e.g., comma)
+            const dataArray = data.split(',');
 
-              // Handle the array data (e.g., display it)
-              console.log('File content as array:', dataArray);
-              //win.webContents.send('set-select-label', dataArray);
-              win.webContents.send('set-image-label', { data: dataArray });
-            } else {
-              console.error('File content is undefined.');
-              // Handle the case when the content is undefined
-            }
-            //const dataArray = data.split('\n');
-            // Handle the file content (e.g., display it)
-            //console.log('File content:', dataArray);
-            //win.webContents.send('set-image-label', dataArray);
+            // Handle the array data (e.g., display it)
+            console.log('File content as array:', dataArray);
+            //win.webContents.send('set-select-label', dataArray);
+            win.webContents.send('set-image-label', { data: dataArray });
           }
         });
       })
