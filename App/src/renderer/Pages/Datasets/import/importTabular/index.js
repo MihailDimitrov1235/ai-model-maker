@@ -1,15 +1,18 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CustomTable from '../../../Components/Utils/CustomTable';
-import CustomDialog from '../../../Components/Utils/CustomDialog';
+import { useNavigate } from 'react-router-dom';
+import CustomTable from '../../../../Components/Utils/CustomTable';
+import CustomDialog from '../../../../Components/Utils/CustomDialog';
 import FillTablular from './FillTablular';
 
 function ImportTabular() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [file, setFile] = useState(t('select-file'));
   const [data, setData] = useState(null);
   const [header, setHeader] = useState([]);
+  const [missingHeader, setMissingHeader] = useState(-1);
   const [bodyData, setBodyData] = useState([]);
   const [headerCheckboxes, setHeaderCheckboxes] = useState([]);
   const [openMissingValues, setOpenMissingValues] = useState(false);
@@ -46,7 +49,15 @@ function ImportTabular() {
       setNameError(true);
       return;
     }
-    console.log('all goood');
+    for (let i = 0; i < header.length; i++) {
+      console.log(header[i]);
+      console.log(i);
+
+      if (!header[i]) {
+        setMissingHeader(i);
+        return;
+      }
+    }
     //create dataset
     let finalHeader = [];
     for (let i = 0; i < header.length; i++) {
@@ -72,6 +83,8 @@ function ImportTabular() {
         finalSelectedTypes.push(selectedTypes[i]);
       }
     }
+
+    navigate('/data');
 
     window.electronAPI.createDatasetTable({
       name: nameRef.current.value,
@@ -179,6 +192,8 @@ function ImportTabular() {
               setHeader={setHeader}
               headerCheckboxes={headerCheckboxes}
               setHeaderCheckboxes={setHeaderCheckboxes}
+              missingHeader={missingHeader}
+              setMissingHeader={setMissingHeader}
               selectedTypes={selectedTypes}
               setSelectedTypes={setSelectedTypes}
               handleFinish={handleFinish}

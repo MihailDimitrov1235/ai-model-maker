@@ -6,7 +6,7 @@ import Landing from './Pages/Landing';
 
 import Datasets from './Pages/Datasets';
 import ImportDataset from './Pages/Datasets/import/ImportDataset';
-import ImportTabular from './Pages/Datasets/import/ImportTabular';
+import ImportTabular from './Pages/Datasets/import/importTabular';
 import ImportImage from './Pages/Datasets/import/ImportImage';
 import ImportText from './Pages/Datasets/import/ImportText';
 

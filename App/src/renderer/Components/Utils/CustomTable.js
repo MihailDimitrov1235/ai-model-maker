@@ -34,6 +34,8 @@ export default function CustomTable({
   setHeader,
   headerCheckboxes,
   setHeaderCheckboxes,
+  missingHeader,
+  setMissingHeader,
   selectedTypes,
   setSelectedTypes,
   handleFinish,
@@ -117,6 +119,9 @@ export default function CustomTable({
   const handleHeaderChange = (event, index) => {
     const nextHeader = header.map((c, i) => {
       if (i === index) {
+        if (index === missingHeader && event.target.value != undefined) {
+          setMissingHeader(-1);
+        }
         return event.target.value;
       } else {
         return c;
@@ -199,7 +204,26 @@ export default function CustomTable({
                         </Tooltip>
                       ) : (
                         <TextField
+                          error={index === missingHeader}
+                          helperText={
+                            index === missingHeader ? t('missing-value') : ''
+                          }
                           onChange={(event) => handleHeaderChange(event, index)}
+                          inputProps={{ style: { color: 'white' } }}
+                          sx={{
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                color: 'text.contrast',
+                                borderColor: 'border.lightContrast',
+                              },
+                              '&:hover fieldset': {
+                                borderColor: 'border.contrast',
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: 'border.contrast',
+                              },
+                            },
+                          }}
                         />
                       )}
 
@@ -214,7 +238,31 @@ export default function CustomTable({
                         />
                       </Tooltip>
                     </Box>
-                    <FormControl fullWidth sx={{ mt: 3 }}>
+                    <FormControl
+                      fullWidth
+                      sx={{
+                        mt: 3,
+                        color: 'text.contrast',
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            color: 'border.contrast',
+                            borderColor: 'border.lightContrast',
+                          },
+                          '& svg': {
+                            color: 'border.contrast',
+                          },
+                          '& div': {
+                            color: 'text.contrast',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'border.contrast',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'border.contrast',
+                          },
+                        },
+                      }}
+                    >
                       <InputLabel sx={{ color: 'text.contrast' }}>
                         {t('data-type')}
                       </InputLabel>
@@ -224,7 +272,6 @@ export default function CustomTable({
                         onChange={(event) =>
                           handleChangeSelectedDataType(event, index)
                         }
-                        sx={{ color: 'text.contrast' }}
                       >
                         {headerTypes[index] &&
                           headerTypes[index].map((item, idx) => (

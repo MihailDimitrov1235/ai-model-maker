@@ -6,6 +6,8 @@ const primaryMain = '#15A4C1';
 const primaryDark = '#10839A';
 const textContrast = '#ffffff';
 const borderMain = '#4C4D51';
+const borderLightContrast = '#47A0B1';
+
 const lightBackgroundMain = '#E9E9E9';
 const lightBackgroundStandOut = '#ffffff';
 const lightTextMain = '#000000';
@@ -36,6 +38,8 @@ const createCustomTheme = (mode) =>
       },
       border: {
         main: borderMain,
+        contrast: textContrast,
+        lightContrast: borderLightContrast,
       },
     },
     components: {

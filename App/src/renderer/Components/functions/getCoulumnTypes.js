@@ -22,13 +22,15 @@ export default function getColumnTypes(table) {
       }
 
       if (typeof val !== 'number') {
-        if(!(typeof val === 'string' && /^\d+$/.test(val))){
+        if (!(typeof val === 'string' && /^\d+$/.test(val))) {
           isNumeric = false;
         }
       }
 
       if (!(typeof val === 'string' || typeof val === 'boolean')) {
-        isCategorical = false;
+        if (typeof val !== 'number' || val % 1 != 0) {
+          isCategorical = false;
+        }
       }
 
       if (!(val instanceof Date)) {
@@ -71,6 +73,6 @@ export default function getColumnTypes(table) {
     }
     columnsTypes.push(columnTypes);
   }
-
+  console.log(columnsTypes);
   return columnsTypes;
 }
