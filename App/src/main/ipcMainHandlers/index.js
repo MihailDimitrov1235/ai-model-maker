@@ -99,7 +99,7 @@ function setupIPCMain(win) {
             } else {
               // Filter only image files (you may customize this logic)
               const imageFiles = files.filter((file) =>
-                /\.(jpg|png)$/i.test(path.extname(file)),
+                /\.(jpg|png|jpeg)$/i.test(path.extname(file)),
               );
 
               // Construct full paths for image files
