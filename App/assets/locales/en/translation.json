@@ -7,7 +7,7 @@
   "use-existing": "Use Existing",
   "new-venv":"New VENV",
   "choose-image-folder" : "Choose Image Folder",
-  "choose-labels" : "Choose Labels",
+  "choоse-labels" : "Choose Labels",
   "create-labels" : "Create Labels",
   "captioning" : "Captioning",
   "image-classification": "Image Classification",
@@ -26,9 +26,10 @@
   "text": "Text",
   "homepage": "Homepage",
   "new-datasets": "New Datasets",
-  "create-tabular-dataset": "Create Tabular Dataset"
+  "create-tabular-dataset": "Create Tabular Dataset",
+  "chosen-images": "Choosed images",
+  "chosen-txt-file": "A txt file is choosed",
+  "no-images-found": "No images found",
+  "no-labels-found": "No labels found"
 
-
-
-  
 }

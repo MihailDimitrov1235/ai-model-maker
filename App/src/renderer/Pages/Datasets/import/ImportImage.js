@@ -14,15 +14,15 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function ImportImage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showButton, setShowButton] = useState(false);
   const [images, setImages] = useState([]);
   const [label, setLabel] = useState([]);
-  const [uploadLabelsError, setUploadLabelsError] = useState('');
-  const [uploadImagesError, setUploadImagesError] = useState('');
+  const [uploadLabelsError, setUploadLabelsError] = useState(1);
+  const [uploadImagesError, setUploadImagesError] = useState(1);
   const [selectedValue, setSelectedValue] = useState('');
-  const [textUploadImages, setTextUploadImages] = useState(t('choose-image-folder'));
-  const [textUploadLabels, setTextUploadLabels] = useState(t('choose-labels'));
+  const [textUploadImages, setTextUploadImages] = useState(1);
+  const [textUploadLabels, setTextUploadLabels] = useState(1);
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -37,19 +37,19 @@ function ImportImage() {
     window.electronAPI.handleSetImageFolder((event, value) => {
       if (value.data && value.data.length > 0) {
         setImages(value.data);
-        setUploadImagesError('');
-        setTextUploadImages('Избраните снимки са ' + (value.data.length) + " на брой във PNG, JPG формат.")
+        setUploadImagesError(1);
+        setTextUploadImages(2);
       } else {
-        setUploadImagesError('no-images-found');
+        setUploadImagesError(2);
       }
     });
     window.electronAPI.handleSetImageLabel((event, value) => {
       if (!value.canceled && value.data != '') {
         setLabel(value.data);
-        setUploadLabelsError('');
-        setTextUploadLabels('Избран е txt файл')
+        setUploadLabelsError(1);
+        setTextUploadLabels(2);
       } else {
-        setUploadLabelsError(t('no-labels-found'));
+        setUploadLabelsError(2);
       }
     });
   }, []);
@@ -114,17 +114,24 @@ function ImportImage() {
         <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
           <UploadButton
             onClick={handleClick}
-            text={textUploadImages}
+            text={
+              textUploadImages == 1
+                ? t('choose-image-folder')
+                : t('chosen-images')
+            }
             //text={t('choose-image-folder')}
-            error={uploadImagesError}
+            error={uploadImagesError == 1 ? '' : t('no-images-found')}
+            uploadItem={images.length}
           />
           <UploadButton
             onClick={handleClickLabel}
-            text={textUploadLabels}
+            text={
+              textUploadLabels == 1 ? t('choоse-labels') : t('chosen-txt-file')
+            }
             //text={t('choose-labels')}
             disabled={selectedValue ? false : true}
             icon="file"
-            error={uploadLabelsError}
+            error={uploadLabelsError == 1 ? '' : t('no-labels-found')}
           />
         </Box>
         <Box>

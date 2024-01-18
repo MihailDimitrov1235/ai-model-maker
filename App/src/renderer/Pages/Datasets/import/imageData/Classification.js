@@ -7,6 +7,7 @@ import {
   RadioGroup,
   Radio,
   TextField,
+  Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
@@ -52,6 +53,12 @@ function Classification() {
           width: '50%',
         }}
       />
+      <Button
+        sx={{ marginTop: 3, marginLeft: 'auto', width: '50%' }}
+        variant="contrast"
+      >
+        {t('adding-labels')}
+      </Button>
     </Box>
   );
 }

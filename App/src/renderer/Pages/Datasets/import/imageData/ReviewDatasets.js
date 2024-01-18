@@ -62,7 +62,6 @@ function ReviewDatasets() {
         display: 'inline',
       }}
     >
-      <h2>{t('create-image-labels')}</h2>
       <Box
         sx={{
           display: 'flex',

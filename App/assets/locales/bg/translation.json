@@ -11,7 +11,8 @@
   "object-detection": "Засичане На Обекти",
   "captioning": "Поставяне На Надписи",
   "choose-image-folder": "Избери папка със снимки",
-  "choose-labels": "Избери етикет",
+  "choоse-labels": "Избери етикет",
+  "create-labels" : "Създай етикети",
   "no-labels": "Нямаш етикет?",
   "overview-button": "Преглед",
   "finish-button": "Приключи",
@@ -24,11 +25,9 @@
   "text": "Текстов",
   "homepage": "Главна страница",
   "new-datasets": "Нов набор от данни",
-  "create-tabular-dataset": "Създай табличен набор отданни"
-  
-
-
-
-
-
+  "create-tabular-dataset": "Създай табличен набор отданни",
+  "chosen-images": "Избрани снимки",
+  "chosen-txt-file": "Избран е txt файл",
+  "no-images-found": "Няма намерени снимки",
+  "no-labels-found": "Няма намерени етикети"
 }

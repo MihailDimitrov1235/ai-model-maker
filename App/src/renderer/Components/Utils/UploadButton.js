@@ -10,14 +10,16 @@ import {
 } from '@mui/material';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-
+import { useTranslation } from 'react-i18next';
 function UploadButton({
   text,
   onClick,
   disabled = false,
   icon = 'folder',
   error = false,
+  uploadItem = 0,
 }) {
+  const { t } = useTranslation();
   return (
     <Box sx={{ width: '100%', aspectRatio: '11/6' }}>
       <Button
@@ -36,7 +38,9 @@ function UploadButton({
           flexDirection: 'column',
         }}
       >
-        {icon == 'folder' ? (
+        {uploadItem > 0 ? (
+          <Typography fontSize={'3.2rem'}>{uploadItem}</Typography>
+        ) : icon == 'folder' ? (
           <DriveFolderUploadIcon
             color={error ? 'error' : ''}
             sx={{
