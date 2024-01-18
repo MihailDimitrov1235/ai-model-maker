@@ -155,15 +155,19 @@ function setupIPCMain(win) {
   });
 
   ipcMain.on('create-dataset-table', (event, arg) => {
+    console.log(arg);
     const csvData = arg.bodyData.map((row) => row.join(','));
     const dir = getAssetPath(`datasets/table/${arg.name}`);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
-      console.log('made');
+    } else {
+      console.log('already exists');
     }
-    console.log('yes');
     const csvFilePath = path.join(dir, 'data.csv');
+    const jsonFilePath = path.join(dir, 'info.json');
     fs.writeFileSync(csvFilePath, csvData.join('\n'), 'utf-8');
+    delete arg.bodyData;
+    fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
   });
 
   ipcMain.on('run-python', (event, arg) => {
