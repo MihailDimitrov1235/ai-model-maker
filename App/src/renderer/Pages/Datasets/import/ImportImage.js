@@ -76,7 +76,6 @@ function ImportImage() {
     >
       <Box
         sx={{
-          marginTop: '5%',
           borderRadius: '16px',
 
           color: 'white',
@@ -106,10 +105,10 @@ function ImportImage() {
             <TextField variant="outlined" placeholder="Width" />
             <TextField variant="outlined" placeholder="Height" />
           </FormControl>
-          <Box>
-            <Typography color={'text.main'}>{t('no-labels')}</Typography>
-            <Button variant="contrast">{t('create-labels')}</Button>
-          </Box>
+          {/* <Box> */}
+          {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}
+          <Button variant="contrast">{t('create-labels')}</Button>
+          {/* </Box> */}
         </Box>
         <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
           <UploadButton
@@ -137,7 +136,13 @@ function ImportImage() {
         <Box>
           {showButton && (
             <Box
-              sx={{ width: '100%', display: 'flex', justifyContent: 'right' }}
+              sx={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                gap: 3,
+              }}
             >
               <Link
                 to={`review/${selectedValue}?array=${encodeURIComponent(
@@ -146,7 +151,7 @@ function ImportImage() {
               >
                 <Button>{t('overview-button')}</Button>
               </Link>
-              <Button>{t('finish-button')}</Button>
+              <Button variant="contrast">{t('finish-button')}</Button>
             </Box>
           )}
         </Box>

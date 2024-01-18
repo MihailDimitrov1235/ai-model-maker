@@ -27,7 +27,7 @@
   "homepage": "Homepage",
   "new-datasets": "New Datasets",
   "create-tabular-dataset": "Create Tabular Dataset",
-  "chosen-images": "Choosed images",
+  "chosen-images": "Images chosen",
   "chosen-txt-file": "A txt file is choosed",
   "no-images-found": "No images found",
   "no-labels-found": "No labels found"

@@ -8,10 +8,13 @@ import {
   Radio,
   TextField,
   Button,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import ClearIcon from '@mui/icons-material/Clear';
 
 function Classification() {
   const { t } = useTranslation();
@@ -25,40 +28,59 @@ function Classification() {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'column',
         justifyContent: 'right',
       }}
     >
-      <FormControl
+      <Box
         sx={{
-          width: '50%',
-          marginLeft: 'auto',
-        }}
-      >
-        <FormLabel sx={{ color: 'text.main' }}>Classes</FormLabel>
-        <RadioGroup onChange={handleChangeLabel}>
-          {classes.map((item) => (
-            <FormControlLabel
-              checked={labels[page - 1] === item}
-              value={item}
-              control={<Radio />}
-              label={item}
-            />
-          ))}
-        </RadioGroup>
-      </FormControl>
-      <TextField
-        sx={{
-          marginLeft: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
           width: '50%',
         }}
-      />
-      <Button
-        sx={{ marginTop: 3, marginLeft: 'auto', width: '50%' }}
-        variant="contrast"
       >
-        {t('adding-labels')}
-      </Button>
+        <FormControl>
+          <FormLabel sx={{ color: 'text.main', fontSize: '20px' }}>
+            {t('categories')}
+          </FormLabel>
+          <RadioGroup sx={{ mt: 3 }} onChange={handleChangeLabel}>
+            {classes.map((item, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  overflow: 'hidden',
+                  maxWidth: '100%',
+                }}
+              >
+                <FormControlLabel
+                  sx={{
+                    m: 0,
+                    maxWidth: '85%',
+                    overflow: 'hidden',
+                  }}
+                  checked={labels[page - 1] === item}
+                  value={item}
+                  control={<Radio />}
+                  label={
+                    <Tooltip followCursor placement="top" title={item}>
+                      {item}
+                    </Tooltip>
+                  }
+                />
+                <IconButton>
+                  <ClearIcon />
+                </IconButton>
+              </Box>
+            ))}
+          </RadioGroup>
+        </FormControl>
+        <TextField sx={{ mt: 3 }} />
+        <Button sx={{ mt: 3 }} variant="contrast">
+          {t('add-category')}
+        </Button>
+      </Box>
     </Box>
   );
 }
