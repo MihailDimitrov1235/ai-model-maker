@@ -21,6 +21,8 @@ function ImportImage() {
   const [uploadLabelsError, setUploadLabelsError] = useState('');
   const [uploadImagesError, setUploadImagesError] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
+  const [textUploadImages, setTextUploadImages] = useState(t('choose-image-folder'));
+  const [textUploadLabels, setTextUploadLabels] = useState(t('choose-labels'));
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -36,6 +38,7 @@ function ImportImage() {
       if (value.data && value.data.length > 0) {
         setImages(value.data);
         setUploadImagesError('');
+        setTextUploadImages('Избраните снимки са ' + (value.data.length) + " на брой във PNG, JPG формат.")
       } else {
         setUploadImagesError('no-images-found');
       }
@@ -44,6 +47,7 @@ function ImportImage() {
       if (!value.canceled && value.data != '') {
         setLabel(value.data);
         setUploadLabelsError('');
+        setTextUploadLabels('Избран е txt файл')
       } else {
         setUploadLabelsError(t('no-labels-found'));
       }
@@ -110,12 +114,14 @@ function ImportImage() {
         <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
           <UploadButton
             onClick={handleClick}
-            text={t('choose-image-folder')}
+            text={textUploadImages}
+            //text={t('choose-image-folder')}
             error={uploadImagesError}
           />
           <UploadButton
             onClick={handleClickLabel}
-            text={t('choose-labels')}
+            text={textUploadLabels}
+            //text={t('choose-labels')}
             disabled={selectedValue ? false : true}
             icon="file"
             error={uploadLabelsError}
