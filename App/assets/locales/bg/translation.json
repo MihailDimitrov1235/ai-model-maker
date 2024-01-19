@@ -29,5 +29,7 @@
   "chosen-images": "Избрани снимки",
   "chosen-txt-file": "Избран е txt файл",
   "no-images-found": "Няма намерени снимки",
-  "no-labels-found": "Няма намерени етикети"
+  "no-labels-found": "Няма намерени етикети",
+  "add-label": "Добави етикет",
+  "enter-label": "Въведи етикет"
 }

@@ -30,6 +30,8 @@
   "chosen-images": "Choosed images",
   "chosen-txt-file": "A txt file is choosed",
   "no-images-found": "No images found",
-  "no-labels-found": "No labels found"
+  "no-labels-found": "No labels found",
+  "add-label": "Add Labels",
+  "enter-label": "Enter Label"
 
 }

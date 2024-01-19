@@ -107,7 +107,7 @@ function ReviewDatasets() {
           )}
         </Box>
         <Box sx={{ width: '50%', p: 3 }}>
-          <Outlet context={[labels, setLabels, classes, page]} />
+          <Outlet context={[labels, setLabels, classes, setClasses, page]} />
         </Box>
       </Box>
     </Box>

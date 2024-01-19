@@ -12,14 +12,29 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function Classification() {
   const { t } = useTranslation();
-  const [labels, setLabels, classes, page] = useOutletContext();
+  const [labels, setLabels, classes, setClasses, page] = useOutletContext();
+  const [inputValue, setInputValue] = useState('');
+
   const handleChangeLabel = (event, value) => {
     let newLabels = [...labels];
     newLabels[page - 1] = event.target.value;
     setLabels(newLabels);
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleAddValue = () => {
+    if (inputValue.trim() !== '') {
+      setClasses([...classes, inputValue]);
+      setLabels([...labels, inputValue]);
+      setInputValue('');
+    }
   };
   return (
     <Box
@@ -48,16 +63,26 @@ function Classification() {
         </RadioGroup>
       </FormControl>
       <TextField
+        label={t('enter-label')}
+        value={inputValue}
+        onChange={handleInputChange}
         sx={{
           marginLeft: 'auto',
           width: '50%',
         }}
       />
       <Button
-        sx={{ marginTop: 3, marginLeft: 'auto', width: '50%' }}
+        sx={{
+          marginTop: 3,
+          marginLeft: 'auto',
+          width: '50%',
+          justifyContent: 'space-around',
+        }}
         variant="contrast"
+        onClick={handleAddValue}
       >
-        {t('adding-labels')}
+        <AddCircleOutlineIcon />
+        {t('add-label')}
       </Button>
     </Box>
   );
