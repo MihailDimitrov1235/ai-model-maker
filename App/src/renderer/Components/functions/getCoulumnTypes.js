@@ -15,6 +15,8 @@ export default function getColumnTypes(table) {
     let isDateTime = true;
     let isText = true;
     let isBinary = true;
+    let max = null;
+    let min = null;
 
     for (const val of columnValues) {
       if (val === undefined || val === null) {
@@ -24,6 +26,13 @@ export default function getColumnTypes(table) {
       if (typeof val !== 'number') {
         if (!(typeof val === 'string' && /^\d+$/.test(val))) {
           isNumeric = false;
+        }
+      } else {
+        if (max == null || max < val) {
+          max = val;
+        }
+        if (min == null || min > val) {
+          min = val;
         }
       }
 
@@ -56,11 +65,15 @@ export default function getColumnTypes(table) {
       columnTypes.push({ type: 'binary' });
     }
     if (isNumeric) {
-      columnTypes.push({ type: 'numeric' });
+      columnTypes.push({ type: 'numeric', min: min, max: max });
     }
     if (isCategorical) {
       const uniqueValues = Array.from(new Set(columnValues));
-      columnTypes.push({ type: 'categorical', values: uniqueValues });
+      columnTypes.push({
+        type: 'categorical',
+        numeric: isNumeric,
+        values: uniqueValues,
+      });
     }
     if (isDateTime) {
       columnTypes.push({ type: 'date' });

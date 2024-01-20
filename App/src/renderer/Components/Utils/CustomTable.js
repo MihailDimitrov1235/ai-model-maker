@@ -78,17 +78,23 @@ export default function CustomTable({
         let nextSelectedTypes = [...selectedTypes];
         for (let i = 0; i < columnsTypes.length; i++) {
           const types = columnsTypes[i];
-          if (!nextSelectedTypes[i] || !types.includes(nextSelectedTypes[i])) {
+          const matchingType = types.find(
+            (obj) => obj.type === nextSelectedTypes[i].type,
+          );
+          if (!nextSelectedTypes[i] || !matchingType) {
             nextSelectedTypes[i] = types[0];
+          } else {
+            nextSelectedTypes[i] = matchingType;
           }
         }
         setSelectedTypes(nextSelectedTypes);
       }
       setHeaderTypes(columnsTypes);
-      console.log(selectedTypes);
     }
 
-    setHeaderCheckboxes(new Array(data[0].length || 0).fill(true));
+    if (!headerCheckboxes || headerCheckboxes.length != data[0].length) {
+      setHeaderCheckboxes(new Array(data[0].length || 0).fill(true));
+    }
   }, [data, hasHeaders]);
 
   const { t } = useTranslation();
@@ -233,7 +239,7 @@ export default function CustomTable({
                         followCursor
                       >
                         <Checkbox
-                          defaultChecked
+                          checked={headerCheckboxes[index]}
                           onClick={(event) => handleClickCheckbox(index)}
                         />
                       </Tooltip>

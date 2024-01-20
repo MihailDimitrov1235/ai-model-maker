@@ -45,6 +45,7 @@ function convertCsvToArray(csvString) {
 }
 
 function setupIPCMain(win) {
+  ipcMain.setMaxListeners(20);
   setupIPCMainPyEnv(win);
 
   ipcMain.on('select-tabular-file', (event, arg) => {
@@ -52,7 +53,6 @@ function setupIPCMain(win) {
       filters: [{ name: 'Tabular', extensions: ['csv', 'xlsx'] }],
     };
     dialog.showOpenDialog(options).then((data) => {
-      console.log(data);
       const fileName = data.filePaths[0];
       win.webContents.send('set-tabular-file', data);
 
@@ -107,7 +107,6 @@ function setupIPCMain(win) {
                 path.join(folderPath, file),
               );
               win.webContents.send('set-image-folder', { data: newImagePaths });
-              console.log(newImagePaths);
               // Update state with the list of image paths
               //setImagePaths(newImagePaths);
             }
@@ -130,10 +129,8 @@ function setupIPCMain(win) {
         if (data.canceled) {
           return;
         }
-        console.log(data);
         const filePath = data.filePaths[0];
 
-        console.log(data);
         fs.readFile(filePath, 'utf-8', (err, data) => {
           if (err) {
             console.error(`Error reading file: ${filePath}`, err);
@@ -141,8 +138,6 @@ function setupIPCMain(win) {
             // Split the string into an array based on a delimiter (e.g., comma)
             const dataArray = data.split(',');
 
-            // Handle the array data (e.g., display it)
-            console.log('File content as array:', dataArray);
             //win.webContents.send('set-select-label', dataArray);
             win.webContents.send('set-image-label', { data: dataArray });
           }
@@ -155,8 +150,15 @@ function setupIPCMain(win) {
   });
 
   ipcMain.on('create-dataset-table', (event, arg) => {
-    console.log(arg);
     const csvData = arg.bodyData.map((row) => row.join(','));
+    csvData.unshift(arg.header.join(','));
+
+    const transformedSelectedTypes = {};
+    arg.selectedTypes.forEach((item, idx) => {
+      transformedSelectedTypes[arg.header[idx]] = item;
+    });
+    arg.selectedTypes = transformedSelectedTypes;
+
     const dir = getAssetPath(`datasets/table/${arg.name}`);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
