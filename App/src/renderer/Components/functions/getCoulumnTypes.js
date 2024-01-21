@@ -19,7 +19,7 @@ export default function getColumnTypes(table) {
     let min = null;
 
     for (const val of columnValues) {
-      if (val === undefined || val === null) {
+      if (val === undefined || val === null || val === '') {
         continue;
       }
 
@@ -60,27 +60,36 @@ export default function getColumnTypes(table) {
         isBinary = false;
       }
     }
+    const uniqueValues = Array.from(new Set(columnValues));
 
-    if (isBinary) {
-      columnTypes.push({ type: 'binary' });
+    if (isBinary || uniqueValues.length == 2) {
+      columnTypes.push({
+        type: 'binary',
+        numeric: isNumeric,
+        values: uniqueValues,
+      });
     }
-    if (isNumeric) {
-      columnTypes.push({ type: 'numeric', min: min, max: max });
-    }
+
     if (isCategorical) {
-      const uniqueValues = Array.from(new Set(columnValues));
       columnTypes.push({
         type: 'categorical',
         numeric: isNumeric,
         values: uniqueValues,
       });
     }
+
+    if (isNumeric) {
+      columnTypes.push({ type: 'numeric', min: min, max: max });
+    }
+
     if (isDateTime) {
       columnTypes.push({ type: 'date' });
     }
+
     if (isText) {
       columnTypes.push({ type: 'text' });
     }
+
     if (!isNumeric && !isCategorical && !isDateTime && !isText && !isBinary) {
       columnTypes.push({ type: 'mixed' });
     }
