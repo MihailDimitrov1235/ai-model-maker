@@ -8,11 +8,14 @@ import {
   Radio,
   TextField,
   Button,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ClearIcon from '@mui/icons-material/Clear';
 
 function Classification() {
   const { t } = useTranslation();
@@ -37,53 +40,57 @@ function Classification() {
     }
   };
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'right',
-      }}
-    >
-      <FormControl
+    <Box display={'flex'} justifyContent={'right'}>
+      <Box
         sx={{
-          width: '50%',
-          marginLeft: 'auto',
+          width: '40%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'right',
         }}
       >
-        <FormLabel sx={{ color: 'text.main' }}>Classes</FormLabel>
-        <RadioGroup onChange={handleChangeLabel}>
-          {classes.map((item) => (
-            <FormControlLabel
-              checked={labels[page - 1] === item}
-              value={item}
-              control={<Radio />}
-              label={item}
-            />
-          ))}
-        </RadioGroup>
-      </FormControl>
-      <TextField
-        label={t('enter-label')}
-        value={inputValue}
-        onChange={handleInputChange}
-        sx={{
-          marginLeft: 'auto',
-          width: '50%',
-        }}
-      />
-      <Button
-        sx={{
-          marginTop: 3,
-          marginLeft: 'auto',
-          width: '50%',
-          justifyContent: 'space-around',
-        }}
-        variant="contrast"
-        onClick={handleAddValue}
-      >
-        <AddCircleOutlineIcon />
-        {t('add-label')}
-      </Button>
+        <FormControl>
+          <FormLabel sx={{ color: 'text.main', fontSize: '18px' }}>
+            Classes
+          </FormLabel>
+          <RadioGroup onChange={handleChangeLabel}>
+            {classes.map((item) => (
+              <Box
+                display={'flex'}
+                justifyContent={'space-between'}
+                sx={{ overflow: 'hidden', width: '100%', pl: 2 }}
+              >
+                <FormControlLabel
+                  checked={labels[page - 1] === item}
+                  value={item}
+                  control={<Radio />}
+                  label={<Tooltip title={item}>{item}</Tooltip>}
+                  sx={{ maxWidth: '100%', overflow: 'hidden' }}
+                />
+                <IconButton>
+                  <ClearIcon />
+                </IconButton>
+              </Box>
+            ))}
+          </RadioGroup>
+        </FormControl>
+        <TextField
+          sx={{ mt: 3 }}
+          label={t('enter-label')}
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <Button
+          sx={{
+            mt: 3,
+          }}
+          variant="contrast"
+          onClick={handleAddValue}
+          startIcon={<AddCircleOutlineIcon />}
+        >
+          {t('add-label')}
+        </Button>
+      </Box>
     </Box>
   );
 }

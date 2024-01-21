@@ -41,11 +41,8 @@ function ReviewDatasets() {
       path: imagesPaths[page - 1],
     });
 
-    setClasses(queryParameters.get('class'));
-    console.log(queryParameters.get('class'));
-
+    setClasses(JSON.parse(decodeURIComponent(queryParameters.get('class'))));
     setLabels(queryParameters.get('label'));
-    console.log(queryParameters.get('label'));
 
     // Listen for the response from the main process
     window.electronAPI.handleRequestImage((event, image) => {
