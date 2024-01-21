@@ -11,18 +11,26 @@ import {
 import UploadButton from '../../../Components/Utils/UploadButton';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ImportImage() {
   const { t, i18n } = useTranslation();
   const [showButton, setShowButton] = useState(false);
+  const navigate = useNavigate();
   const [images, setImages] = useState([]);
-  const [label, setLabel] = useState([]);
+  const [labels, setLabels] = useState([]);
   const [uploadLabelsError, setUploadLabelsError] = useState(1);
   const [uploadImagesError, setUploadImagesError] = useState(1);
   const [selectedValue, setSelectedValue] = useState('');
   const [textUploadImages, setTextUploadImages] = useState(1);
   const [textUploadLabels, setTextUploadLabels] = useState(1);
+  const [imageWidth, setImageWidth] = useState(0);
+  const [imageHeight, setImageHeigth] = useState(0);
+  const [nameDataset, setNameDataset] = useState('');
+  const [widthError, setWidthError] = useState(false);
+  const [heightError, setHeightError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [classes, setClasses] = useState([]);
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -45,7 +53,24 @@ function ImportImage() {
     });
     window.electronAPI.handleSetImageLabel((event, value) => {
       if (!value.canceled && value.data != '') {
-        setLabel(value.data);
+        //setLabels(value.data);
+        console.log('LabelOT SETVANE=' + value.data);
+        let labelsFromFile = JSON.stringify(value.data)
+          .replace(/["\[\]]/g, '')
+          .split('\\r\\n');
+        let newLabel = [];
+        let classSet = new Set();
+        labelsFromFile.map((item) => {
+          if (item != '') {
+            newLabel.push(item);
+            classSet.add(item);
+          }
+        });
+        console.log(classSet);
+        setClasses(Array.from(classSet));
+        console.log(Array.from(classSet));
+        setLabels(newLabel);
+
         setUploadLabelsError(1);
         setTextUploadLabels(2);
       } else {
@@ -55,10 +80,13 @@ function ImportImage() {
   }, []);
   useEffect(() => {
     // Check labels
-    if (images && label && images.length > 0 && label.length > 0) {
+    if (images && labels && images.length > 0 && labels.length > 0) {
       setShowButton(true);
+      //console.log('Labels=' + labels);
+
+      //console.log('CLASSES=' + newLabel);
     }
-  }, [images, label]);
+  }, [images, labels]);
 
   const handleClick = () => {
     window.electronAPI.selectImageFolder();
@@ -66,6 +94,55 @@ function ImportImage() {
 
   const handleClickLabel = () => {
     window.electronAPI.selectLabel();
+  };
+  const handleInputChangeWidth = (e) => {
+    setImageWidth(e.target.value);
+    console.log('width=' + imageWidth);
+  };
+  const handleInputChangeHeight = (e) => {
+    setImageHeigth(e.target.value);
+    console.log('height=' + imageHeight);
+  };
+  const handleInputChangeName = (e) => {
+    setNameDataset(e.target.value);
+    //console.log('height=' + imageHeight);
+  };
+  const handleOverviewButtonClick = () => {
+    if (!imageWidth || !imageHeight || !nameDataset) {
+      alert('Image Width or Image Height is empty');
+
+      return;
+    } else {
+      console.log('Button clicked, perform finish action');
+      console.log('Final width=' + imageWidth + 'height=' + imageHeight);
+      navigate(
+        `review/${selectedValue}?image=${encodeURIComponent(
+          JSON.stringify(images),
+        )}&label=${encodeURIComponent(
+          JSON.stringify(labels),
+        )}&width=${imageWidth}&height=${imageHeight}&type=${selectedValue}&name=${nameDataset}&class=${encodeURIComponent(
+          JSON.stringify(classes),
+        )}`,
+      );
+      //console.log('height=' + imageWidth);
+    }
+  };
+
+  const handleFinish = (event, value) => {
+    if (!imageWidth || !imageHeight || !nameDataset) {
+      return;
+    }
+
+    window.electronAPI.createDatasetLabels({
+      name: nameDataset,
+      labels: labels,
+      classes: classes,
+      images: images,
+      type: selectedValue,
+      width: imageWidth,
+      height: imageHeight,
+    });
+    navigate('/data');
   };
 
   return (
@@ -102,8 +179,30 @@ function ImportImage() {
               <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
             </Select>
 
-            <TextField variant="outlined" placeholder="Width" />
-            <TextField variant="outlined" placeholder="Height" />
+            <TextField
+              variant="outlined"
+              placeholder={t('width')}
+              error={widthError}
+              helperText={widthError ? t('missing-width') : ''}
+              onBlur={() => setWidthError(imageWidth === '' ? true : false)}
+              onChange={handleInputChangeWidth}
+            />
+            <TextField
+              variant="outlined"
+              placeholder={t('height')}
+              error={heightError}
+              helperText={heightError ? t('missing-height') : ''}
+              onBlur={() => setHeightError(imageHeight === '' ? true : false)}
+              onChange={handleInputChangeHeight}
+            />
+            <TextField
+              variant="outlined"
+              placeholder={t('name')}
+              error={nameError}
+              helperText={nameError ? t('missing-name') : ''}
+              onBlur={() => setNameError(nameDataset === '' ? true : false)}
+              onChange={handleInputChangeName}
+            />
           </FormControl>
           {/* <Box> */}
           {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}
@@ -144,14 +243,12 @@ function ImportImage() {
                 gap: 3,
               }}
             >
-              <Link
-                to={`review/${selectedValue}?array=${encodeURIComponent(
-                  JSON.stringify(images),
-                )}&label=${encodeURIComponent(JSON.stringify(label))}`}
-              >
-                <Button>{t('overview-button')}</Button>
-              </Link>
-              <Button variant="contrast">{t('finish-button')}</Button>
+              <Button onClick={handleOverviewButtonClick}>
+                {t('overview-button')}
+              </Button>
+              <Button variant="contrast" onClick={handleFinish}>
+                {t('finish-button')}
+              </Button>
             </Box>
           )}
         </Box>

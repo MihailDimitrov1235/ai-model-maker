@@ -32,6 +32,12 @@
   "no-images-found": "No images found",
   "no-labels-found": "No labels found",
   "add-label": "Add Labels",
-  "enter-label": "Enter Label"
+  "enter-label": "Enter Label",
+  "missing-width": "Missing Width",
+  "missing-height": "Missing Height",
+  "missing-name": "Missing Name",
+  "width": "Width",
+  "height": "Height",
+  "name": "Name"
 
 }

@@ -172,6 +172,22 @@ function setupIPCMain(win) {
     fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
   });
 
+  ipcMain.on('create-dataset-labels', (event, arg) => {
+    //const csvData = arg.labels.map((item) => item + ',');
+    //console.log(csvData);
+    const dir = getAssetPath(`datasets/image/${arg.type}/${arg.name}`);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    } else {
+      console.log('already exists');
+    }
+    const csvFilePath = path.join(dir, 'labels.csv');
+    const jsonFilePath = path.join(dir, 'info.json');
+    fs.writeFileSync(csvFilePath, arg.labels.join(','), 'utf-8');
+    delete arg.labels;
+    fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
+  });
+
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
     // dial.then(data => {

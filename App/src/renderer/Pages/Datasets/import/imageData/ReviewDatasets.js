@@ -1,23 +1,38 @@
 import { Box, Button, Pagination } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams, useNavigate } from 'react-router-dom';
 
 function ReviewDatasets() {
   const { t } = useTranslation();
   const [queryParameters] = useSearchParams();
   const [imageSrc, setImageSrc] = useState('');
-
+  const navigate = useNavigate();
   const imagesPaths = JSON.parse(
-    decodeURIComponent(queryParameters.get('array')),
+    decodeURIComponent(queryParameters.get('image')),
   );
 
   const [page, setPage] = useState(1);
+  const [imageWidthParam, setImageWidthParam] = useState(0);
+  //const [imageHeigthParam, setImageHeigthParam] = useState(0);
   const [labels, setLabels] = useState([]);
   const [classes, setClasses] = useState([]);
 
   const handleChangePage = (event, value) => {
     setPage(value);
+  };
+  const handleFinish = (event, value) => {
+    navigate('/data');
+
+    window.electronAPI.createDatasetLabels({
+      name: queryParameters.get('name'),
+      labels: labels,
+      classes: classes,
+      images: imagesPaths,
+      type: queryParameters.get('type'),
+      width: queryParameters.get('width'),
+      height: queryParameters.get('height'),
+    });
   };
 
   useEffect(() => {
@@ -26,20 +41,11 @@ function ReviewDatasets() {
       path: imagesPaths[page - 1],
     });
 
-    let labelsParam = queryParameters
-      .get('label')
-      .replace(/["\[\]]/g, '')
-      .split('\\r\\n');
-    let newLabel = [];
-    let classSet = new Set();
-    labelsParam.map((item) => {
-      if (item != '') {
-        newLabel.push(item);
-        classSet.add(item);
-      }
-    });
-    setClasses(Array.from(classSet));
-    setLabels(newLabel);
+    setClasses(queryParameters.get('class'));
+    console.log(queryParameters.get('class'));
+
+    setLabels(queryParameters.get('label'));
+    console.log(queryParameters.get('label'));
 
     // Listen for the response from the main process
     window.electronAPI.handleRequestImage((event, image) => {
@@ -78,7 +84,9 @@ function ReviewDatasets() {
 
         <Box display={'flex'} gap={3}>
           <Button variant="contrast">{t('Delete-image')}</Button>
-          <Button variant="contrast">{t('finish-button')}</Button>
+          <Button variant="contrast" onClick={handleFinish}>
+            {t('finish-button')}
+          </Button>
         </Box>
       </Box>
       <Box
@@ -107,7 +115,9 @@ function ReviewDatasets() {
           )}
         </Box>
         <Box sx={{ width: '50%', p: 3 }}>
-          <Outlet context={[labels, setLabels, classes, setClasses, page]} />
+          {classes && (
+            <Outlet context={[labels, setLabels, classes, setClasses, page]} />
+          )}
         </Box>
       </Box>
     </Box>
