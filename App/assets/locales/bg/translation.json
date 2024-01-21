@@ -31,5 +31,11 @@
   "no-images-found": "Няма намерени снимки",
   "no-labels-found": "Няма намерени етикети",
   "add-label": "Добави етикет",
-  "enter-label": "Въведи етикет"
+  "enter-label": "Въведи етикет",
+  "missing-width": "Липсва ширина",
+  "missing-height": "Липсва височина",
+  "missing-name": "Липсва име",
+  "width": "Ширина",
+  "height": "Височина",
+  "name": "Име"
 }

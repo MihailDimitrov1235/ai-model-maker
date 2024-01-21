@@ -18,7 +18,7 @@ function Classification() {
   const { t } = useTranslation();
   const [labels, setLabels, classes, setClasses, page] = useOutletContext();
   const [inputValue, setInputValue] = useState('');
-
+  console.log(classes);
   const handleChangeLabel = (event, value) => {
     let newLabels = [...labels];
     newLabels[page - 1] = event.target.value;

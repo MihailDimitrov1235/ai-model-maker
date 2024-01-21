@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   selectImageFolder: (arg) => ipcRenderer.send('select-image-folder', arg),
   selectLabel: (arg) => ipcRenderer.send('select-label', arg),
   createDatasetTable: (arg) => ipcRenderer.send('create-dataset-table', arg),
+  createDatasetLabels: (arg) => ipcRenderer.send('create-dataset-labels', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
   requestImage: (arg) => ipcRenderer.send('requestImage', arg),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
