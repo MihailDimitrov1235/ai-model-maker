@@ -39,6 +39,11 @@ function Classification() {
       setInputValue('');
     }
   };
+  const handleRemoveClass = (item) => {
+    const removedClass = classes.filter(classItem => classItem !== item)
+    
+    setClasses(removedClass);
+  }
   return (
     <Box display={'flex'} justifyContent={'right'}>
       <Box
@@ -67,7 +72,7 @@ function Classification() {
                   label={<Tooltip title={item}>{item}</Tooltip>}
                   sx={{ maxWidth: '100%', overflow: 'hidden' }}
                 />
-                <IconButton>
+                <IconButton onClick={() => handleRemoveClass(item)}>
                   <ClearIcon />
                 </IconButton>
               </Box>
