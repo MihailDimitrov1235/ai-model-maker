@@ -38,6 +38,7 @@
   "missing-name": "Missing Name",
   "width": "Width",
   "height": "Height",
-  "name": "Name"
+  "name": "Name",
+  "delete-image": "Delete Image"
 
 }

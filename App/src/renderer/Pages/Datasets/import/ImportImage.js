@@ -82,9 +82,6 @@ function ImportImage() {
     // Check labels
     if (images && labels && images.length > 0 && labels.length > 0) {
       setShowButton(true);
-      //console.log('Labels=' + labels);
-
-      //console.log('CLASSES=' + newLabel);
     }
   }, [images, labels]);
 
@@ -105,12 +102,19 @@ function ImportImage() {
   };
   const handleInputChangeName = (e) => {
     setNameDataset(e.target.value);
-    //console.log('height=' + imageHeight);
   };
+  //Go to ReviewDatasets file when you want to make an overview to data you upload
   const handleOverviewButtonClick = () => {
     if (!imageWidth || !imageHeight || !nameDataset) {
-      alert('Image Width or Image Height is empty');
-
+      if (!imageWidth) {
+        setWidthError(true);
+      }
+      if(!imageHeight){
+        setHeightError(true);
+      }
+      if(!nameDataset){
+        setNameError(true);
+      }
       return;
     } else {
       console.log('Button clicked, perform finish action');
@@ -124,25 +128,37 @@ function ImportImage() {
           JSON.stringify(classes),
         )}`,
       );
-      //console.log('height=' + imageWidth);
     }
   };
-
+  // Go to main folder and then make datasets 
   const handleFinish = (event, value) => {
+    
     if (!imageWidth || !imageHeight || !nameDataset) {
+      if (!imageWidth) {
+        setWidthError(true);
+      }
+      if(!imageHeight){
+        setHeightError(true);
+      }
+      if(!nameDataset){
+        setNameError(true);
+      }
       return;
+    }else{
+      window.electronAPI.createDatasetLabels({
+        name: nameDataset,
+        labels: labels,
+        classes: classes,
+        images: images,
+        type: selectedValue,
+        width: imageWidth,
+        height: imageHeight,
+      });
+      navigate('/data');
     }
 
-    window.electronAPI.createDatasetLabels({
-      name: nameDataset,
-      labels: labels,
-      classes: classes,
-      images: images,
-      type: selectedValue,
-      width: imageWidth,
-      height: imageHeight,
-    });
-    navigate('/data');
+    
+    
   };
 
   return (

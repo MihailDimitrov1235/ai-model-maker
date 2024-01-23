@@ -80,7 +80,7 @@ function ReviewDatasets() {
         />
 
         <Box display={'flex'} gap={3}>
-          <Button variant="contrast">{t('Delete-image')}</Button>
+          <Button variant="contrast">{t('delete-image')}</Button>
           <Button variant="contrast" onClick={handleFinish}>
             {t('finish-button')}
           </Button>
