@@ -13,6 +13,7 @@ import ImportText from './Pages/Datasets/import/ImportText';
 import ImportInfo from './Pages/ImortInfo';
 import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
 import Classification from './Pages/Datasets/import/imageData/Classification';
+import Train from './Pages/Train';
 
 const routes = [
   {
@@ -73,11 +74,7 @@ const routes = [
       {
         path: '/train',
         element: <InnerLayout type={'train'} />,
-        children: [
-          { path: '', element: <Landing /> },
-          { path: 'data1', element: <Landing /> },
-          { path: 'data2', element: <Landing /> },
-        ],
+        children: [{ path: '', element: <Train /> }],
       },
       {
         path: '/test',

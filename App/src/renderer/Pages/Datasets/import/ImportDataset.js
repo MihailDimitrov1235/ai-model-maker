@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Box,
+  Typography,
+} from '@mui/material';
 import { useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -29,7 +36,7 @@ function ImportDataset() {
   return (
     <Box
       sx={{
-        margin: '50px',
+        m: 3,
       }}
     >
       <Box
@@ -39,7 +46,7 @@ function ImportDataset() {
           gap: 3,
         }}
       >
-        <h2>{t('create-dataset')}</h2>
+        <Typography variant="h5">{t('create-model')}</Typography>
         <FormControl fullWidth>
           <InputLabel>{t('type')}</InputLabel>
           <Select label={t('type')} value={type} onChange={handleChange}>
