@@ -12,6 +12,7 @@ import UploadButton from '../../../Components/Utils/UploadButton';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { width } from '@mui/system';
  
 function ImportImage() {
   const { t, i18n } = useTranslation();
@@ -93,12 +94,19 @@ function ImportImage() {
     window.electronAPI.selectLabel();
   };
   const handleInputChangeWidth = (e) => {
-    setImageWidth(e.target.value);
+    if(/^\d+$/.test(e.target.value)){
+      setImageWidth(e.target.value);
+    }
+
+    
+
     console.log('width=' + imageWidth);
   };
   const handleInputChangeHeight = (e) => {
-    setImageHeigth(e.target.value);
-    console.log('height=' + imageHeight);
+    if(/^\d+$/.test(e.target.value)){
+      setImageHeigth(e.target.value);
+    }
+    
   };
   const handleInputChangeName = (e) => {
     setNameDataset(e.target.value);
@@ -181,12 +189,12 @@ function ImportImage() {
             flexDirection: 'column'
           }}
         >
-          <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'column', width: '100%' }}>
+          <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'column', width: '100%'  }}>
             <Box sx={{display: 'flex', width: '100%', gap: 3}}>
               <InputLabel>{t('type')}</InputLabel>
               <Select
                 label={'type'}
-                sx={{flex:1 }}
+                sx={{flex:1, height:'56px'}}
                 onChange={handleSelectChange}
               >
                 <MenuItem value={'classification'}>
@@ -202,7 +210,7 @@ function ImportImage() {
               helperText={nameError ? t('missing-name') : ''}
               onBlur={() => setNameError(nameDataset === '' ? true : false)}
               onChange={handleInputChangeName}
-              sx={{ml: 1, flex: 1}}
+              sx={{ flex: 1}}
              
             />
              
@@ -212,7 +220,7 @@ function ImportImage() {
                   variant="outlined"
                   placeholder={t('width')}
                   error={widthError}
-                  helperText={widthError ? t('missing-width') : ''}
+                  value={imageWidth}
                   onBlur={() => setWidthError(imageWidth === '' ? true : false)}
                   onChange={handleInputChangeWidth}
                   sx={{flex: 1}}
@@ -221,6 +229,7 @@ function ImportImage() {
                 variant="outlined"
                 placeholder={t('height')}
                 error={heightError}
+                value={imageHeight}
                 helperText={heightError ? t('missing-height') : ''}
                 onBlur={() => setHeightError(imageHeight === '' ? true : false)}
                 onChange={handleInputChangeHeight}
@@ -230,10 +239,10 @@ function ImportImage() {
           </FormControl>
           {/* <Box> */}
           {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}
-          <Button sx={{ml: 'auto', mt: 2}}variant="contrast">{t('create-labels')}</Button>
+          <Button sx={{ml: 'auto', mt: 3}}variant="contrast">{t('create-labels')}</Button>
           {/* </Box> */}
         </Box>
-        <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
+        <Box sx={{ display: 'flex', gap: 3, mt: 3 }}>
           <UploadButton
             onClick={handleClick}
             text={
