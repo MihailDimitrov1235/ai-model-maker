@@ -12,7 +12,7 @@ import UploadButton from '../../../Components/Utils/UploadButton';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+ 
 function ImportImage() {
   const { t, i18n } = useTranslation();
   const [showButton, setShowButton] = useState(false);
@@ -31,15 +31,15 @@ function ImportImage() {
   const [heightError, setHeightError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [classes, setClasses] = useState([]);
-
+ 
   const handleSelectChange = (event) => {
     const value = event.target.value;
     setSelectedValue(value);
-
+ 
     // You can perform additional actions based on the selected value here
     console.log('Selected value:', value);
   };
-
+ 
   useEffect(() => {
     //Setting images variable
     window.electronAPI.handleSetImageFolder((event, value) => {
@@ -70,7 +70,7 @@ function ImportImage() {
         setClasses(Array.from(classSet));
         console.log(Array.from(classSet));
         setLabels(newLabel);
-
+ 
         setUploadLabelsError(1);
         setTextUploadLabels(2);
       } else {
@@ -84,11 +84,11 @@ function ImportImage() {
       setShowButton(true);
     }
   }, [images, labels]);
-
+ 
   const handleClick = () => {
     window.electronAPI.selectImageFolder();
   };
-
+ 
   const handleClickLabel = () => {
     window.electronAPI.selectLabel();
   };
@@ -130,9 +130,9 @@ function ImportImage() {
       );
     }
   };
-  // Go to main folder and then make datasets 
+  // Go to main folder and then make datasets
   const handleFinish = (event, value) => {
-    
+   
     if (!imageWidth || !imageHeight || !nameDataset) {
       if (!imageWidth) {
         setWidthError(true);
@@ -156,11 +156,11 @@ function ImportImage() {
       });
       navigate('/data');
     }
-
-    
-    
+ 
+   
+   
   };
-
+ 
   return (
     <Box
       sx={{
@@ -170,7 +170,6 @@ function ImportImage() {
       <Box
         sx={{
           borderRadius: '16px',
-
           color: 'white',
         }}
       >
@@ -178,51 +177,60 @@ function ImportImage() {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'right',
+            flexDirection: 'column'
           }}
         >
-          <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'row' }}>
-            <InputLabel>{t('type')}</InputLabel>
-            <Select
-              label={'type'}
-              sx={{ minWidth: '200px' }}
-              onChange={handleSelectChange}
-            >
-              <MenuItem value={'classification'}>
-                {t('image-classification')}
-              </MenuItem>
-              <MenuItem value={'detection'}>{t('object-detection')}</MenuItem>
-              <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
-            </Select>
-
-            <TextField
-              variant="outlined"
-              placeholder={t('width')}
-              error={widthError}
-              helperText={widthError ? t('missing-width') : ''}
-              onBlur={() => setWidthError(imageWidth === '' ? true : false)}
-              onChange={handleInputChangeWidth}
-            />
-            <TextField
-              variant="outlined"
-              placeholder={t('height')}
-              error={heightError}
-              helperText={heightError ? t('missing-height') : ''}
-              onBlur={() => setHeightError(imageHeight === '' ? true : false)}
-              onChange={handleInputChangeHeight}
-            />
-            <TextField
+          <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'column', width: '100%' }}>
+            <Box sx={{display: 'flex', width: '100%', gap: 3}}>
+              <InputLabel>{t('type')}</InputLabel>
+              <Select
+                label={'type'}
+                sx={{flex:1 }}
+                onChange={handleSelectChange}
+              >
+                <MenuItem value={'classification'}>
+                  {t('image-classification')}
+                </MenuItem>
+                <MenuItem value={'detection'}>{t('object-detection')}</MenuItem>
+                <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
+              </Select>
+              <TextField
               variant="outlined"
               placeholder={t('name')}
               error={nameError}
               helperText={nameError ? t('missing-name') : ''}
               onBlur={() => setNameError(nameDataset === '' ? true : false)}
               onChange={handleInputChangeName}
+              sx={{ml: 1, flex: 1}}
+             
             />
+             
+            </Box>
+            <Box sx={{display: 'flex', gap: 3}}>
+              <TextField
+                  variant="outlined"
+                  placeholder={t('width')}
+                  error={widthError}
+                  helperText={widthError ? t('missing-width') : ''}
+                  onBlur={() => setWidthError(imageWidth === '' ? true : false)}
+                  onChange={handleInputChangeWidth}
+                  sx={{flex: 1}}
+                />
+              <TextField
+                variant="outlined"
+                placeholder={t('height')}
+                error={heightError}
+                helperText={heightError ? t('missing-height') : ''}
+                onBlur={() => setHeightError(imageHeight === '' ? true : false)}
+                onChange={handleInputChangeHeight}
+                sx={{flex: 1}}
+              />
+            </Box>
           </FormControl>
           {/* <Box> */}
           {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}
-          <Button variant="contrast">{t('create-labels')}</Button>
+          <Button sx={{ml: 'auto', mt: 2}}variant="contrast">{t('create-labels')}</Button>
           {/* </Box> */}
         </Box>
         <Box sx={{ display: 'flex', gap: 3, mt: 4 }}>
@@ -272,5 +280,5 @@ function ImportImage() {
     </Box>
   );
 }
-
+ 
 export default ImportImage;
