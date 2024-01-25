@@ -28,27 +28,26 @@ const Datasets = function () {
   const navigate = useNavigate();
   const [datasetsInfo, setDatasetsInfo] = useState([]);
   useEffect(() => {
-   // Send a request to the main process with the absolute path
+    // Send a request to the main process with the absolute path
     window.electronAPI.requestDatasetsInfo();
 
     // Listen for the response from the main process
     window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
       setDatasetsInfo(datasets.data);
-      console.log("Datasets Info:");
-      console.log(datasets);
+      console.log('Datasets Info:');
+      console.log(datasets.data);
     });
     // Clean up the event listener when the component unmounts
   }, []);
 
-
-  const datasets = [
-    { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
-    { title: 'Road Sign' },
-    { title: 'Road Sign' },
-    { title: 'Football Objects' },
-    { title: 'Basketball Objects' },
-    { title: 'Titanic Deaths' },
-  ];
+  // const datasets = [
+  //   { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
+  //   { title: 'Road Sign' },
+  //   { title: 'Road Sign' },
+  //   { title: 'Football Objects' },
+  //   { title: 'Basketball Objects' },
+  //   { title: 'Titanic Deaths' },
+  // ];
   const handleClick = (event) => {
     navigate('/data/import');
   };
@@ -99,9 +98,9 @@ const Datasets = function () {
           }}
         >
           <Grid container spacing={4}>
-            {datasets.map((dataset, index) => (
+            {datasetsInfo.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.title} />
+                <CardElement title={dataset.name} type={'Tabular Data'} />
               </Grid>
             ))}
           </Grid>
