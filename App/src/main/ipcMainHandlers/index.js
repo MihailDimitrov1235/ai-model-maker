@@ -229,6 +229,38 @@ function setupIPCMain(win) {
       win.webContents.send('set-request-image', { data: imageDataURL });
     });
   });
+
+  ipcMain.on('requestDatasetsInfo', (event, data) => {
+    const tabularDatasetsFolder = getAssetPath(`datasets/table/`);
+    // Read the image file
+    const datasetsInfo = [];
+    fs.readdir(tabularDatasetsFolder, (err, folders) => {
+      if (err) {
+        console.error('Error reading directory', err);
+        return;
+      }
+      folders.forEach(folder => {
+        const infoFilePath = path.join(tabularDatasetsFolder, folder, 'info.json');
+          fs.readFile(infoFilePath, 'utf-8', (err, data) => {
+            if (err) {
+              console.error('Error reading file', err);
+            } else {
+              const jsonData = JSON.parse(data);
+              console.log(jsonData);
+              datasetsInfo.push(jsonData);
+              // Do something with the jsonData
+              
+            }
+        });
+        console.log(datasetsInfo);
+ 
+          
+    });
+  });
+    
+    win.webContents.send('set-request-datasets-info', { data: datasetsInfo });    
+    
+  });
 }
 
 module.exports = { setupIPCMain };

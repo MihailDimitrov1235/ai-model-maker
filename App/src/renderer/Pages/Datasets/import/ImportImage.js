@@ -97,9 +97,6 @@ function ImportImage() {
     if(/^\d+$/.test(e.target.value)){
       setImageWidth(e.target.value);
     }
-
-    
-
     console.log('width=' + imageWidth);
   };
   const handleInputChangeHeight = (e) => {

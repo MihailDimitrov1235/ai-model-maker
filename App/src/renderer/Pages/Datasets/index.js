@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { ShowDiagrams } from '../../Components/Charts/BarChart_GoogleLib';
 import CardElement from '../../Components/Cards/DatasetCard';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 // import python from 'python-shell';
 // import path from "path";
 
@@ -25,6 +26,20 @@ import { useNavigate } from 'react-router-dom';
 const Datasets = function () {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const [datasetsInfo, setDatasetsInfo] = useState([]);
+  useEffect(() => {
+   // Send a request to the main process with the absolute path
+    window.electronAPI.requestDatasetsInfo();
+
+    // Listen for the response from the main process
+    window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
+      setDatasetsInfo(datasets.data);
+      console.log("Datasets Info:");
+      console.log(datasets);
+    });
+    // Clean up the event listener when the component unmounts
+  }, []);
+
 
   const datasets = [
     { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
