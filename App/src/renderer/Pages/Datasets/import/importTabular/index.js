@@ -94,6 +94,7 @@ function ImportTabular() {
       name: nameRef.current.value,
       header: finalHeader,
       selectedTypes: finalSelectedTypes,
+      rows: bodyData.length,
       bodyData: finalBodyData,
     });
   };
