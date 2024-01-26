@@ -82,7 +82,22 @@ const Datasets = function () {
           }}
         >
           <Grid container spacing={4}>
-            {datasetsInfo.map((dataset, index) => (
+            {datasetsInfo.table.map((dataset, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+              </Grid>
+            ))}
+            {datasetsInfo.image.classification.map((dataset, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+              </Grid>
+            ))}
+            {datasetsInfo.image.detection.map((dataset, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+              </Grid>
+            ))}
+            {datasetsInfo.image.captioning.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
                 <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
               </Grid>
