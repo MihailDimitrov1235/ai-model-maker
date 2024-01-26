@@ -14,26 +14,24 @@ import { useTranslation } from 'react-i18next';
 import { ShowDiagrams } from '../../Components/Charts/BarChart_GoogleLib';
 import CardElement from '../../Components/Cards/DatasetCard';
 import { useNavigate } from 'react-router-dom';
-// import python from 'python-shell';
-// import path from "path";
-
-// var options = {
-//     scriptPath : path.join(__dirname, '/../Backend/'),
-//     args : [],
-// };
+import { useEffect, useState } from 'react';
 
 const Datasets = function () {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const [datasetsInfo, setDatasetsInfo] = useState([]);
+  useEffect(() => {
+    // Send a request to the main process with the absolute path
+    window.electronAPI.requestDatasetsInfo();
 
-  const datasets = [
-    { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
-    { title: 'Road Sign' },
-    { title: 'Road Sign' },
-    { title: 'Football Objects' },
-    { title: 'Basketball Objects' },
-    { title: 'Titanic Deaths' },
-  ];
+    // Listen for the response from the main process
+    window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
+      setDatasetsInfo(datasets.data);
+      console.log(datasets.data);
+    });
+    // Clean up the event listener when the component unmounts
+  }, []);
+
   const handleClick = (event) => {
     navigate('/data/import');
   };
@@ -84,9 +82,40 @@ const Datasets = function () {
           }}
         >
           <Grid container spacing={4}>
-            {datasets.map((dataset, index) => (
+            {datasetsInfo.table?.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.title} />
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
+              </Grid>
+            ))}
+            {datasetsInfo.image?.classification.map((dataset, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
+              </Grid>
+            ))}
+            {datasetsInfo.image?.detection.map((dataset, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
+              </Grid>
+            ))}
+            {datasetsInfo.image?.captioning.map((dataset, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
               </Grid>
             ))}
           </Grid>

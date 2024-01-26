@@ -67,3 +67,40 @@ export function condaExists(appDataPath) {
   }
   return false;
 }
+
+export function convertCsvToArray(csvString) {
+  const rows = csvString.split('\n').filter((row) => row.trim() !== '');
+
+  let delimiter = ',';
+  if (csvString.indexOf(';') !== -1) {
+    delimiter = ';';
+  }
+
+  const data = rows.map((row) => {
+    let insideQuotes = false;
+    let field = '';
+    const fields = [];
+
+    for (let char of row) {
+      if (char === '"') {
+        insideQuotes = !insideQuotes;
+      } else if (char === delimiter && !insideQuotes) {
+        fields.push(field.trim());
+        field = '';
+      } else {
+        field += char;
+      }
+    }
+
+    fields.push(field.trim());
+    return fields.map((value) => {
+      if (value === '') {
+        return '';
+      }
+      const num = Number(value);
+      return isNaN(num) ? value : num;
+    });
+  });
+
+  return data;
+}
