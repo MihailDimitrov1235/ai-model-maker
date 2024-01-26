@@ -188,49 +188,42 @@ function setupIPCDatasets(win) {
       captioningDatasetsFolder,
     ];
 
-    const tabularDatasets = [];
-    const classificationDatasets = [];
-    const detectionDatasets = [];
-    const captioningDatasets = [];
+    let tabularDatasets = [];
+    let classificationDatasets = [];
+    let detectionDatasets = [];
+    let captioningDatasets = [];
 
     datasetsFolderPaths.forEach((folderPath) => {
-      fs.readdir(folderPath.path, (err, folders) => {
-        if (err) {
-          console.error('Error reading directory', err);
-          return;
-        }
+      if (fs.existsSync(folderPath.path)) {
+        const folders = fs.readdirSync(folderPath.path);
+        console.log(folders);
         folders.forEach((folder) => {
           const infoFilePath = path.join(folderPath.path, folder, 'info.json');
-          fs.readFile(infoFilePath, 'utf-8', (err, data) => {
-            if (err) {
-              console.error('Error reading file', err);
-            } else {
-              const jsonData = JSON.parse(data);
-              if (folderPath.type == 'table') {
-                tabularDatasets.push(jsonData);
-              } else if (folderPath.type == 'image') {
-                if (folderPath.subType == 'classification') {
-                  classificationDatasets.push(jsonData);
-                } else if (folderPath.subType == 'detection') {
-                  detectionDatasets.push(jsonData);
-                } else if (folderPath.subType == 'captioning') {
-                  captioningDatasets.push(jsonData);
-                }
-              }
-              win.webContents.send('set-request-datasets-info', {
-                data: {
-                  table: tabularDatasets,
-                  image: {
-                    classification: classificationDatasets,
-                    detection: detectionDatasets,
-                    captioning: captioningDatasets,
-                  },
-                },
-              });
+          const data = fs.readFileSync(infoFilePath);
+          const jsonData = JSON.parse(data);
+          if (folderPath.type == 'table') {
+            tabularDatasets.push(jsonData);
+          } else if (folderPath.type == 'image') {
+            if (folderPath.subType == 'classification') {
+              classificationDatasets.push(jsonData);
+            } else if (folderPath.subType == 'detection') {
+              detectionDatasets.push(jsonData);
+            } else if (folderPath.subType == 'captioning') {
+              captioningDatasets.push(jsonData);
             }
-          });
+          }
         });
-      });
+      }
+    });
+    win.webContents.send('set-request-datasets-info', {
+      data: {
+        table: tabularDatasets,
+        image: {
+          classification: classificationDatasets,
+          detection: detectionDatasets,
+          captioning: captioningDatasets,
+        },
+      },
     });
   });
 }
