@@ -1,5 +1,4 @@
-import React from 'react';
-import { ReactDOM } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Typography,
   Button,
@@ -11,7 +10,11 @@ import {
 } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-export default function DatasetCard({ title, type }) {
+
+export default function DatasetCard({ title, type, records=null }) {
+
+  const { t } = useTranslation()
+
   return (
     <Card sx={{ width: '100%', p: 2 }}>
       <CardContent sx={{ p: 0, pb: 2 }}>
@@ -60,12 +63,12 @@ export default function DatasetCard({ title, type }) {
             textAlign: 'center',
           }}
         >
-          <Typography>300</Typography>
-          <Typography>Records</Typography>
+          <Typography>{records}</Typography>
+          <Typography>{t('records')}</Typography>
         </Box>
 
         <Button size="small" variant="contrast">
-          Make model
+          {t("make-model")}
         </Button>
       </CardActions>
     </Card>
