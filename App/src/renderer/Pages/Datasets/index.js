@@ -15,13 +15,6 @@ import { ShowDiagrams } from '../../Components/Charts/BarChart_GoogleLib';
 import CardElement from '../../Components/Cards/DatasetCard';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// import python from 'python-shell';
-// import path from "path";
-
-// var options = {
-//     scriptPath : path.join(__dirname, '/../Backend/'),
-//     args : [],
-// };
 
 const Datasets = function () {
   const { t, i18n } = useTranslation();
@@ -34,20 +27,10 @@ const Datasets = function () {
     // Listen for the response from the main process
     window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
       setDatasetsInfo(datasets.data);
-      console.log('Datasets Info:');
-      console.log(datasets.data);
     });
     // Clean up the event listener when the component unmounts
   }, []);
 
-  // const datasets = [
-  //   { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
-  //   { title: 'Road Sign' },
-  //   { title: 'Road Sign' },
-  //   { title: 'Football Objects' },
-  //   { title: 'Basketball Objects' },
-  //   { title: 'Titanic Deaths' },
-  // ];
   const handleClick = (event) => {
     navigate('/data/import');
   };
@@ -100,7 +83,7 @@ const Datasets = function () {
           <Grid container spacing={4}>
             {datasetsInfo.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.name} type={'Tabular Data'} />
+                <CardElement title={dataset.name} type={t('tabular-data')} />
               </Grid>
             ))}
           </Grid>

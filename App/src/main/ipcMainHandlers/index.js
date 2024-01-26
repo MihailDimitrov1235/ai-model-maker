@@ -257,7 +257,6 @@ function setupIPCMain(win) {
             win.webContents.send('set-request-datasets-info', {
               data: datasetsInfo,
             });
-            return;
           }
         });
       });
