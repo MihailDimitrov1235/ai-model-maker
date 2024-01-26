@@ -27,7 +27,7 @@ const Datasets = function () {
     // Listen for the response from the main process
     window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
       setDatasetsInfo(datasets.data);
-      console.log(datasets.data)
+      console.log(datasets.data);
     });
     // Clean up the event listener when the component unmounts
   }, []);
@@ -82,24 +82,40 @@ const Datasets = function () {
           }}
         >
           <Grid container spacing={4}>
-            {datasetsInfo.table.map((dataset, index) => (
+            {datasetsInfo.table?.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
               </Grid>
             ))}
-            {datasetsInfo.image.classification.map((dataset, index) => (
+            {datasetsInfo.image?.classification.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
               </Grid>
             ))}
-            {datasetsInfo.image.detection.map((dataset, index) => (
+            {datasetsInfo.image?.detection.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
               </Grid>
             ))}
-            {datasetsInfo.image.captioning.map((dataset, index) => (
+            {datasetsInfo.image?.captioning.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement title={dataset.name} type={t('tabular-data')} records={dataset.records} />
+                <CardElement
+                  title={dataset.name}
+                  type={t('tabular-data')}
+                  records={dataset.records}
+                />
               </Grid>
             ))}
           </Grid>

@@ -162,18 +162,37 @@ function setupIPCDatasets(win) {
   });
 
   ipcMain.on('requestDatasetsInfo', (event, data) => {
-    const tabularDatasetsFolder = {path: getAssetPath(`datasets/table/`), type: 'table'};
-    const classificationDatasetsFolder = {path: getAssetPath(`datasets/image/classification`), type: 'image', subType: 'classification'};
-    const detectionDatasetsFolder = {path: getAssetPath(`datasets/image/detection`),  type: 'image', subType: 'detection'};
-    const captioningDatasetsFolder = {path: getAssetPath(`datasets/image/captioning`),  type: 'image', subType: 'captioning'};
-    const datasetsFolderPaths = [tabularDatasetsFolder, classificationDatasetsFolder, detectionDatasetsFolder, captioningDatasetsFolder];
+    const tabularDatasetsFolder = {
+      path: getAssetPath(`datasets/table`),
+      type: 'table',
+    };
+    const classificationDatasetsFolder = {
+      path: getAssetPath(`datasets/image/classification`),
+      type: 'image',
+      subType: 'classification',
+    };
+    const detectionDatasetsFolder = {
+      path: getAssetPath(`datasets/image/detection`),
+      type: 'image',
+      subType: 'detection',
+    };
+    const captioningDatasetsFolder = {
+      path: getAssetPath(`datasets/image/captioning`),
+      type: 'image',
+      subType: 'captioning',
+    };
+    const datasetsFolderPaths = [
+      tabularDatasetsFolder,
+      classificationDatasetsFolder,
+      detectionDatasetsFolder,
+      captioningDatasetsFolder,
+    ];
 
     const tabularDatasets = [];
     const classificationDatasets = [];
     const detectionDatasets = [];
     const captioningDatasets = [];
 
-    
     datasetsFolderPaths.forEach((folderPath) => {
       fs.readdir(folderPath.path, (err, folders) => {
         if (err) {
@@ -181,40 +200,37 @@ function setupIPCDatasets(win) {
           return;
         }
         folders.forEach((folder) => {
-          const infoFilePath = path.join(
-            folderPath.path,
-            folder,
-            'info.json',
-          );
+          const infoFilePath = path.join(folderPath.path, folder, 'info.json');
           fs.readFile(infoFilePath, 'utf-8', (err, data) => {
             if (err) {
               console.error('Error reading file', err);
             } else {
-            
               const jsonData = JSON.parse(data);
-              if(folderPath.type == 'table'){
+              if (folderPath.type == 'table') {
                 tabularDatasets.push(jsonData);
-              }else if(folderPath.type == 'image'){
-                if(folderPath.subType == 'classification'){
+              } else if (folderPath.type == 'image') {
+                if (folderPath.subType == 'classification') {
                   classificationDatasets.push(jsonData);
-                }else if(folderPath.subType == 'detection'){
+                } else if (folderPath.subType == 'detection') {
                   detectionDatasets.push(jsonData);
-                }else if(folderPath.subType == 'captioning'){
+                } else if (folderPath.subType == 'captioning') {
                   captioningDatasets.push(jsonData);
                 }
-                
               }
-              
-              
+              win.webContents.send('set-request-datasets-info', {
+                data: {
+                  table: tabularDatasets,
+                  image: {
+                    classification: classificationDatasets,
+                    detection: detectionDatasets,
+                    captioning: captioningDatasets,
+                  },
+                },
+              });
             }
           });
         });
       });
-    });
-
-
-    win.webContents.send('set-request-datasets-info', {
-      data: {table: tabularDatasets, image: {classification: classificationDatasets, detection: detectionDatasets, captioning: captioningDatasets} },
     });
   });
 }
