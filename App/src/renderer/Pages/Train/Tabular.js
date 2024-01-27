@@ -28,6 +28,8 @@ export default function Tabular() {
   const [epochsError, setEpochsError] = useState('');
   const [batchSizeError, setBatchSizeError] = useState('');
   const [targetError, setTargetError] = useState('');
+  const [slidersError, setSlidersError] = useState('');
+  const [layersError, setLayersError] = useState('');
 
   const [layers, setLayers] = useState([
     { type: 'dense', nodes: 64, activation: 'relu' },
@@ -149,8 +151,23 @@ export default function Tabular() {
 
     if (!target) {
       setTargetError(true);
+      return;
     } else {
       setTargetError('');
+    }
+
+    if (train < 10) {
+      setSlidersError(t('train-data-expected-10%-or-more') + '*');
+      return;
+    } else {
+      setSlidersError('');
+    }
+
+    if (layers.length == 0) {
+      setLayersError(t('missing-layers') + '*');
+      return;
+    } else {
+      setLayersError('');
     }
   };
 
@@ -240,6 +257,7 @@ export default function Tabular() {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'center'}
+              gap={2}
             >
               <Typography>{t('train')}</Typography>
               <Slider
@@ -255,6 +273,7 @@ export default function Tabular() {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'center'}
+              gap={2}
             >
               <Typography>{t('validation')}</Typography>
               <Slider
@@ -270,6 +289,7 @@ export default function Tabular() {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'center'}
+              gap={2}
             >
               <Typography>{t('test')}</Typography>
               <Slider
@@ -281,6 +301,8 @@ export default function Tabular() {
               />
             </Box>
           </Box>
+
+          <Typography color={'error'}>{slidersError}</Typography>
         </Box>
       </Box>
 
@@ -288,6 +310,7 @@ export default function Tabular() {
         layers={layers}
         setLayers={setLayers}
         possibleLayers={possibleLayers}
+        layersError={layersError}
       />
 
       <Box display={'flex'} width={'100%'} justifyContent={'right'}>

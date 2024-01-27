@@ -15,7 +15,12 @@ import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function LayersDisplay({ layers, setLayers, possibleLayers }) {
+export default function LayersDisplay({
+  layers,
+  setLayers,
+  possibleLayers,
+  layersError,
+}) {
   const { t } = useTranslation();
 
   const handleAddLayer = () => {
@@ -42,7 +47,10 @@ export default function LayersDisplay({ layers, setLayers, possibleLayers }) {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={3}>
       <Box display={'flex'} width={'100%'} justifyContent={'space-between'}>
-        <Typography variant="h6">{t('hidden-layers')}</Typography>
+        <Box>
+          <Typography variant="h6">{t('hidden-layers')}</Typography>
+          <Typography color={'error'}>{layersError}</Typography>
+        </Box>
         <Button onClick={handleAddLayer} startIcon={<AddIcon />}>
           {t('add-layer')}
         </Button>
