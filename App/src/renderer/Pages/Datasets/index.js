@@ -20,16 +20,20 @@ const Datasets = function () {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [datasetsInfo, setDatasetsInfo] = useState([]);
+  const [datasetsCount, setDatasetsCount] = useState(0);
   useEffect(() => {
-    // Send a request to the main process with the absolute path
-    window.electronAPI.requestDatasetsInfo();
+    // Send a request to the main process for datasets count
+    window.electronAPI.getDatasetsCount();
 
     // Listen for the response from the main process
     window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
       setDatasetsInfo(datasets.data);
-      console.log(datasets.data);
     });
-    // Clean up the event listener when the component unmounts
+    window.electronAPI.handleSetDatasetsCount((event, datasetsCount) => {
+      console.log(datasetsCount.data);
+      // Send a request to the main process for datasets
+      window.electronAPI.requestDatasetsInfo();
+    });
   }, []);
 
   const handleClick = (event) => {
@@ -82,38 +86,12 @@ const Datasets = function () {
           }}
         >
           <Grid container spacing={4}>
-            {datasetsInfo.table?.map((dataset, index) => (
+            {datasetsInfo?.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
                 <CardElement
                   title={dataset.name}
-                  type={t('tabular-data')}
-                  records={dataset.records}
-                />
-              </Grid>
-            ))}
-            {datasetsInfo.image?.classification.map((dataset, index) => (
-              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement
-                  title={dataset.name}
-                  type={t('tabular-data')}
-                  records={dataset.records}
-                />
-              </Grid>
-            ))}
-            {datasetsInfo.image?.detection.map((dataset, index) => (
-              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement
-                  title={dataset.name}
-                  type={t('tabular-data')}
-                  records={dataset.records}
-                />
-              </Grid>
-            ))}
-            {datasetsInfo.image?.captioning.map((dataset, index) => (
-              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement
-                  title={dataset.name}
-                  type={t('tabular-data')}
+                  type={dataset.type}
+                  subType={dataset.subType}
                   records={dataset.records}
                 />
               </Grid>

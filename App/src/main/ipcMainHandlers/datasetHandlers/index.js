@@ -7,6 +7,28 @@ const { parse } = require('csv-parse/sync');
 const { getAssetPath, convertCsvToArray } = require('../../utils');
 
 function setupIPCDatasets(win) {
+  const datasetsFolderPaths = [
+    {
+      path: getAssetPath(`datasets/table`),
+      type: 'table',
+    },
+    {
+      path: getAssetPath(`datasets/image/classification`),
+      type: 'image',
+      subType: 'classification',
+    },
+    {
+      path: getAssetPath(`datasets/image/detection`),
+      type: 'image',
+      subType: 'detection',
+    },
+    {
+      path: getAssetPath(`datasets/image/captioning`),
+      type: 'image',
+      subType: 'captioning',
+    },
+  ];
+
   ipcMain.on('select-tabular-file', (event, arg) => {
     const options = {
       filters: [{ name: 'Tabular', extensions: ['csv', 'xlsx'] }],
@@ -162,36 +184,7 @@ function setupIPCDatasets(win) {
   });
 
   ipcMain.on('requestDatasetsInfo', (event, data) => {
-    const tabularDatasetsFolder = {
-      path: getAssetPath(`datasets/table`),
-      type: 'table',
-    };
-    const classificationDatasetsFolder = {
-      path: getAssetPath(`datasets/image/classification`),
-      type: 'image',
-      subType: 'classification',
-    };
-    const detectionDatasetsFolder = {
-      path: getAssetPath(`datasets/image/detection`),
-      type: 'image',
-      subType: 'detection',
-    };
-    const captioningDatasetsFolder = {
-      path: getAssetPath(`datasets/image/captioning`),
-      type: 'image',
-      subType: 'captioning',
-    };
-    const datasetsFolderPaths = [
-      tabularDatasetsFolder,
-      classificationDatasetsFolder,
-      detectionDatasetsFolder,
-      captioningDatasetsFolder,
-    ];
-
-    let tabularDatasets = [];
-    let classificationDatasets = [];
-    let detectionDatasets = [];
-    let captioningDatasets = [];
+    let datasetsInfo = [];
 
     datasetsFolderPaths.forEach((folderPath) => {
       if (fs.existsSync(folderPath.path)) {
@@ -202,28 +195,37 @@ function setupIPCDatasets(win) {
           const data = fs.readFileSync(infoFilePath);
           const jsonData = JSON.parse(data);
           if (folderPath.type == 'table') {
-            tabularDatasets.push(jsonData);
+            jsonData.type = 'table';
           } else if (folderPath.type == 'image') {
+            jsonData.type = 'image';
             if (folderPath.subType == 'classification') {
-              classificationDatasets.push(jsonData);
+              jsonData.subType = 'classification';
             } else if (folderPath.subType == 'detection') {
-              detectionDatasets.push(jsonData);
+              jsonData.subType = 'detection';
             } else if (folderPath.subType == 'captioning') {
-              captioningDatasets.push(jsonData);
+              jsonData.subType = 'captioning';
             }
           }
+          datasetsInfo.push(jsonData);
         });
       }
     });
     win.webContents.send('set-request-datasets-info', {
-      data: {
-        table: tabularDatasets,
-        image: {
-          classification: classificationDatasets,
-          detection: detectionDatasets,
-          captioning: captioningDatasets,
-        },
-      },
+      data: datasetsInfo,
+    });
+  });
+
+  ipcMain.on('get-datasets-count', (event, data) => {
+    let datasetCount = 0;
+    datasetsFolderPaths.forEach((folderPath) => {
+      if (fs.existsSync(folderPath.path)) {
+        const folders = fs.readdirSync(folderPath.path);
+        console.log(folders);
+        datasetCount += folders.length;
+      }
+    });
+    win.webContents.send('set-datasets-count', {
+      data: datasetCount,
     });
   });
 }

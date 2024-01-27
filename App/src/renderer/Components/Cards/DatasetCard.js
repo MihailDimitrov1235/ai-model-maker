@@ -10,10 +10,51 @@ import {
 } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useEffect, useState } from 'react';
 
-export default function DatasetCard({ title, type, records=null }) {
+export default function DatasetCard({ title, type, subType, records = null }) {
+  const { t } = useTranslation();
+  const [labels, setLabels] = useState([]);
+  useEffect(() => {
+    let newLabels = [];
 
-  const { t } = useTranslation()
+    switch (type) {
+      case 'table':
+        newLabels.push({
+          text: t('tabular'),
+          icon: <InsertDriveFileIcon />,
+        });
+        break;
+      case 'image':
+        newLabels.push({
+          text: t('image-data'),
+          icon: <InsertDriveFileIcon />,
+        });
+        switch (subType) {
+          case 'classification':
+            newLabels.push({
+              text: t('image-classification'),
+              icon: <InsertDriveFileIcon />,
+            });
+            break;
+          case 'detection':
+            newLabels.push({
+              text: t('object-detection'),
+              icon: <InsertDriveFileIcon />,
+            });
+            break;
+          case 'captioning':
+            newLabels.push({
+              text: t('captioning'),
+              icon: <InsertDriveFileIcon />,
+            });
+            break;
+        }
+
+        break;
+    }
+    setLabels(newLabels);
+  }, [subType, type]);
 
   return (
     <Card sx={{ width: '100%', p: 2 }}>
@@ -34,20 +75,22 @@ export default function DatasetCard({ title, type, records=null }) {
             <MoreVertIcon />
           </IconButton>
         </Typography>
-
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 16,
-            gap: 1,
-          }}
-          color="text.secondary"
-        >
-          <InsertDriveFileIcon />
-          {type}
-        </Box>
+        {labels.map((label, index) => (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 16,
+              gap: 1,
+            }}
+            color="text.secondary"
+            key={index}
+          >
+            {label.icon}
+            {label.text}
+          </Box>
+        ))}
       </CardContent>
       <CardActions
         sx={{
@@ -68,7 +111,7 @@ export default function DatasetCard({ title, type, records=null }) {
         </Box>
 
         <Button size="small" variant="contrast">
-          {t("make-model")}
+          {t('make-model')}
         </Button>
       </CardActions>
     </Card>
