@@ -12,6 +12,7 @@ import {
   Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import LayersDisplay from './LayersDisplay';
 
 export default function Tabular() {
   const { t } = useTranslation();
@@ -21,7 +22,25 @@ export default function Tabular() {
   const [learningRate, setLearningRate] = useState(0.001);
   const [epochs, setEpochs] = useState(10);
   const [batchSize, setBatchSize] = useState(24);
-  const [target, setTarget] = useState(null);
+  const [target, setTarget] = useState('');
+
+  const [learningRateError, setLearningRateError] = useState('');
+  const [epochsError, setEpochsError] = useState('');
+  const [batchSizeError, setBatchSizeError] = useState('');
+  const [targetError, setTargetError] = useState('');
+
+  const [layers, setLayers] = useState([
+    { type: 'dense', nodes: 64, activation: 'relu' },
+    { type: 'dropout', rate: 0.2 },
+    { type: 'dense', nodes: 64, activation: 'relu' },
+    { type: 'dropout', rate: 0.3 },
+    { type: 'dense', nodes: 64, activation: 'relu' },
+  ]);
+
+  const possibleLayers = [
+    { type: 'dense', nodes: 64, activation: 'relu' },
+    { type: 'dropout', rate: 0.2 },
+  ];
 
   const handleLearningRateChange = (event) => {
     const newValue = event.target.value;
@@ -41,9 +60,8 @@ export default function Tabular() {
   const fetchInfo = async () => {
     const newInfo = await window.electronAPI.getDatasetInfo({ name: id });
     setInfo(newInfo);
-    console.log(newInfo);
   };
-  //   fetchInfo();
+
   useEffect(() => {
     fetchInfo();
   }, []);
@@ -89,8 +107,55 @@ export default function Tabular() {
     }
   };
 
+  const handleFinish = () => {
+    if (!(learningRate > 0 && learningRate < 1)) {
+      setLearningRateError(
+        t('expected-number-between') + ' ' + 0 + ' ' + t('and') + ' ' + 1,
+      );
+      return;
+    } else {
+      setLearningRateError('');
+    }
+
+    if (!(epochs > 0 && epochs <= 100) || epochs % 1 != 0) {
+      setEpochsError(
+        t('expected-whole-number-between') +
+          ' ' +
+          0 +
+          ' ' +
+          t('and') +
+          ' ' +
+          100,
+      );
+      return;
+    } else {
+      setEpochsError('');
+    }
+
+    if (!(batchSize > 0 && batchSize < 100) || batchSize % 1 != 0) {
+      setBatchSizeError(
+        t('expected-whole-number-between') +
+          ' ' +
+          0 +
+          ' ' +
+          t('and') +
+          ' ' +
+          100,
+      );
+      return;
+    } else {
+      setBatchSizeError('');
+    }
+
+    if (!target) {
+      setTargetError(true);
+    } else {
+      setTargetError('');
+    }
+  };
+
   return (
-    <Box width={'100%'} display={'flex'} flexDirection={'column'} gap={3}>
+    <Box width={'100%'} display={'flex'} flexDirection={'column'} gap={6}>
       <Typography variant="h6">{t('select-model-options')}</Typography>
       <Box display={'flex'} width={'100%'} gap={3}>
         <Box display={'flex'} flexDirection={'column'} flex={1} gap={3}>
@@ -107,6 +172,8 @@ export default function Tabular() {
                 max: 1,
                 step: 0.001,
               }}
+              error={learningRateError}
+              helperText={learningRateError}
               value={learningRate}
             />
           </Box>
@@ -117,6 +184,8 @@ export default function Tabular() {
             </Typography>
             <TextField
               type="number"
+              error={epochsError}
+              helperText={epochsError}
               value={epochs}
               onChange={handleEpochsChange}
               sx={{ flex: 8 }}
@@ -130,6 +199,8 @@ export default function Tabular() {
             </Typography>
             <TextField
               type="number"
+              error={batchSizeError}
+              helperText={batchSizeError}
               value={batchSize}
               onChange={handleBatchSizeChange}
               sx={{ flex: 8 }}
@@ -142,6 +213,7 @@ export default function Tabular() {
               {t('target')}
             </Typography>
             <Select
+              error={targetError}
               sx={{ flex: 8 }}
               value={target}
               onChange={(event) => {
@@ -211,8 +283,17 @@ export default function Tabular() {
           </Box>
         </Box>
       </Box>
+
+      <LayersDisplay
+        layers={layers}
+        setLayers={setLayers}
+        possibleLayers={possibleLayers}
+      />
+
       <Box display={'flex'} width={'100%'} justifyContent={'right'}>
-        <Button variant="contrast">{t('finish')}</Button>
+        <Button onClick={handleFinish} variant="contrast">
+          {t('start-training')}
+        </Button>
       </Box>
     </Box>
   );
