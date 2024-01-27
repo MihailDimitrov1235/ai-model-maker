@@ -14,6 +14,7 @@ import ImportInfo from './Pages/ImortInfo';
 import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
 import Classification from './Pages/Datasets/import/imageData/Classification';
 import Train from './Pages/Train';
+import Tabular from './Pages/Train/Tabular';
 
 const routes = [
   {
@@ -74,7 +75,18 @@ const routes = [
       {
         path: '/train',
         element: <InnerLayout type={'train'} />,
-        children: [{ path: '', element: <Train /> }],
+        children: [
+          {
+            path: '',
+            element: <Train />,
+            children: [
+              { path: 'tabular/:id', element: <Tabular /> },
+              { path: 'image/classification/:id', element: <Train /> },
+              { path: 'table/detection/:id', element: <Train /> },
+              { path: 'table/captioning/:id', element: <Train /> },
+            ],
+          },
+        ],
       },
       {
         path: '/test',

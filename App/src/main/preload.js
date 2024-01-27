@@ -13,6 +13,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   requestImage: (arg) => ipcRenderer.send('requestImage', arg),
   requestDatasetsInfo: (arg) => ipcRenderer.send('requestDatasetsInfo', arg),
   getDatasetsCount: (arg) => ipcRenderer.send('get-datasets-count', arg),
+
+  getTabularDatasets: (arg) => ipcRenderer.invoke('get-tabular-datasets', arg),
+  getImageDatasets: (arg) => ipcRenderer.invoke('get-image-datasets', arg),
+  getDatasetInfo: (arg) => ipcRenderer.invoke('get-dataset-info', arg),
+
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
   handleChangeCreateEnvText: (callback) =>

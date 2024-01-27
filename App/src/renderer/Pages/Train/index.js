@@ -9,40 +9,28 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-
-const tabularDatasets = [
-  { label: 'dataset1' },
-  { label: 'dataset2' },
-  { label: 'dataset3' },
-];
-
-const imageDatasets = [
-  { label: 'dataset4' },
-  { label: 'dataset5' },
-  { label: 'dataset6' },
-];
-
-// const tabularDatasets = [
-// { label: 'dataset1' },
-// { label: 'dataset2' },
-// { label: 'dataset3' },
-// ];
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Train() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [datasetType, setDatasetType] = useState('');
   const [datasets, setDatasets] = useState('');
   const [dataset, setDataset] = useState(null);
 
-  const handleDatasetTypeChange = (event) => {
+  const handleDatasetTypeChange = async (event) => {
     const type = event.target.value;
     if (type != datasetType) {
+      navigate('/train');
       setDataset(null);
       setDatasetType(type);
       if (type == 'tabular') {
+        const tabularDatasets = await window.electronAPI.getTabularDatasets();
         setDatasets(tabularDatasets);
       } else if (type == 'image') {
+        const imageDatasets = await window.electronAPI.getImageDatasets();
         setDatasets(imageDatasets);
       }
     }
@@ -50,13 +38,24 @@ export default function Train() {
 
   const handleChangeDataset = (event, newValue) => {
     setDataset(newValue);
+    if (datasetType == 'tabular') {
+      navigate(`/train/tabular/${newValue}`);
+    } else if (datasetType == 'image') {
+      if (newValue.type == 'classification') {
+        navigate(`/train/image/classification/${newValue}`);
+      } else if (newValue.type == 'detection') {
+        navigate(`/train/image/detection/${newValue}`);
+      } else if (newValue.type == 'captioning') {
+        navigate(`/train/image/captioning/${newValue}`);
+      }
+    }
   };
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, m: 3 }}>
       <Typography variant="h5">{t('create-model')}</Typography>
       <Box sx={{ display: 'flex', gap: 3 }}>
         <FormControl sx={{ flex: 1 }}>
-          <InputLabel>{t('dataset')}</InputLabel>
+          <InputLabel>{t('dataset-type')}</InputLabel>
           <Select
             value={datasetType}
             label={t('dataset-type')}
@@ -78,6 +77,7 @@ export default function Train() {
           )}
         />
       </Box>
+      <Outlet />
     </Box>
   );
 }

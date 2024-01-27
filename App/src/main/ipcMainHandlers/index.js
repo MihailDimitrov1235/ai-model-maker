@@ -4,6 +4,7 @@ const fs = require('fs');
 const { PythonShell } = require('python-shell');
 const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 const { setupIPCDatasets } = require('./datasetHandlers');
+const { setupIPCModelHandlers } = require('./modelHandlers');
 const XLSX = require('xlsx');
 const { parse } = require('csv-parse/sync');
 const { getAssetPath } = require('../utils');
@@ -12,6 +13,7 @@ function setupIPCMain(win) {
   ipcMain.setMaxListeners(20);
   setupIPCMainPyEnv(win);
   setupIPCDatasets(win);
+  setupIPCModelHandlers(win);
 
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
