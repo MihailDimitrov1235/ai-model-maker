@@ -21,6 +21,9 @@ const Datasets = function () {
   const navigate = useNavigate();
   const [datasetsInfo, setDatasetsInfo] = useState([]);
   const [datasetsCount, setDatasetsCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+  const [pageDifference, setPageDifference] = useState(3);
   useEffect(() => {
     // Send a request to the main process for datasets count
     window.electronAPI.getDatasetsCount();
@@ -29,15 +32,32 @@ const Datasets = function () {
     window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
       setDatasetsInfo(datasets.data);
     });
+
     window.electronAPI.handleSetDatasetsCount((event, datasetsCount) => {
       console.log(datasetsCount.data);
+      let newPageCount = Math.ceil(datasetsCount.data / pageDifference);
+      //console.log('PAGES=' + pages);
+      setPageCount(newPageCount);
+      console.log('newPAGECOUNT:');
+      console.log(newPageCount);
       // Send a request to the main process for datasets
-      window.electronAPI.requestDatasetsInfo();
+      window.electronAPI.requestDatasetsInfo({
+        page: page,
+        pageDifference: pageDifference,
+      });
     });
   }, []);
 
   const handleClick = (event) => {
     navigate('/data/import');
+  };
+
+  const handleChangePage = (event, value) => {
+    setPage(value);
+    window.electronAPI.requestDatasetsInfo({
+      page: value,
+      pageDifference: pageDifference,
+    });
   };
 
   return (
@@ -105,7 +125,11 @@ const Datasets = function () {
               margin: '30px',
             }}
           >
-            <Pagination count={10} color="primary" />
+            <Pagination
+              count={pageCount}
+              page={page}
+              onChange={handleChangePage}
+            />
           </Box>
         </Box>
       </Box>

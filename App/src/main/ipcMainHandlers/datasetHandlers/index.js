@@ -166,7 +166,7 @@ function setupIPCDatasets(win) {
     fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
   });
 
-  ipcMain.on('requestImage', (event, data) => {
+  ipcMain.on('request-image', (event, data) => {
     const imagePath = data.path;
     fs.readFile(imagePath, (err, imageBuffer) => {
       if (err) {
@@ -183,15 +183,44 @@ function setupIPCDatasets(win) {
     });
   });
 
-  ipcMain.on('requestDatasetsInfo', (event, data) => {
+  ipcMain.on('request-datasets-info', (event, data) => {
+    let page = data.page;
+    let pageDif = data.pageDifference;
     let datasetsInfo = [];
 
+    let current = 0;
+
+    console.log('pageDif=' + pageDif);
     datasetsFolderPaths.forEach((folderPath) => {
       if (fs.existsSync(folderPath.path)) {
         const folders = fs.readdirSync(folderPath.path);
-        console.log(folders);
-        folders.forEach((folder) => {
-          const infoFilePath = path.join(folderPath.path, folder, 'info.json');
+        console.log(folders.length);
+        let start = 0;
+        let end = 0;
+        if (
+          folders.length + current >= pageDif * page - pageDif &&
+          current < page * pageDif
+        ) {
+          start = pageDif * page - pageDif - current;
+        } else {
+          console.log(folders);
+          return;
+        }
+
+        if (start + pageDif > folders.length) {
+          end = folders.length;
+        } else {
+          end = start + pageDif;
+        }
+
+        current += folders.length;
+
+        for (let i = start; i < end; i++) {
+          const infoFilePath = path.join(
+            folderPath.path,
+            folders[i],
+            'info.json',
+          );
           const data = fs.readFileSync(infoFilePath);
           const jsonData = JSON.parse(data);
           if (folderPath.type == 'table') {
@@ -207,9 +236,29 @@ function setupIPCDatasets(win) {
             }
           }
           datasetsInfo.push(jsonData);
-        });
+        }
+        // folders.forEach((folder) => {
+        //   const infoFilePath = path.join(folderPath.path, folder, 'info.json');
+        //   const data = fs.readFileSync(infoFilePath);
+        //   const jsonData = JSON.parse(data);
+        //   if (folderPath.type == 'table') {
+        //     jsonData.type = 'table';
+        //   } else if (folderPath.type == 'image') {
+        //     jsonData.type = 'image';
+        //     if (folderPath.subType == 'classification') {
+        //       jsonData.subType = 'classification';
+        //     } else if (folderPath.subType == 'detection') {
+        //       jsonData.subType = 'detection';
+        //     } else if (folderPath.subType == 'captioning') {
+        //       jsonData.subType = 'captioning';
+        //     }
+        //   }
+
+        //
+        // });
       }
     });
+
     win.webContents.send('set-request-datasets-info', {
       data: datasetsInfo,
     });

@@ -10,8 +10,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   createDatasetTable: (arg) => ipcRenderer.send('create-dataset-table', arg),
   createDatasetLabels: (arg) => ipcRenderer.send('create-dataset-labels', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
-  requestImage: (arg) => ipcRenderer.send('requestImage', arg),
-  requestDatasetsInfo: (arg) => ipcRenderer.send('requestDatasetsInfo', arg),
+  requestImage: (arg) => ipcRenderer.send('request-image', arg),
+  requestDatasetsInfo: (arg) => ipcRenderer.send('request-datasets-info', arg),
   getDatasetsCount: (arg) => ipcRenderer.send('get-datasets-count', arg),
 
   getTabularDatasets: (arg) => ipcRenderer.invoke('get-tabular-datasets', arg),
