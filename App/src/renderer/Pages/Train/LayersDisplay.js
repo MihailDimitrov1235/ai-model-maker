@@ -57,7 +57,7 @@ export default function LayersDisplay({
       </Box>
       <Box display={'flex'} flexDirection={'column'} gap={3}>
         {layers.map((layer, index) => (
-          <Box display={'flex'} justifyContent={'space-between'}>
+          <Box key={index} display={'flex'} justifyContent={'space-between'}>
             <Box display={'flex'} gap={3}>
               <FormControl>
                 <InputLabel>{t('type')}</InputLabel>
@@ -75,8 +75,10 @@ export default function LayersDisplay({
                     setLayers(newLayers);
                   }}
                 >
-                  {possibleLayers.map((item) => (
-                    <MenuItem value={item.type}>{t(item.type)}</MenuItem>
+                  {possibleLayers.map((item, idx) => (
+                    <MenuItem key={idx} value={item.type}>
+                      {t(item.type)}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -115,8 +117,10 @@ export default function LayersDisplay({
                       setLayers(newLayers);
                     }}
                   >
-                    {['relu', 'linear'].map((func) => (
-                      <MenuItem value={func}>{t(func)}</MenuItem>
+                    {['relu', 'linear'].map((func, i) => (
+                      <MenuItem key={i} value={func}>
+                        {t(func)}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>

@@ -184,36 +184,38 @@ function setupIPCDatasets(win) {
   });
 
   ipcMain.on('request-datasets-info', (event, data) => {
-    let page = data.page;
-    let pageDif = data.pageDifference;
+    const page = data.page;
+    const datasetsPerPage = data.datasetsPerPage;
+
+    const startTarget = datasetsPerPage * (page - 1);
+    const endTarget = datasetsPerPage * page;
+
     let datasetsInfo = [];
 
-    let current = 0;
-
-    console.log('pageDif=' + pageDif);
+    let passed = 0;
     datasetsFolderPaths.forEach((folderPath) => {
       if (fs.existsSync(folderPath.path)) {
         const folders = fs.readdirSync(folderPath.path);
-        console.log(folders.length);
+
+        const startIndex = passed;
+        const endIndex = passed + folders.length;
+
         let start = 0;
-        let end = 0;
-        if (
-          folders.length + current >= pageDif * page - pageDif &&
-          current < page * pageDif
-        ) {
-          start = pageDif * page - pageDif - current;
-        } else {
-          console.log(folders);
+        let end = folders.length;
+
+        if (startTarget >= startIndex) {
+          start = startTarget - passed;
+        }
+
+        if (endTarget <= endIndex) {
+          end = endTarget - passed;
+        }
+
+        passed += folders.length;
+
+        if (startIndex > endTarget || endIndex < startTarget) {
           return;
         }
-
-        if (start + pageDif > folders.length) {
-          end = folders.length;
-        } else {
-          end = start + pageDif;
-        }
-
-        current += folders.length;
 
         for (let i = start; i < end; i++) {
           const infoFilePath = path.join(
@@ -237,28 +239,8 @@ function setupIPCDatasets(win) {
           }
           datasetsInfo.push(jsonData);
         }
-        // folders.forEach((folder) => {
-        //   const infoFilePath = path.join(folderPath.path, folder, 'info.json');
-        //   const data = fs.readFileSync(infoFilePath);
-        //   const jsonData = JSON.parse(data);
-        //   if (folderPath.type == 'table') {
-        //     jsonData.type = 'table';
-        //   } else if (folderPath.type == 'image') {
-        //     jsonData.type = 'image';
-        //     if (folderPath.subType == 'classification') {
-        //       jsonData.subType = 'classification';
-        //     } else if (folderPath.subType == 'detection') {
-        //       jsonData.subType = 'detection';
-        //     } else if (folderPath.subType == 'captioning') {
-        //       jsonData.subType = 'captioning';
-        //     }
-        //   }
-
-        //
-        // });
       }
     });
-
     win.webContents.send('set-request-datasets-info', {
       data: datasetsInfo,
     });

@@ -17,7 +17,7 @@ export default function Train() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [datasetType, setDatasetType] = useState('');
-  const [datasets, setDatasets] = useState('');
+  const [datasets, setDatasets] = useState([]);
   const [dataset, setDataset] = useState(null);
 
   const handleDatasetTypeChange = async (event) => {

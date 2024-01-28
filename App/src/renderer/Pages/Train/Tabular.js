@@ -27,7 +27,7 @@ export default function Tabular() {
   const [learningRateError, setLearningRateError] = useState('');
   const [epochsError, setEpochsError] = useState('');
   const [batchSizeError, setBatchSizeError] = useState('');
-  const [targetError, setTargetError] = useState('');
+  const [targetError, setTargetError] = useState(null);
   const [slidersError, setSlidersError] = useState('');
   const [layersError, setLayersError] = useState('');
 
@@ -237,8 +237,10 @@ export default function Tabular() {
                 setTarget(event.target.value);
               }}
             >
-              {info.header?.map((title) => (
-                <MenuItem value={title}>{title}</MenuItem>
+              {info.header?.map((title, id) => (
+                <MenuItem key={id} value={title}>
+                  {title}
+                </MenuItem>
               ))}
             </Select>
           </Box>
@@ -315,7 +317,7 @@ export default function Tabular() {
 
       <Box display={'flex'} width={'100%'} justifyContent={'right'}>
         <Button onClick={handleFinish} variant="contrast">
-          {t('start-training')}
+          {t('create-model')}
         </Button>
       </Box>
     </Box>

@@ -20,10 +20,9 @@ const Datasets = function () {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [datasetsInfo, setDatasetsInfo] = useState([]);
-  const [datasetsCount, setDatasetsCount] = useState(0);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [pageDifference, setPageDifference] = useState(3);
+  const datasetsPerPage = 4;
   useEffect(() => {
     // Send a request to the main process for datasets count
     window.electronAPI.getDatasetsCount();
@@ -34,16 +33,12 @@ const Datasets = function () {
     });
 
     window.electronAPI.handleSetDatasetsCount((event, datasetsCount) => {
-      console.log(datasetsCount.data);
-      let newPageCount = Math.ceil(datasetsCount.data / pageDifference);
-      //console.log('PAGES=' + pages);
+      let newPageCount = Math.ceil(datasetsCount.data / datasetsPerPage);
       setPageCount(newPageCount);
-      console.log('newPAGECOUNT:');
-      console.log(newPageCount);
       // Send a request to the main process for datasets
       window.electronAPI.requestDatasetsInfo({
         page: page,
-        pageDifference: pageDifference,
+        datasetsPerPage: datasetsPerPage,
       });
     });
   }, []);
@@ -56,7 +51,7 @@ const Datasets = function () {
     setPage(value);
     window.electronAPI.requestDatasetsInfo({
       page: value,
-      pageDifference: pageDifference,
+      datasetsPerPage: datasetsPerPage,
     });
   };
 
