@@ -68,7 +68,7 @@ const Datasets = function () {
             justifyContent: 'space-between',
           }}
         >
-          <h2>{t('datasets')}</h2>
+          <h2>{t('dataset')}</h2>
 
           <Box
             sx={{

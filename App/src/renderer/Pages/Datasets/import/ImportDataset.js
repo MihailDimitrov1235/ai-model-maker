@@ -46,7 +46,7 @@ function ImportDataset() {
           gap: 3,
         }}
       >
-        <Typography variant="h5">{t('create-model')}</Typography>
+        <Typography variant="h5">{t('create-dataset')}</Typography>
         <FormControl fullWidth>
           <InputLabel>{t('type')}</InputLabel>
           <Select label={t('type')} value={type} onChange={handleChange}>

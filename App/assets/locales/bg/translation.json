@@ -38,5 +38,19 @@
   "width": "Ширина",
   "height": "Височина",
   "name": "Име",
-  "delete-image": "Изтрий снимка"
+  "delete-image": "Изтрий снимка",
+  "create-model": "Създай модел",
+  "create-dataset": "Създай на набор от данни",
+  "dataset-type": "Вид на набор от данни",
+  "dataset": "Набор от данни",
+  "hidden-layers": "Скрит слой",
+  "add-layer": "Добави слой",
+  "activation-function": "Функция за начало",
+  "expected-number-between": "Очаквано число между",
+  "expected-whole-number-between": "Очаквано цяло число между",
+  "and": "и",
+  "train-data-expected-10%-or-more": "Oчаквани данни за обучение 10% или повече ",
+  "missing-layers": "Липсващи слоеве",
+  "new-dataset": "Нов набор от данни",
+  "select-file": "Избери файл"
 }

@@ -39,6 +39,19 @@
   "width": "Width",
   "height": "Height",
   "name": "Name",
-  "delete-image": "Delete Image"
+  "delete-image": "Delete Image",
+  "create-model": "Create Model",
+  "create-dataset": "Create Dataset",
+  "dataset-type": "Dataset Type",
+  "dataset": "Dataset",
+  "hidden-layers": "Hidden layers",
+  "add-layer": "Add Layer",
+  "activation-function": "Activation function",
+  "expected-number-between": "Expected number between",
+  "expected-whole-number-between": "Expected whole number between",
+  "and": "and",
+  "missing-layers": "Missing Layers",
+  "new-dataset": "New Dataset",
+  "select-file": "Selected File"
 
 }
