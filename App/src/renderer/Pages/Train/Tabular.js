@@ -169,6 +169,16 @@ export default function Tabular() {
     } else {
       setLayersError('');
     }
+
+    window.electronAPI.createTabularModel({
+      dataset: id,
+      learningRate: learningRate,
+      epochs: epochs,
+      batchSize: batchSize,
+      target: target,
+      dataSplit: [train / 100, val / 100, test / 100],
+      layers: layers,
+    });
   };
 
   return (

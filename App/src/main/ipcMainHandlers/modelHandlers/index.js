@@ -1,5 +1,7 @@
 const { ipcMain } = require('electron');
 const { getAssetPath } = require('../../utils');
+import { getConfig } from '../../utils/configUtils';
+const { PythonShell } = require('python-shell');
 const fs = require('fs');
 
 const path = require('path');
@@ -46,5 +48,40 @@ export function setupIPCModelHandlers(win) {
     const filePath = path.join(tabularDatasetsFolder, arg.name, 'info.json');
     const data = JSON.parse(fs.readFileSync(filePath));
     return data;
+  });
+
+  ipcMain.on('create-tabular-model', (event, arg) => {
+    const args = [
+      getAssetPath('datasets/table/' + arg.dataset),
+      arg.learningRate,
+      arg.epochs,
+      arg.batchSize,
+      arg.target,
+      arg.dataSplit[1],
+      arg.dataSplit[2],
+    ];
+    arg.layers.forEach((layer) => {
+      args.push(JSON.stringify(layer));
+    });
+    const config = getConfig();
+    let options = {
+      mode: 'text',
+      pythonPath: config.python_exe_path,
+      pythonOptions: ['-u'], // get print results in real-time
+      scriptPath: getAssetPath('/python-scripts/tabularData'),
+      args: args,
+    };
+
+    let pyShell = new PythonShell('create_data_and_model.py', options);
+
+    // pyShell.run('create_data_and_model.py', options).then((messages) => {
+    //   // console.log('results: %j', messages);
+    // });
+
+    pyShell.stdout.on('data', function (message) {
+      // received a message sent from the Python script (a simple "print" statement)
+      console.log('message');
+      console.log(message);
+    });
   });
 }

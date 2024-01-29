@@ -45,6 +45,4 @@ def create_model(all_inputs, encoded_features, layers, info, target, learning_ra
             metrics=["accuracy"],
         )
 
-    model.summary()
-
     return model

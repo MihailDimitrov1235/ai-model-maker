@@ -1,7 +1,6 @@
 const { ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const { PythonShell } = require('python-shell');
 const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 const { setupIPCDatasets } = require('./datasetHandlers');
 const { setupIPCModelHandlers } = require('./modelHandlers');
@@ -20,8 +19,7 @@ function setupIPCMain(win) {
     // dial.then(data => {
     //   console.log(data)
     // })
-
-    getConfig();
+    // getConfig();
     // let options = {
     //   mode: 'text',
     //   pythonPath: path.join(__dirname, '/../Python/.conda/python.exe'),
@@ -29,7 +27,6 @@ function setupIPCMain(win) {
     //   scriptPath: path.join(__dirname, '/../Python'),
     //   args: []
     // };
-
     // PythonShell.run('Test.py', options).then(messages=>{
     //   // results is an array consisting of messages collected during execution
     //   console.log('results: %j', messages);
