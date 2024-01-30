@@ -45,18 +45,20 @@ function Classification() {
     setClasses(removedClass);
   }
   return (
-    <Box display={'flex'} justifyContent={'right'}>
+    <Box display={'flex'} justifyContent={'right'} height={'100%'} >
       <Box
         sx={{
-          width: '40%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'right',
+          height: "100%",
+          overflow: 'scroll'
         }}
       >
         <FormControl>
           <FormLabel sx={{ color: 'text.main', fontSize: '18px' }}>
-            Classes
+            {t('classes')}
           </FormLabel>
           <RadioGroup onChange={handleChangeLabel}>
             {classes.map((item) => (

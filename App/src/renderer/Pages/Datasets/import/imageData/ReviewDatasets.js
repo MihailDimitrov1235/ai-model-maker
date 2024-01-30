@@ -1,4 +1,4 @@
-import { Box, Button, Pagination } from '@mui/material';
+import { Box, Button, Pagination,Card } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Outlet, useSearchParams, useNavigate } from 'react-router-dom';
@@ -86,18 +86,17 @@ function ReviewDatasets() {
           </Button>
         </Box>
       </Box>
-      <Box
+      <Card
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           mt: 3,
-          border: 'solid',
+          p:3
         }}
       >
         <Box
           sx={{
             width: '50%',
-            border: 'solid',
             alignContent: 'center',
           }}
         >
@@ -116,7 +115,7 @@ function ReviewDatasets() {
             <Outlet context={[labels, setLabels, classes, setClasses, page]} />
           )}
         </Box>
-      </Box>
+      </Card>
     </Box>
   );
 }

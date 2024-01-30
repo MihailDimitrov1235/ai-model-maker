@@ -254,12 +254,13 @@ function ImportImage() {
           <UploadButton
             onClick={handleClickLabel}
             text={
-              textUploadLabels == 1 ? t('choоse-labels') : t('chosen-txt-file')
+              textUploadLabels == 1 ? t('choоse-labels') : t('chosen-labels')
             }
             //text={t('choose-labels')}
             disabled={selectedValue ? false : true}
             icon="file"
             error={uploadLabelsError == 1 ? '' : t('no-labels-found')}
+            uploadItem={labels.length}
           />
         </Box>
         <Box>

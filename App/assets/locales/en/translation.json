@@ -28,7 +28,7 @@
   "new-datasets": "New Datasets",
   "create-tabular-dataset": "Create Tabular Dataset",
   "chosen-images": "Images chosen",
-  "chosen-txt-file": "A txt file is choosed",
+  "chosen-labels": "Labels chosen",
   "no-images-found": "No images found",
   "no-labels-found": "No labels found",
   "add-label": "Add Labels",
@@ -52,6 +52,9 @@
   "and": "and",
   "missing-layers": "Missing Layers",
   "new-dataset": "New Dataset",
-  "select-file": "Selected File"
+  "select-file": "Selected File",
+  "make-model": "Make Model",
+  "records": "Records",
+  "image-data": "Image Data"
 
 }

@@ -27,7 +27,7 @@
   "new-datasets": "Нов набор от данни",
   "create-tabular-dataset": "Създай табличен набор отданни",
   "chosen-images": "Избрани снимки",
-  "chosen-txt-file": "Избран е txt файл",
+  "chosen-labels": "Избрани етикети",
   "no-images-found": "Няма намерени снимки",
   "no-labels-found": "Няма намерени етикети",
   "add-label": "Добави етикет",
@@ -52,5 +52,9 @@
   "train-data-expected-10%-or-more": "Oчаквани данни за обучение 10% или повече ",
   "missing-layers": "Липсващи слоеве",
   "new-dataset": "Нов набор от данни",
-  "select-file": "Избери файл"
+  "select-file": "Избери файл",
+  "make-model": "Направи модел",
+  "records": "Записи",
+  "image-data": "Данни от снимки"
+  
 }
