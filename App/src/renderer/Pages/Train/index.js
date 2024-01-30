@@ -38,9 +38,14 @@ export default function Train() {
 
   const handleChangeDataset = (event, newValue) => {
     setDataset(newValue);
+    if(newValue == null){
+      navigate(`/train`);
+      return
+    }
     if (datasetType == 'tabular') {
       navigate(`/train/tabular/${newValue}`);
     } else if (datasetType == 'image') {
+      console.log(newValue)
       if (newValue.type == 'classification') {
         navigate(`/train/image/classification/${newValue}`);
       } else if (newValue.type == 'detection') {

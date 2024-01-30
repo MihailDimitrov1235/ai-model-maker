@@ -67,20 +67,14 @@ export function setupIPCModelHandlers(win) {
     let options = {
       mode: 'text',
       pythonPath: config.python_exe_path,
-      pythonOptions: ['-u'], // get print results in real-time
+      pythonOptions: ['-u'], 
       scriptPath: getAssetPath('/python-scripts/tabularData'),
       args: args,
     };
 
     let pyShell = new PythonShell('create_data_and_model.py', options);
 
-    // pyShell.run('create_data_and_model.py', options).then((messages) => {
-    //   // console.log('results: %j', messages);
-    // });
-
     pyShell.stdout.on('data', function (message) {
-      // received a message sent from the Python script (a simple "print" statement)
-      console.log('message');
       console.log(message);
     });
   });
