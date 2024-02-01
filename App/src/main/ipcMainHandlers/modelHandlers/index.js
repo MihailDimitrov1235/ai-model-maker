@@ -6,6 +6,8 @@ const fs = require('fs');
 
 const path = require('path');
 
+let pyShell;
+
 export function setupIPCModelHandlers(win) {
   const tabularDatasetsFolder = getAssetPath(`datasets/table`);
   const imageDatasetsFolders = [
@@ -51,31 +53,50 @@ export function setupIPCModelHandlers(win) {
   });
 
   ipcMain.on('create-tabular-model', (event, arg) => {
-    const args = [
-      getAssetPath('datasets/table/' + arg.dataset),
-      arg.learningRate,
-      arg.epochs,
-      arg.batchSize,
-      arg.target,
-      arg.dataSplit[1],
-      arg.dataSplit[2],
-    ];
+    if (pyShell) {
+      pyShell.kill('SIGINT');
+    }
+    const save_model_path = getAssetPath('models/' + arg.dataset);
+    if (!fs.existsSync(save_model_path)) {
+      fs.mkdirSync(save_model_path, { recursive: true });
+    }
+    const argsObject = {
+      folder_path: getAssetPath('datasets/table/' + arg.dataset),
+      save_model_path: save_model_path + '/model.keras',
+      learning_rate: arg.learningRate,
+      epochs: arg.epochs,
+      batch_size: arg.batchSize,
+      target: arg.target,
+      validation_split: arg.dataSplit[1],
+      test_split: arg.dataSplit[2],
+    };
+
+    let argsArray = [];
+    for (let key in argsObject) {
+      argsArray.push(argsObject[key]);
+    }
+
     arg.layers.forEach((layer) => {
-      args.push(JSON.stringify(layer));
+      argsArray.push(JSON.stringify(layer));
     });
+
     const config = getConfig();
     let options = {
       mode: 'text',
       pythonPath: config.python_exe_path,
-      pythonOptions: ['-u'], 
+      pythonOptions: ['-u'],
       scriptPath: getAssetPath('/python-scripts/tabularData'),
-      args: args,
+      args: argsArray,
     };
 
-    let pyShell = new PythonShell('create_data_and_model.py', options);
+    pyShell = new PythonShell('create_data_and_model.py', options);
 
     pyShell.stdout.on('data', function (message) {
       console.log(message);
+    });
+
+    pyShell.stderr.on('data', function (err) {
+      console.log(err);
     });
   });
 }

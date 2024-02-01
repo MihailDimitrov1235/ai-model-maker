@@ -1,2 +1,6 @@
 /datasets/table/*
-/datasets/image/*
+/datasets/image/classification/*
+/datasets/image/detection/*
+/datasets/image/captioning/*
+
+/models/*
