@@ -13,8 +13,10 @@ import ImportText from './Pages/Datasets/import/ImportText';
 import ImportInfo from './Pages/ImortInfo';
 import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
 import Classification from './Pages/Datasets/import/imageData/Classification';
-import Train from './Pages/Train';
-import Tabular from './Pages/Train/Tabular';
+
+import Models from './Pages/Models';
+import CreateModel from './Pages/Models/CreateModel';
+import CreateTabular from './Pages/Models/CreateModel/CreateTabular';
 
 const routes = [
   {
@@ -73,17 +75,31 @@ const routes = [
         ],
       },
       {
-        path: '/train',
-        element: <InnerLayout type={'train'} />,
+        path: '/models',
+        element: <InnerLayout type={'models'} />,
         children: [
           {
             path: '',
-            element: <Train />,
+            element: <Models />,
+            // children: [
+            //   { path: 'tabular/:id', element: <Tabular /> },
+            //   { path: 'image/classification/:id', element: <Models /> },
+            //   { path: 'table/detection/:id', element: <Models /> },
+            //   { path: 'table/captioning/:id', element: <Models /> },
+            // ],
+          },
+          {
+            path: 'create',
+            element: <CreateModel />,
             children: [
-              { path: 'tabular/:id', element: <Tabular /> },
-              { path: 'image/classification/:id', element: <Train /> },
-              { path: 'table/detection/:id', element: <Train /> },
-              { path: 'table/captioning/:id', element: <Train /> },
+              {
+                path: 'tabular',
+                children: [{ path: ':id', element: <CreateTabular /> }],
+              },
+              {
+                path: 'image',
+                children: [{ path: ':id', element: <CreateTabular /> }],
+              },
             ],
           },
         ],

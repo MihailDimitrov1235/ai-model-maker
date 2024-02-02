@@ -14,7 +14,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import LayersDisplay from './LayersDisplay';
 
-export default function Tabular() {
+export default function CreateTabular() {
   const { t } = useTranslation();
   const { id } = useParams();
   const [info, setInfo] = useState({});

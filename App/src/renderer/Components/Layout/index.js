@@ -63,14 +63,13 @@ export default function Layout() {
 
   const handleCancelCreateEnv = () => {
     window.electronAPI.cancelCreateEnv();
-    // setOpenCreateEnv(false)
     setCreateEnvText(t('create-env-init'));
   };
 
   const items = [
     { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
     { type: 'item', name: t('Data'), icon: DatasetIcon, href: '/data' },
-    { type: 'item', name: t('Train'), icon: SchoolIcon, href: '/train' },
+    { type: 'item', name: t('Models'), icon: SchoolIcon, href: '/models' },
     { type: 'item', name: t('Test'), icon: ScienceIcon, href: '/test' },
   ];
   return (
@@ -148,7 +147,12 @@ export default function Layout() {
           <img
             src={logo}
             alt="Logo"
-            style={{ aspectRatio: '1/1', width: '100%', borderRadius:'28px', padding:'6px' }}
+            style={{
+              aspectRatio: '1/1',
+              width: '100%',
+              borderRadius: '28px',
+              padding: '8px',
+            }}
           />
         </Box>
 

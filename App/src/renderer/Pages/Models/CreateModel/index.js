@@ -11,19 +11,23 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Train() {
+  const location = useLocation();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [datasetType, setDatasetType] = useState('');
   const [datasets, setDatasets] = useState([]);
   const [dataset, setDataset] = useState(null);
 
-  const handleDatasetTypeChange = async (event) => {
-    const type = event.target.value;
+  useEffect(() => {
+    handleDatasetTypeChange(location.pathname.split('/')[3] || '');
+  }, [location]);
+
+  const handleDatasetTypeChange = async (type) => {
     if (type != datasetType) {
-      navigate('/train');
+      navigate(`/models/create/${type}`);
       setDataset(null);
       setDatasetType(type);
       if (type == 'tabular') {
@@ -38,20 +42,19 @@ export default function Train() {
 
   const handleChangeDataset = (event, newValue) => {
     setDataset(newValue);
-    if(newValue == null){
-      navigate(`/train`);
-      return
+    if (newValue == null) {
+      navigate(`/models/create`);
+      return;
     }
     if (datasetType == 'tabular') {
-      navigate(`/train/tabular/${newValue}`);
+      navigate(`/models/create/tabular/${newValue}`);
     } else if (datasetType == 'image') {
-      console.log(newValue)
       if (newValue.type == 'classification') {
-        navigate(`/train/image/classification/${newValue}`);
+        navigate(`/models/create/image/classification/${newValue}`);
       } else if (newValue.type == 'detection') {
-        navigate(`/train/image/detection/${newValue}`);
+        navigate(`/models/create/image/detection/${newValue}`);
       } else if (newValue.type == 'captioning') {
-        navigate(`/train/image/captioning/${newValue}`);
+        navigate(`/models/create/image/captioning/${newValue}`);
       }
     }
   };
@@ -64,7 +67,7 @@ export default function Train() {
           <Select
             value={datasetType}
             label={t('dataset-type')}
-            onChange={handleDatasetTypeChange}
+            onChange={(event) => handleDatasetTypeChange(event.target.value)}
           >
             <MenuItem value={'tabular'}>{t('tabular')}</MenuItem>
             <MenuItem value={'image'}>{t('image')}</MenuItem>
