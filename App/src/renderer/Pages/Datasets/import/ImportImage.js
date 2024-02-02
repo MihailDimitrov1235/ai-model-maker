@@ -36,9 +36,6 @@ function ImportImage() {
   const handleSelectChange = (event) => {
     const value = event.target.value;
     setSelectedValue(value);
- 
-    // You can perform additional actions based on the selected value here
-    console.log('Selected value:', value);
   };
  
   useEffect(() => {
@@ -54,8 +51,6 @@ function ImportImage() {
     });
     window.electronAPI.handleSetImageLabel((event, value) => {
       if (!value.canceled && value.data != '') {
-        //setLabels(value.data);
-        console.log('LabelOT SETVANE=' + value.data);
         let labelsFromFile = JSON.stringify(value.data)
           .replace(/["\[\]]/g, '')
           .split('\\r\\n');
@@ -67,9 +62,7 @@ function ImportImage() {
             classSet.add(item);
           }
         });
-        console.log(classSet);
         setClasses(Array.from(classSet));
-        console.log(Array.from(classSet));
         setLabels(newLabel);
  
         setUploadLabelsError(1);
@@ -97,7 +90,6 @@ function ImportImage() {
     if(/^\d+$/.test(e.target.value)){
       setImageWidth(e.target.value);
     }
-    console.log('width=' + imageWidth);
   };
   const handleInputChangeHeight = (e) => {
     if(/^\d+$/.test(e.target.value)){
@@ -122,8 +114,6 @@ function ImportImage() {
       }
       return;
     } else {
-      console.log('Button clicked, perform finish action');
-      console.log('Final width=' + imageWidth + 'height=' + imageHeight);
       navigate(
         `review/${selectedValue}?image=${encodeURIComponent(
           JSON.stringify(images),

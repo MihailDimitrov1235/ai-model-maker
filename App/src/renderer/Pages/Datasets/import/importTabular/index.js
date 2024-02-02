@@ -50,8 +50,6 @@ function ImportTabular() {
       return;
     }
     for (let i = 0; i < header.length; i++) {
-      console.log(header[i]);
-      console.log(i);
 
       if (!header[i]) {
         setMissingHeader(i);
@@ -70,16 +68,12 @@ function ImportTabular() {
     for (let i = 0; i < bodyData.length; i++) {
       let row = [];
       for (let j = 0; j < bodyData[i].length; j++) {
-        console.log(bodyData[i][j]);
-        console.log(headerCheckboxes[j]);
         if (headerCheckboxes[j]) {
           row.push(bodyData[i][j]);
         }
       }
       finalBodyData.push(row);
     }
-    // console.log(finalBodyData);
-    // console.log(headerCheckboxes);
 
     let finalSelectedTypes = [];
     for (let i = 0; i < selectedTypes.length; i++) {
@@ -127,7 +121,6 @@ function ImportTabular() {
       if (!value.error) {
         setData(value.data);
       }
-      console.log(value);
     });
   }, []);
 

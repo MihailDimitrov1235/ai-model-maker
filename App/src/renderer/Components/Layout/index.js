@@ -17,7 +17,7 @@ import ThemeToggle from './ThemeToggle';
 import { useTranslation } from 'react-i18next';
 import LanguageChanger from './LanguageChanger';
 import { useEffect, useState } from 'react';
-import logo from '../../../../assets/logo-placeholder-image.png';
+import logo from '../../../../assets/logo.png';
 import Snack from '../Utils/Snack';
 import CustomDialog from '../Utils/CustomDialog';
 
@@ -147,8 +147,8 @@ export default function Layout() {
         >
           <img
             src={logo}
-            alt="Logo Placeholder"
-            style={{ aspectRatio: '1/1', width: '100%' }}
+            alt="Logo"
+            style={{ aspectRatio: '1/1', width: '100%', borderRadius:'28px', padding:'6px' }}
           />
         </Box>
 

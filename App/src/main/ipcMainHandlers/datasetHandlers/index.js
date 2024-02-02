@@ -151,8 +151,6 @@ function setupIPCDatasets(win) {
   });
 
   ipcMain.on('create-dataset-labels', (event, arg) => {
-    //const csvData = arg.labels.map((item) => item + ',');
-    //console.log(csvData);
     const dir = getAssetPath(`datasets/image/${arg.type}/${arg.name}`);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
@@ -251,7 +249,6 @@ function setupIPCDatasets(win) {
     datasetsFolderPaths.forEach((folderPath) => {
       if (fs.existsSync(folderPath.path)) {
         const folders = fs.readdirSync(folderPath.path);
-        console.log(folders);
         datasetCount += folders.length;
       }
     });

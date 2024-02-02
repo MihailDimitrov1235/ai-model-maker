@@ -15,12 +15,12 @@ const dataItems = [
   },
   {
     type: "section",
-    name: "Tabular",
-    href: "/data/import",
+    name: "View",
+    href: "/data",
     items: [
-      { type: "item", name: "1", href: "/data/tabular/1" },
-      { type: "item", name: "2", href: "/data/tabular/2" },
-      { type: "item", name: "3", href: "/data/tabular/3" },
+      { type: "item", name: "Tabular", href: "/data/tabular" },
+      { type: "item", name: "Image", href: "/data/image" },
+      { type: "item", name: "Text", href: "/data/text" },
     ],
   },
 ];
@@ -28,22 +28,14 @@ const dataItems = [
 const trainItems = [
   {
     type: "section",
-    name: "Linear Regression",
-    href: "/train/linear",
+    name: "Create",
+    href: "/train/create",
     items: [
-      { type: "item", name: "Model1", href: "/train/linear" },
-      { type: "item", name: "Model2", href: "/train/linear" },
+      { type: "item", name: "Tabular", href: "/train/create/tabular" },
+      { type: "item", name: "Image", href: "/train/create/image" },
+      { type: "item", name: "Text", href: "/train/create/text" },
     ],
-  },
-  {
-    type: "section",
-    name: "Neural networks",
-    href: "/train/nn",
-    items: [
-      { type: "item", name: "Model1", href: "/train/nn" },
-      { type: "item", name: "Model2", href: "/train/nn" },
-    ],
-  },
+  }
 ];
 
 const testItems = [
