@@ -55,6 +55,7 @@
   "select-file": "Избери файл",
   "make-model": "Направи модел",
   "records": "Записи",
-  "image-data": "Данни от снимки"
+  "image-data": "Данни от снимки",
+  "no-datasets-found": "Няма намерени наборa от данни"
   
 }
