@@ -5,16 +5,6 @@ import { Outlet } from 'react-router-dom';
 const dataItems = [
   {
     type: 'section',
-    name: 'Import',
-    href: '/data/import',
-    items: [
-      { type: 'item', name: 'Tabular', href: '/data/import/tabular' },
-      { type: 'item', name: 'Image', href: '/data/import/image' },
-      { type: 'item', name: 'Text', href: '/data/import/text' },
-    ],
-  },
-  {
-    type: 'section',
     name: 'View',
     href: '/data',
     items: [
@@ -23,9 +13,29 @@ const dataItems = [
       { type: 'item', name: 'Text', href: '/data/text' },
     ],
   },
+  {
+    type: 'section',
+    name: 'Import',
+    href: '/data/import',
+    items: [
+      { type: 'item', name: 'Tabular', href: '/data/import/tabular' },
+      { type: 'item', name: 'Image', href: '/data/import/image' },
+      { type: 'item', name: 'Text', href: '/data/import/text' },
+    ],
+  },
 ];
 
 const modelsItems = [
+  {
+    type: 'section',
+    name: 'View',
+    href: '/models',
+    items: [
+      { type: 'item', name: 'Tabular', href: '/models/tabular' },
+      { type: 'item', name: 'Image', href: '/models/image' },
+      { type: 'item', name: 'Text', href: '/models/text' },
+    ],
+  },
   {
     type: 'section',
     name: 'Create',

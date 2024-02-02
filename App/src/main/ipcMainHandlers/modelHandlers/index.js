@@ -16,6 +16,13 @@ export function setupIPCModelHandlers(win) {
     getAssetPath(`datasets/image/captioning`),
   ];
 
+  const modelFolders = [
+    getAssetPath(`models/table`),
+    getAssetPath(`models/image/classification`),
+    getAssetPath(`models/image/detection`),
+    getAssetPath(`models/image/captioning`),
+  ];
+
   ipcMain.handle('get-tabular-datasets', async (event, arg) => {
     if (fs.existsSync(tabularDatasetsFolder)) {
       const folders = fs.readdirSync(tabularDatasetsFolder);
@@ -97,6 +104,82 @@ export function setupIPCModelHandlers(win) {
 
     pyShell.stderr.on('data', function (err) {
       console.log(err);
+    });
+  });
+
+  ipcMain.on('get-models', (event, data) => {
+    const page = data.page;
+    const modelsPerPage = data.modelsPerPage;
+
+    const startTarget = modelsPerPage * (page - 1);
+    const endTarget = modelsPerPage * page;
+
+    let models = [];
+
+    let passed = 0;
+    modelFolders.forEach((folderPath) => {
+      if (fs.existsSync(folderPath.path)) {
+        const folders = fs.readdirSync(folderPath.path);
+
+        const startIndex = passed;
+        const endIndex = passed + folders.length;
+
+        let start = 0;
+        let end = folders.length;
+
+        if (startTarget >= startIndex) {
+          start = startTarget - passed;
+        }
+
+        if (endTarget <= endIndex) {
+          end = endTarget - passed;
+        }
+
+        passed += folders.length;
+
+        if (startIndex > endTarget || endIndex < startTarget) {
+          return;
+        }
+
+        for (let i = start; i < end; i++) {
+          const infoFilePath = path.join(
+            folderPath.path,
+            folders[i],
+            'info.json',
+          );
+          const data = fs.readFileSync(infoFilePath);
+          const jsonData = JSON.parse(data);
+          if (folderPath.type == 'table') {
+            jsonData.type = 'table';
+          } else if (folderPath.type == 'image') {
+            jsonData.type = 'image';
+            if (folderPath.subType == 'classification') {
+              jsonData.subType = 'classification';
+            } else if (folderPath.subType == 'detection') {
+              jsonData.subType = 'detection';
+            } else if (folderPath.subType == 'captioning') {
+              jsonData.subType = 'captioning';
+            }
+          }
+          models.push(jsonData);
+        }
+      }
+    });
+    win.webContents.send('set-models', {
+      data: models,
+    });
+  });
+
+  ipcMain.on('get-models-count', (event, data) => {
+    let modelsCount = 0;
+    modelFolders.forEach((folderPath) => {
+      if (fs.existsSync(folderPath.path)) {
+        const folders = fs.readdirSync(folderPath.path);
+        modelsCount += folders.length;
+      }
+    });
+    win.webContents.send('set-models-count', {
+      data: modelsCount,
     });
   });
 }
