@@ -10,16 +10,19 @@ import {
 } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function DatasetCard({ title, type, subType, records = null }) {
   const { t } = useTranslation();
   const [labels, setLabels] = useState([]);
+  const navigate = useNavigate();
+  const [link, setLink] = useState('');
   useEffect(() => {
     let newLabels = [];
-
     switch (type) {
       case 'table':
+        setLink(`/models/create/tabular/${title}`);
         newLabels.push({
           text: t('tabular'),
           icon: <InsertDriveFileIcon />,
@@ -32,18 +35,21 @@ export default function DatasetCard({ title, type, subType, records = null }) {
         });
         switch (subType) {
           case 'classification':
+            setLink(`/models/create/image/classification/${title}`);
             newLabels.push({
               text: t('image-classification'),
               icon: <InsertDriveFileIcon />,
             });
             break;
           case 'detection':
+            setLink(`/models/create/image/detection/${title}`);
             newLabels.push({
               text: t('object-detection'),
               icon: <InsertDriveFileIcon />,
             });
             break;
           case 'captioning':
+            setLink(`/models/create/image/captioning/${title}`);
             newLabels.push({
               text: t('captioning'),
               icon: <InsertDriveFileIcon />,
@@ -110,7 +116,7 @@ export default function DatasetCard({ title, type, subType, records = null }) {
           <Typography>{t('records')}</Typography>
         </Box>
 
-        <Button size="small" variant="contrast">
+        <Button onClick={() => navigate(link)} size="small" variant="contrast">
           {t('make-model')}
         </Button>
       </CardActions>

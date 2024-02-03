@@ -23,12 +23,15 @@ export default function Train() {
 
   useEffect(() => {
     handleDatasetTypeChange(location.pathname.split('/')[3] || '');
+    setDataset(location.pathname.split('/')[4] || null);
   }, [location]);
 
   const handleDatasetTypeChange = async (type) => {
     if (type != datasetType) {
-      navigate(`/models/create/${type}`);
-      setDataset(null);
+      if (!location.pathname.startsWith(`/models/create/${type}`)) {
+        navigate(`/models/create/${type}`);
+        setDataset(null);
+      }
       setDatasetType(type);
       if (type == 'tabular') {
         const tabularDatasets = await window.electronAPI.getTabularDatasets();
@@ -41,6 +44,7 @@ export default function Train() {
   };
 
   const handleChangeDataset = (event, newValue) => {
+    console.log(newValue);
     setDataset(newValue);
     if (newValue == null) {
       navigate(`/models/create`);

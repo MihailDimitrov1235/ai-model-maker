@@ -69,7 +69,7 @@ export default function CreateTabular() {
 
   useEffect(() => {
     fetchInfo();
-  }, []);
+  }, [id]);
   const [train, setTrain] = useState(85);
   const [val, setVal] = useState(10);
   const [test, setTest] = useState(5);
