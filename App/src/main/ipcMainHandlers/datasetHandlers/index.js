@@ -29,13 +29,14 @@ function setupIPCDatasets(win) {
     },
   ];
 
-  ipcMain.on('select-tabular-file', (event, arg) => {
+  ipcMain.handle('select-tabular-file', async (event, arg) => {
     const options = {
       filters: [{ name: 'Tabular', extensions: ['csv', 'xlsx'] }],
     };
-    dialog.showOpenDialog(options).then((data) => {
-      const fileName = data.filePaths[0];
-      win.webContents.send('set-tabular-file', data);
+    const { canceled, filePaths } = await dialog.showOpenDialog(options);
+    if (!canceled) {
+      const fileName = filePaths[0];
+      // win.webContents.send('set-tabular-file', data);
 
       const ext = path.extname(fileName).toLowerCase();
 
@@ -47,84 +48,57 @@ function setupIPCDatasets(win) {
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
         jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-        win.webContents.send('set-tabular-file-data', { data: jsonData });
+        return { file: fileName, data: jsonData };
       } else if (ext === '.csv') {
         const content = fs.readFileSync(fileName, 'utf-8');
         jsonData = convertCsvToArray(content);
-        win.webContents.send('set-tabular-file-data', { data: jsonData });
+        return { file: fileName, data: jsonData };
       } else {
-        win.webContents.send('set-tabular-file-data', {
-          error: 'Unsupported file format',
-        });
-        return;
+        return { error: 'Unsupported file format', file: fileName };
       }
+    }
+    return {
+      canceled: true,
+    };
+  });
+
+  ipcMain.handle('select-image-folder', async (event, arg) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: ['openDirectory'],
     });
+    if (!canceled) {
+      const folderPath = filePaths[0];
+
+      const files = fs.readdirSync(folderPath);
+      // Filter only image files (you may customize this logic)
+      const imageFiles = files.filter((file) =>
+        /\.(jpg|png|jpeg)$/i.test(path.extname(file)),
+      );
+
+      // Construct full paths for image files
+      const newImagePaths = imageFiles.map((file) =>
+        path.join(folderPath, file),
+      );
+      return { data: newImagePaths };
+    }
+    return { canceled: true };
   });
 
-  ipcMain.on('select-image-folder', (event, arg) => {
-    dialog
-      .showOpenDialog({
-        properties: ['openDirectory'],
-      })
-      .then((result) => {
-        if (!result.canceled) {
-          const folderPath = result.filePaths[0];
-
-          fs.readdir(folderPath, (err, files) => {
-            if (err) {
-              console.error(`Error reading folder: ${folderPath}`, err);
-
-              return;
-            } else {
-              // Filter only image files (you may customize this logic)
-              const imageFiles = files.filter((file) =>
-                /\.(jpg|png|jpeg)$/i.test(path.extname(file)),
-              );
-
-              // Construct full paths for image files
-              const newImagePaths = imageFiles.map((file) =>
-                path.join(folderPath, file),
-              );
-              win.webContents.send('set-image-folder', { data: newImagePaths });
-              // Update state with the list of image paths
-            }
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
-  ipcMain.on('select-label', (event, arg) => {
+  ipcMain.handle('select-label', async (event, arg) => {
     //const [imagePaths, setImagePaths] = useState([]);
     const options = {
       filters: [{ name: 'Labels', extensions: ['txt'] }],
     };
-    dialog
-      .showOpenDialog(options)
-      .then((data) => {
-        if (data.canceled) {
-          return;
-        }
-        const filePath = data.filePaths[0];
+    const { canceled, filePaths } = await dialog.showOpenDialog(options);
 
-        fs.readFile(filePath, 'utf-8', (err, data) => {
-          if (err) {
-            console.error(`Error reading file: ${filePath}`, err);
-          } else {
-            // Split the string into an array based on a delimiter (e.g., comma)
-            const dataArray = data.split(',');
+    if (canceled) {
+      return { canceled: true };
+    }
+    const filePath = filePaths[0];
 
-            //win.webContents.send('set-select-label', dataArray);
-            win.webContents.send('set-image-label', { data: dataArray });
-          }
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        return false;
-      });
+    const data = fs.readFileSync(filePath, 'utf-8');
+    const dataArray = data.split(',');
+    return { data: dataArray };
   });
 
   ipcMain.on('create-dataset-table', (event, arg) => {

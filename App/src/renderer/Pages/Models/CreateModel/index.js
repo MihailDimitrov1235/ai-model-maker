@@ -44,7 +44,6 @@ export default function Train() {
   };
 
   const handleChangeDataset = (event, newValue) => {
-    console.log(newValue);
     setDataset(newValue);
     if (newValue == null) {
       navigate(`/models/create`);

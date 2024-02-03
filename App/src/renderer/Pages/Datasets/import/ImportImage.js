@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
- 
+
 function ImportImage() {
   const { t, i18n } = useTranslation();
   const [showButton, setShowButton] = useState(false);
@@ -32,45 +32,44 @@ function ImportImage() {
   const [heightError, setHeightError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [classes, setClasses] = useState([]);
- 
+
   const handleSelectChange = (event) => {
     const value = event.target.value;
     setSelectedValue(value);
   };
- 
+
   useEffect(() => {
     //Setting images variable
-    window.electronAPI.handleSetImageFolder((event, value) => {
-      if (value.data && value.data.length > 0) {
-        setImages(value.data);
-        setUploadImagesError(1);
-        setTextUploadImages(2);
-      } else {
-        setUploadImagesError(2);
-      }
-    });
-    window.electronAPI.handleSetImageLabel((event, value) => {
-      if (!value.canceled && value.data != '') {
-        let labelsFromFile = JSON.stringify(value.data)
-          .replace(/["\[\]]/g, '')
-          .split('\\r\\n');
-        let newLabel = [];
-        let classSet = new Set();
-        labelsFromFile.map((item) => {
-          if (item != '') {
-            newLabel.push(item);
-            classSet.add(item);
-          }
-        });
-        setClasses(Array.from(classSet));
-        setLabels(newLabel);
- 
-        setUploadLabelsError(1);
-        setTextUploadLabels(2);
-      } else {
-        setUploadLabelsError(2);
-      }
-    });
+    // window.electronAPI.handleSetImageFolder((event, value) => {
+    //   if (value.data && value.data.length > 0) {
+    //     setImages(value.data);
+    //     setUploadImagesError(1);
+    //     setTextUploadImages(2);
+    //   } else {
+    //     setUploadImagesError(2);
+    //   }
+    // });
+    // window.electronAPI.handleSetImageLabel((event, value) => {
+    //   if (!value.canceled && value.data != '') {
+    //     let labelsFromFile = JSON.stringify(value.data)
+    //       .replace(/["\[\]]/g, '')
+    //       .split('\\r\\n');
+    //     let newLabel = [];
+    //     let classSet = new Set();
+    //     labelsFromFile.map((item) => {
+    //       if (item != '') {
+    //         newLabel.push(item);
+    //         classSet.add(item);
+    //       }
+    //     });
+    //     setClasses(Array.from(classSet));
+    //     setLabels(newLabel);
+    //     setUploadLabelsError(1);
+    //     setTextUploadLabels(2);
+    //   } else {
+    //     setUploadLabelsError(2);
+    //   }
+    // });
   }, []);
   useEffect(() => {
     // Check labels
@@ -78,24 +77,50 @@ function ImportImage() {
       setShowButton(true);
     }
   }, [images, labels]);
- 
-  const handleClick = () => {
-    window.electronAPI.selectImageFolder();
+
+  const handleClick = async () => {
+    const request = await window.electronAPI.selectImageFolder();
+    if (request.data && request.data.length > 0) {
+      setImages(request.data);
+      setUploadImagesError(1);
+      setTextUploadImages(2);
+    } else {
+      setUploadImagesError(2);
+    }
   };
- 
-  const handleClickLabel = () => {
-    window.electronAPI.selectLabel();
+
+  const handleClickLabel = async () => {
+    const request = await window.electronAPI.selectLabel();
+    if (!request.canceled && request.data != '') {
+      let labelsFromFile = JSON.stringify(request.data)
+        .replace(/["\[\]]/g, '')
+        .split('\\r\\n');
+      let newLabel = [];
+      let classSet = new Set();
+      labelsFromFile.map((item) => {
+        if (item != '') {
+          newLabel.push(item);
+          classSet.add(item);
+        }
+      });
+      setClasses(Array.from(classSet));
+      setLabels(newLabel);
+      setUploadLabelsError(1);
+      setTextUploadLabels(2);
+    } else {
+      setUploadLabelsError(2);
+    }
   };
+
   const handleInputChangeWidth = (e) => {
-    if(/^\d+$/.test(e.target.value)){
+    if (/^\d+$/.test(e.target.value)) {
       setImageWidth(e.target.value);
     }
   };
   const handleInputChangeHeight = (e) => {
-    if(/^\d+$/.test(e.target.value)){
+    if (/^\d+$/.test(e.target.value)) {
       setImageHeigth(e.target.value);
     }
-    
   };
   const handleInputChangeName = (e) => {
     setNameDataset(e.target.value);
@@ -106,10 +131,10 @@ function ImportImage() {
       if (!imageWidth) {
         setWidthError(true);
       }
-      if(!imageHeight){
+      if (!imageHeight) {
         setHeightError(true);
       }
-      if(!nameDataset){
+      if (!nameDataset) {
         setNameError(true);
       }
       return;
@@ -127,19 +152,18 @@ function ImportImage() {
   };
   // Go to main folder and then make datasets
   const handleFinish = (event, value) => {
-   
     if (!imageWidth || !imageHeight || !nameDataset) {
       if (!imageWidth) {
         setWidthError(true);
       }
-      if(!imageHeight){
+      if (!imageHeight) {
         setHeightError(true);
       }
-      if(!nameDataset){
+      if (!nameDataset) {
         setNameError(true);
       }
       return;
-    }else{
+    } else {
       window.electronAPI.createDatasetLabels({
         name: nameDataset,
         labels: labels,
@@ -151,11 +175,8 @@ function ImportImage() {
       });
       navigate('/data');
     }
- 
-   
-   
   };
- 
+
   return (
     <Box
       sx={{
@@ -173,15 +194,22 @@ function ImportImage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'right',
-            flexDirection: 'column'
+            flexDirection: 'column',
           }}
         >
-          <FormControl sx={{ display: 'flex', gap: 3, flexDirection: 'column', width: '100%'  }}>
-            <Box sx={{display: 'flex', width: '100%', gap: 3}}>
+          <FormControl
+            sx={{
+              display: 'flex',
+              gap: 3,
+              flexDirection: 'column',
+              width: '100%',
+            }}
+          >
+            <Box sx={{ display: 'flex', width: '100%', gap: 3 }}>
               <InputLabel>{t('type')}</InputLabel>
               <Select
                 label={'type'}
-                sx={{flex:1, height:'56px'}}
+                sx={{ flex: 1, height: '56px' }}
                 onChange={handleSelectChange}
               >
                 <MenuItem value={'classification'}>
@@ -191,27 +219,25 @@ function ImportImage() {
                 <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
               </Select>
               <TextField
-              variant="outlined"
-              placeholder={t('name')}
-              error={nameError}
-              helperText={nameError ? t('missing-name') : ''}
-              onBlur={() => setNameError(nameDataset === '' ? true : false)}
-              onChange={handleInputChangeName}
-              sx={{ flex: 1}}
-             
-            />
-             
+                variant="outlined"
+                placeholder={t('name')}
+                error={nameError}
+                helperText={nameError ? t('missing-name') : ''}
+                onBlur={() => setNameError(nameDataset === '' ? true : false)}
+                onChange={handleInputChangeName}
+                sx={{ flex: 1 }}
+              />
             </Box>
-            <Box sx={{display: 'flex', gap: 3}}>
+            <Box sx={{ display: 'flex', gap: 3 }}>
               <TextField
-                  variant="outlined"
-                  placeholder={t('width')}
-                  error={widthError}
-                  value={imageWidth}
-                  onBlur={() => setWidthError(imageWidth === '' ? true : false)}
-                  onChange={handleInputChangeWidth}
-                  sx={{flex: 1}}
-                />
+                variant="outlined"
+                placeholder={t('width')}
+                error={widthError}
+                value={imageWidth}
+                onBlur={() => setWidthError(imageWidth === '' ? true : false)}
+                onChange={handleInputChangeWidth}
+                sx={{ flex: 1 }}
+              />
               <TextField
                 variant="outlined"
                 placeholder={t('height')}
@@ -220,13 +246,15 @@ function ImportImage() {
                 helperText={heightError ? t('missing-height') : ''}
                 onBlur={() => setHeightError(imageHeight === '' ? true : false)}
                 onChange={handleInputChangeHeight}
-                sx={{flex: 1}}
+                sx={{ flex: 1 }}
               />
             </Box>
           </FormControl>
           {/* <Box> */}
           {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}
-          <Button sx={{ml: 'auto', mt: 3}}variant="contrast">{t('create-labels')}</Button>
+          <Button sx={{ ml: 'auto', mt: 3 }} variant="contrast">
+            {t('create-labels')}
+          </Button>
           {/* </Box> */}
         </Box>
         <Box sx={{ display: 'flex', gap: 3, mt: 3 }}>
@@ -277,5 +305,5 @@ function ImportImage() {
     </Box>
   );
 }
- 
+
 export default ImportImage;

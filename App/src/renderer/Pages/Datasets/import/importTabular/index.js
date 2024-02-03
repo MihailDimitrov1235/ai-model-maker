@@ -50,7 +50,6 @@ function ImportTabular() {
       return;
     }
     for (let i = 0; i < header.length; i++) {
-
       if (!header[i]) {
         setMissingHeader(i);
         return;
@@ -111,21 +110,12 @@ function ImportTabular() {
     setOpenMissingValues(false);
   };
 
-  useEffect(() => {
-    window.electronAPI.handleSetTabularFile((event, value) => {
-      if (!value.canceled) {
-        setFile(value.filePaths);
-      }
-    });
-    window.electronAPI.handleSetTabularFileData((event, value) => {
-      if (!value.error) {
-        setData(value.data);
-      }
-    });
-  }, []);
-
-  const handleClick = () => {
-    window.electronAPI.selectTabularFile();
+  const handleClick = async () => {
+    const response = await window.electronAPI.selectTabularFile();
+    setFile(response.file);
+    if (!response.error) {
+      setData(response.data);
+    }
   };
 
   return (
