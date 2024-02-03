@@ -1,12 +1,20 @@
-import { useState } from "react";
-import { Collapse, List, ListItemButton, ListItemText, IconButton } from "@mui/material";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import { useState } from 'react';
+import {
+  Collapse,
+  List,
+  ListItemButton,
+  ListItemText,
+  IconButton,
+} from '@mui/material';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function SidebarMenu({ items }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const handleButtonClick = (href) => {
     navigate(href);
@@ -17,7 +25,7 @@ export default function SidebarMenu({ items }) {
       {items.map((item) => {
         const isActive = location.pathname.includes(item.href);
         return (
-          <div key={item.name}>
+          <div key={t(item.name)}>
             {item.type === 'section' ? (
               <Section item={item} />
             ) : (
@@ -33,7 +41,7 @@ export default function SidebarMenu({ items }) {
                   },
                 }}
               >
-                <ListItemText primary={item.name} />
+                <ListItemText primary={t(item.name)} />
               </ListItemButton>
             )}
           </div>
@@ -46,13 +54,14 @@ export default function SidebarMenu({ items }) {
 function Section({ item }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
+  const { t } = useTranslation();
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   const handleTextClick = (href) => {
-    navigate(href)
+    navigate(href);
   };
 
   return (
@@ -60,25 +69,26 @@ function Section({ item }) {
       <ListItemButton
         disableRipple
         sx={{
-          bgcolor: "",
-          color: "text.main",
-          ":hover": {
-            bgcolor: "transparent",
+          bgcolor: '',
+          color: 'text.main',
+          ':hover': {
+            bgcolor: 'transparent',
           },
-          ".MuiTypography-root":{
-            fontWeight:600,
-          }
+          '.MuiTypography-root': {
+            fontWeight: 600,
+          },
         }}
-        
-        
       >
-        <ListItemText onClick={() => handleTextClick(item.href)} primary={item.name} />
+        <ListItemText
+          onClick={() => handleTextClick(item.href)}
+          primary={t(item.name)}
+        />
         <IconButton onClick={handleClick}>
-          {open ? <ExpandLess  /> : <ExpandMore />}
+          {open ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding sx={{ml:1}}>
+        <List component="div" disablePadding sx={{ ml: 1 }}>
           <SidebarMenu items={item.items} />
         </List>
       </Collapse>

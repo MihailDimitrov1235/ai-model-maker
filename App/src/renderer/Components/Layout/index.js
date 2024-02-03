@@ -13,6 +13,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
 import DatasetIcon from '@mui/icons-material/Dataset';
 import ScienceIcon from '@mui/icons-material/Science';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ThemeToggle from './ThemeToggle';
 import { useTranslation } from 'react-i18next';
 import LanguageChanger from './LanguageChanger';
@@ -69,8 +70,9 @@ export default function Layout() {
   const items = [
     { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
     { type: 'item', name: t('Data'), icon: DatasetIcon, href: '/data' },
-    { type: 'item', name: t('Models'), icon: SchoolIcon, href: '/models' },
-    { type: 'item', name: t('Test'), icon: ScienceIcon, href: '/test' },
+    { type: 'item', name: t('Models'), icon: SmartToyIcon, href: '/models' },
+    { type: 'item', name: t('Use'), icon: ScienceIcon, href: '/use' },
+    { type: 'item', name: t('Learn'), icon: SchoolIcon, href: '/learn' },
   ];
   return (
     <Box

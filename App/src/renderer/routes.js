@@ -105,8 +105,17 @@ const routes = [
         ],
       },
       {
-        path: '/test',
-        element: <InnerLayout type={'test'} />,
+        path: '/use',
+        element: <InnerLayout type={'use'} />,
+        children: [
+          { path: '', element: <Landing /> },
+          { path: 'data1', element: <Landing /> },
+          { path: 'data2', element: <Landing /> },
+        ],
+      },
+      {
+        path: '/learn',
+        element: <InnerLayout type={'learn'} />,
         children: [
           { path: '', element: <Landing /> },
           { path: 'data1', element: <Landing /> },

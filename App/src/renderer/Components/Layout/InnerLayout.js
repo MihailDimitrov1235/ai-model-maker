@@ -5,22 +5,22 @@ import { Outlet } from 'react-router-dom';
 const dataItems = [
   {
     type: 'section',
-    name: 'View',
+    name: 'view',
     href: '/data',
     items: [
-      { type: 'item', name: 'Tabular', href: '/data/tabular' },
-      { type: 'item', name: 'Image', href: '/data/image' },
-      { type: 'item', name: 'Text', href: '/data/text' },
+      { type: 'item', name: 'tabular', href: '/data/tabular' },
+      { type: 'item', name: 'image', href: '/data/image' },
+      { type: 'item', name: 'text', href: '/data/text' },
     ],
   },
   {
     type: 'section',
-    name: 'Import',
+    name: 'import',
     href: '/data/import',
     items: [
-      { type: 'item', name: 'Tabular', href: '/data/import/tabular' },
-      { type: 'item', name: 'Image', href: '/data/import/image' },
-      { type: 'item', name: 'Text', href: '/data/import/text' },
+      { type: 'item', name: 'tabular', href: '/data/import/tabular' },
+      { type: 'item', name: 'image', href: '/data/import/image' },
+      { type: 'item', name: 'text', href: '/data/import/text' },
     ],
   },
 ];
@@ -28,27 +28,27 @@ const dataItems = [
 const modelsItems = [
   {
     type: 'section',
-    name: 'View',
+    name: 'view',
     href: '/models',
     items: [
-      { type: 'item', name: 'Tabular', href: '/models/tabular' },
-      { type: 'item', name: 'Image', href: '/models/image' },
-      { type: 'item', name: 'Text', href: '/models/text' },
+      { type: 'item', name: 'tabular', href: '/models/tabular' },
+      { type: 'item', name: 'image', href: '/models/image' },
+      { type: 'item', name: 'text', href: '/models/text' },
     ],
   },
   {
     type: 'section',
-    name: 'Create',
+    name: 'create',
     href: '/models/create',
     items: [
-      { type: 'item', name: 'Tabular', href: '/models/create/tabular' },
-      { type: 'item', name: 'Image', href: '/models/create/image' },
-      { type: 'item', name: 'Text', href: '/models/create/text' },
+      { type: 'item', name: 'tabular', href: '/models/create/tabular' },
+      { type: 'item', name: 'image', href: '/models/create/image' },
+      { type: 'item', name: 'text', href: '/models/create/text' },
     ],
   },
 ];
 
-const testItems = [
+const useItems = [
   { type: 'item', name: 'Model1', href: '/test' },
   { type: 'item', name: 'Model2', href: '/test' },
 ];
@@ -56,7 +56,7 @@ const testItems = [
 const learnItems = [
   {
     type: 'section',
-    name: 'Tables',
+    name: 'create-model',
     href: '/learn',
     items: [
       { type: 'item', name: 'model1', href: '/learn' },
@@ -69,7 +69,7 @@ export default function InnerLayout({ type = null }) {
   const itemMap = {
     data: dataItems,
     models: modelsItems,
-    test: testItems,
+    use: useItems,
     learn: learnItems,
   };
   const items = itemMap[type] || [];
