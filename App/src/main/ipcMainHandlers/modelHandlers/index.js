@@ -17,10 +17,25 @@ export function setupIPCModelHandlers(win) {
   ];
 
   const modelFolders = [
-    getAssetPath(`models/table`),
-    getAssetPath(`models/image/classification`),
-    getAssetPath(`models/image/detection`),
-    getAssetPath(`models/image/captioning`),
+    {
+      path: getAssetPath(`models/table`),
+      type: 'table',
+    },
+    {
+      path: getAssetPath(`models/image/classification`),
+      type: 'image',
+      subType: 'classification',
+    },
+    {
+      path: getAssetPath(`models/image/detection`),
+      type: 'image',
+      subType: 'detection',
+    },
+    {
+      path: getAssetPath(`models/image/captioning`),
+      type: 'image',
+      subType: 'captioning',
+    },
   ];
 
   ipcMain.handle('get-tabular-datasets', async (event, arg) => {
@@ -63,7 +78,7 @@ export function setupIPCModelHandlers(win) {
     if (pyShell) {
       pyShell.kill('SIGINT');
     }
-    const save_model_path = getAssetPath('models/' + arg.dataset);
+    const save_model_path = getAssetPath('models/table/' + arg.name);
     if (!fs.existsSync(save_model_path)) {
       fs.mkdirSync(save_model_path, { recursive: true });
     }
@@ -77,6 +92,20 @@ export function setupIPCModelHandlers(win) {
       validation_split: arg.dataSplit[1],
       test_split: arg.dataSplit[2],
     };
+    const infoData = {
+      name: arg.name,
+      learning_rate: arg.learningRate,
+      epochs: arg.epochs,
+      batch_size: arg.batchSize,
+      target: arg.target,
+      validation_split: arg.dataSplit[1],
+      test_split: arg.dataSplit[2],
+      layers: arg.layers,
+      accuracy: 0,
+      epochs: [],
+    };
+    const jsonFilePath = save_model_path + '/info.json';
+    fs.writeFileSync(jsonFilePath, JSON.stringify(infoData, null, 2), 'utf-8');
 
     let argsArray = [];
     for (let key in argsObject) {
@@ -148,7 +177,7 @@ export function setupIPCModelHandlers(win) {
             'info.json',
           );
           const data = fs.readFileSync(infoFilePath);
-          const jsonData = JSON.parse(data);
+          let jsonData = JSON.parse(data);
           if (folderPath.type == 'table') {
             jsonData.type = 'table';
           } else if (folderPath.type == 'image') {

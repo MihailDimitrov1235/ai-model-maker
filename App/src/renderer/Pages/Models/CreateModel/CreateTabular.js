@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   TextField,
@@ -19,11 +19,14 @@ export default function CreateTabular() {
   const { id } = useParams();
   const [info, setInfo] = useState({});
 
+  const nameRef = useRef();
+
   const [learningRate, setLearningRate] = useState(0.001);
   const [epochs, setEpochs] = useState(10);
   const [batchSize, setBatchSize] = useState(24);
   const [target, setTarget] = useState('');
 
+  const [nameError, setNameError] = useState('');
   const [learningRateError, setLearningRateError] = useState('');
   const [epochsError, setEpochsError] = useState('');
   const [batchSizeError, setBatchSizeError] = useState('');
@@ -110,6 +113,12 @@ export default function CreateTabular() {
   };
 
   const handleFinish = () => {
+    if (!nameRef.current.value) {
+      setNameError(t('name-missing'));
+    } else {
+      setNameError('');
+    }
+
     if (!(learningRate > 0 && learningRate < 1)) {
       setLearningRateError(
         t('expected-number-between') + ' ' + 0 + ' ' + t('and') + ' ' + 1,
@@ -172,6 +181,7 @@ export default function CreateTabular() {
 
     window.electronAPI.createTabularModel({
       dataset: id,
+      name: nameRef.current.value,
       learningRate: learningRate,
       epochs: epochs,
       batchSize: batchSize,
@@ -183,6 +193,12 @@ export default function CreateTabular() {
 
   return (
     <Box width={'100%'} display={'flex'} flexDirection={'column'} gap={6}>
+      <TextField
+        error={nameError ? true : false}
+        helperText={nameError}
+        label={t('name')}
+        inputRef={nameRef}
+      />
       <Typography variant="h6">{t('select-model-options')}</Typography>
       <Box display={'flex'} width={'100%'} gap={3}>
         <Box display={'flex'} flexDirection={'column'} flex={1} gap={3}>
@@ -199,7 +215,7 @@ export default function CreateTabular() {
                 max: 1,
                 step: 0.001,
               }}
-              error={learningRateError}
+              error={learningRateError ? true : false}
               helperText={learningRateError}
               value={learningRate}
             />
@@ -211,7 +227,7 @@ export default function CreateTabular() {
             </Typography>
             <TextField
               type="number"
-              error={epochsError}
+              error={epochsError ? true : false}
               helperText={epochsError}
               value={epochs}
               onChange={handleEpochsChange}
@@ -226,7 +242,7 @@ export default function CreateTabular() {
             </Typography>
             <TextField
               type="number"
-              error={batchSizeError}
+              error={batchSizeError ? true : false}
               helperText={batchSizeError}
               value={batchSize}
               onChange={handleBatchSizeChange}
@@ -240,7 +256,7 @@ export default function CreateTabular() {
               {t('target')}
             </Typography>
             <Select
-              error={targetError}
+              error={targetError ? true : false}
               sx={{ flex: 8 }}
               value={target}
               onChange={(event) => {
