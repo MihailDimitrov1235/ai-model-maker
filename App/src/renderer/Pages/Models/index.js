@@ -23,7 +23,7 @@ const Models = function () {
   const [models, setModels] = useState(null);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const modelsPerPage = 4;
+  const modelsPerPage = 12;
   useEffect(() => {
     // Send a request to the main process for models count
     window.electronAPI.getModelsCount();
@@ -60,13 +60,18 @@ const Models = function () {
     <>
       <Box
         sx={{
-          m: '50px',
+          display: 'flex',
+          flexDirection: 'column',
+          px: '50px',
+          gap: 3,
+          minHeight: '100%',
         }}
       >
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
+            mt: 3,
           }}
         >
           <h2>{t('models')}</h2>
@@ -97,38 +102,18 @@ const Models = function () {
         </Box>
 
         {models != null && models.length > 0 ? (
-          <Box
-            sx={{
-              margin: '25px',
-            }}
-          >
-            <Grid container spacing={4}>
-              {models?.map((model, index) => (
-                <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                  {/* <CardElement
+          <Grid container spacing={4}>
+            {models?.map((model, index) => (
+              <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
+                {/* <CardElement
                     title={dataset.name}
                     type={dataset.type}
                     subType={dataset.subType}
                     records={dataset.records}
                   /> */}
-                </Grid>
-              ))}
-            </Grid>
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '30px',
-              }}
-            >
-              <Pagination
-                count={pageCount}
-                page={page}
-                onChange={handleChangePage}
-              />
-            </Box>
-          </Box>
+              </Grid>
+            ))}
+          </Grid>
         ) : (
           <Box
             sx={{
@@ -152,6 +137,23 @@ const Models = function () {
                 </Button>
               </>
             )}
+          </Box>
+        )}
+        {models != null && models.length > 0 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'end',
+              flex: 1,
+              pb: 3,
+            }}
+          >
+            <Pagination
+              count={pageCount}
+              page={page}
+              onChange={handleChangePage}
+            />
           </Box>
         )}
       </Box>

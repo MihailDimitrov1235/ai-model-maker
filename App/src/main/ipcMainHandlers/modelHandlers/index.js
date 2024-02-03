@@ -94,6 +94,7 @@ export function setupIPCModelHandlers(win) {
     };
     const infoData = {
       name: arg.name,
+      dataset: arg.dataset,
       learning_rate: arg.learningRate,
       epochs: arg.epochs,
       batch_size: arg.batchSize,
