@@ -11,13 +11,14 @@ import {
 import UploadButton from '../../../Components/Utils/UploadButton';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { width } from '@mui/system';
 
 function ImportImage() {
   const { t, i18n } = useTranslation();
   const [showButton, setShowButton] = useState(false);
   const navigate = useNavigate();
+  const [queryParameters] = useSearchParams();
   const [images, setImages] = useState([]);
   const [labels, setLabels] = useState([]);
   const [uploadLabelsError, setUploadLabelsError] = useState(1);
@@ -37,6 +38,14 @@ function ImportImage() {
     const value = event.target.value;
     setSelectedValue(value);
   };
+  useEffect(() => {
+    // Check labels
+    if (
+      JSON.parse(decodeURIComponent(queryParameters.get('labels'))).length > 0
+    ) {
+      setLabels(JSON.parse(decodeURIComponent(queryParameters.get('labels'))));
+    }
+  }, [images, labels]);
 
   useEffect(() => {
     // Check labels
@@ -143,6 +152,15 @@ function ImportImage() {
       navigate('/data');
     }
   };
+  console.log(selectedValue);
+  const handleCreateLabels = (event, value) => {
+    console.log(`/data/import/image/labels/${selectedValue}/${images}`);
+    navigate(
+      `/data/import/image/labels/${selectedValue}/?images=${encodeURIComponent(
+        JSON.stringify(images),
+      )}`,
+    );
+  };
 
   return (
     <Box
@@ -219,9 +237,18 @@ function ImportImage() {
           </FormControl>
           {/* <Box> */}
           {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}
-          <Button sx={{ ml: 'auto', mt: 3 }} variant="contrast">
-            {t('create-labels')}
-          </Button>
+          {images.length > 0 ? (
+            <Button
+              sx={{ ml: 'auto', mt: 3 }}
+              variant="contrast"
+              onClick={handleCreateLabels}
+            >
+              {t('create-labels')}
+            </Button>
+          ) : (
+            true
+          )}
+
           {/* </Box> */}
         </Box>
         <Box sx={{ display: 'flex', gap: 3, mt: 3 }}>

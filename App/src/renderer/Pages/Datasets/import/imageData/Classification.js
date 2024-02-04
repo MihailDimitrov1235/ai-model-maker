@@ -32,15 +32,22 @@ function Classification() {
   };
 
   const handleAddValue = () => {
+    let newClasses = new Set();
+    //setClasses(Array.from(classSet));
     if (inputValue.trim() !== '') {
-      setClasses([...classes, inputValue]);
-      setLabels([...labels, inputValue]);
+      console.log('inputValue');
+      console.log(inputValue);
+      newClasses = classes;
+      console.log(newClasses);
+      newClasses.add(inputValue);
+      setClasses(newClasses);
+
       setInputValue('');
     }
   };
   const handleRemoveClass = (item) => {
-    const removedClass = classes.filter((classItem) => classItem !== item);
-
+    let removedClass = classes;
+    removedClass.delete(item);
     setClasses(removedClass);
   };
   return (
@@ -60,7 +67,7 @@ function Classification() {
             {t('classes')}
           </FormLabel>
           <RadioGroup onChange={handleChangeLabel}>
-            {classes.map((item) => (
+            {Array.from(classes).map((item) => (
               <Box
                 display={'flex'}
                 justifyContent={'space-between'}
@@ -94,7 +101,7 @@ function Classification() {
           onClick={handleAddValue}
           startIcon={<AddCircleOutlineIcon />}
         >
-          {t('add-label')}
+          {t('add-classes')}
         </Button>
       </Box>
     </Box>

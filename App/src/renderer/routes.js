@@ -13,11 +13,14 @@ import ImportText from './Pages/Datasets/import/ImportText';
 import ImportInfo from './Pages/ImortInfo';
 import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
 import Classification from './Pages/Datasets/import/imageData/Classification';
+import CreateLabels from './Pages/Datasets/import/imageData/CreateLabels';
 
 import Models from './Pages/Models';
 import CreateModel from './Pages/Models/CreateModel';
 import CreateTabular from './Pages/Models/CreateModel/CreateTabular';
 import TableModel from './Pages/Models/TableModel';
+
+import LearnAIComponents from './Pages/Learn/LearnAIComponents';
 
 const routes = [
   {
@@ -44,6 +47,28 @@ const routes = [
                 children: [
                   {
                     path: '',
+                    element: <ImportImage />,
+                  },
+                  {
+                    path: 'labels',
+                    element: <CreateLabels />,
+                    children: [
+                      {
+                        path: 'classification',
+                        element: <Classification />,
+                      },
+                      {
+                        path: 'detection',
+                        element: <CreateLabels />,
+                      },
+                      {
+                        path: 'captioning',
+                        element: <CreateLabels />,
+                      },
+                    ],
+                  },
+                  {
+                    path: 'create',
                     element: <ImportImage />,
                   },
                   {
@@ -116,7 +141,7 @@ const routes = [
         path: '/learn',
         element: <InnerLayout type={'learn'} />,
         children: [
-          { path: '', element: <Landing /> },
+          { path: '', element: <LearnAIComponents /> },
           { path: 'data1', element: <Landing /> },
           { path: 'data2', element: <Landing /> },
         ],
