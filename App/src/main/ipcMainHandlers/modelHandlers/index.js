@@ -137,7 +137,7 @@ export function setupIPCModelHandlers(win) {
     });
   });
 
-  ipcMain.on('get-models', (event, data) => {
+  ipcMain.handle('get-models', async (event, data) => {
     const page = data.page;
     const modelsPerPage = data.modelsPerPage;
 
@@ -195,12 +195,10 @@ export function setupIPCModelHandlers(win) {
         }
       }
     });
-    win.webContents.send('set-models', {
-      data: models,
-    });
+    return models;
   });
 
-  ipcMain.on('get-models-count', (event, data) => {
+  ipcMain.handle('get-models-count', async (event, data) => {
     let modelsCount = 0;
     modelFolders.forEach((folderPath) => {
       if (fs.existsSync(folderPath.path)) {
@@ -208,8 +206,6 @@ export function setupIPCModelHandlers(win) {
         modelsCount += folders.length;
       }
     });
-    win.webContents.send('set-models-count', {
-      data: modelsCount,
-    });
+    return modelsCount;
   });
 }

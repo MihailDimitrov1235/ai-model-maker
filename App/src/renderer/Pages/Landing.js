@@ -23,15 +23,6 @@ import CardElement from '../Components/Cards/DatasetCard';
 const Landing = function () {
   const { t, i18n } = useTranslation();
 
-  const click = () => {
-    //   window.electronAPI.runPython('test')
-    window.electronAPI.checkVnev();
-    // let test = new python('Test.py', options);
-    // test.on('message', function(message){
-    //     console.log(message)
-    // })
-  };
-
   const datasets = [
     { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
     { title: 'Road Sign' },

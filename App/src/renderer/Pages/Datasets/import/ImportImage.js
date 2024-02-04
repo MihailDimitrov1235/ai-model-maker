@@ -39,39 +39,6 @@ function ImportImage() {
   };
 
   useEffect(() => {
-    //Setting images variable
-    // window.electronAPI.handleSetImageFolder((event, value) => {
-    //   if (value.data && value.data.length > 0) {
-    //     setImages(value.data);
-    //     setUploadImagesError(1);
-    //     setTextUploadImages(2);
-    //   } else {
-    //     setUploadImagesError(2);
-    //   }
-    // });
-    // window.electronAPI.handleSetImageLabel((event, value) => {
-    //   if (!value.canceled && value.data != '') {
-    //     let labelsFromFile = JSON.stringify(value.data)
-    //       .replace(/["\[\]]/g, '')
-    //       .split('\\r\\n');
-    //     let newLabel = [];
-    //     let classSet = new Set();
-    //     labelsFromFile.map((item) => {
-    //       if (item != '') {
-    //         newLabel.push(item);
-    //         classSet.add(item);
-    //       }
-    //     });
-    //     setClasses(Array.from(classSet));
-    //     setLabels(newLabel);
-    //     setUploadLabelsError(1);
-    //     setTextUploadLabels(2);
-    //   } else {
-    //     setUploadLabelsError(2);
-    //   }
-    // });
-  }, []);
-  useEffect(() => {
     // Check labels
     if (images && labels && images.length > 0 && labels.length > 0) {
       setShowButton(true);

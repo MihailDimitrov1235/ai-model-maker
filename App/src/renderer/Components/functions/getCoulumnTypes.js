@@ -95,6 +95,5 @@ export default function getColumnTypes(table) {
     }
     columnsTypes.push(columnTypes);
   }
-  console.log(columnsTypes);
   return columnsTypes;
 }

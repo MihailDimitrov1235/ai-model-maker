@@ -1,4 +1,4 @@
-import { Box, Button, Pagination,Card } from '@mui/material';
+import { Box, Button, Pagination, Card } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Outlet, useSearchParams, useNavigate } from 'react-router-dom';
@@ -35,28 +35,24 @@ function ReviewDatasets() {
     });
   };
 
-  useEffect(() => {
-    // Send a request to the main process with the absolute path
-    window.electronAPI.requestImage({
+  const fetchImage = async () => {
+    const newImage = await window.electronAPI.getImage({
       path: imagesPaths[page - 1],
     });
+    setImageSrc(newImage);
+  };
+
+  useEffect(() => {
+    // Send a request to the main process with the absolute path
+    fetchImage();
 
     setClasses(JSON.parse(decodeURIComponent(queryParameters.get('class'))));
     setLabels(queryParameters.get('label'));
-
-    // Listen for the response from the main process
-    window.electronAPI.handleRequestImage((event, image) => {
-      setImageSrc(image.data);
-    });
-
-    // Clean up the event listener when the component unmounts
   }, []);
 
   useEffect(() => {
     // Send a request to the main process with the absolute path
-    window.electronAPI.requestImage({
-      path: imagesPaths[page - 1],
-    });
+    fetchImage();
   }, [page]);
 
   return (
@@ -91,7 +87,7 @@ function ReviewDatasets() {
           display: 'flex',
           justifyContent: 'space-between',
           mt: 3,
-          p:3
+          p: 3,
         }}
       >
         <Box

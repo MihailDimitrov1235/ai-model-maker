@@ -138,24 +138,16 @@ function setupIPCDatasets(win) {
     fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
   });
 
-  ipcMain.on('request-image', (event, data) => {
+  ipcMain.handle('get-image', async (event, data) => {
     const imagePath = data.path;
-    fs.readFile(imagePath, (err, imageBuffer) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      // Convert the image buffer to a data URL
-      const imageDataURL = `data:image/png;base64,${imageBuffer.toString(
-        'base64',
-      )}`;
-      // Send the image data back to the renderer process
-      win.webContents.send('set-request-image', { data: imageDataURL });
-    });
+    const imageData = fs.readFileSync(imagePath);
+    const imageDataURL = `data:image/png;base64,${imageData.toString(
+      'base64',
+    )}`;
+    return imageDataURL;
   });
 
-  ipcMain.on('request-datasets-info', (event, data) => {
+  ipcMain.handle('get-datasets', (event, data) => {
     const page = data.page;
     const datasetsPerPage = data.datasetsPerPage;
 
@@ -213,12 +205,10 @@ function setupIPCDatasets(win) {
         }
       }
     });
-    win.webContents.send('set-request-datasets-info', {
-      data: datasetsInfo,
-    });
+    return datasetsInfo;
   });
 
-  ipcMain.on('get-datasets-count', (event, data) => {
+  ipcMain.handle('get-datasets-count', async (event, data) => {
     let datasetCount = 0;
     datasetsFolderPaths.forEach((folderPath) => {
       if (fs.existsSync(folderPath.path)) {
@@ -226,9 +216,7 @@ function setupIPCDatasets(win) {
         datasetCount += folders.length;
       }
     });
-    win.webContents.send('set-datasets-count', {
-      data: datasetCount,
-    });
+    return datasetCount;
   });
 }
 

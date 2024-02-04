@@ -37,35 +37,6 @@ import React from 'react';
 const Datasets = function () {
   const { t, i18n } = useTranslation();
 
-  const click = () => {
-    //   window.electronAPI.runPython('test')
-    window.electronAPI.checkVnev();
-    // let test = new python('Test.py', options);
-    // test.on('message', function(message){
-    //     console.log(message)
-    // })
-  };
-
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
       <Box
@@ -200,9 +171,6 @@ const Datasets = function () {
           </Table>
         </TableContainer>
       </Box>
-
-      {/* <ShowDiagrams/>
-              <Button variant="main" onClick={click} style={{maxWidth:'100px'}}>{t('Test')}</Button> */}
     </>
   );
 };

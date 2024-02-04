@@ -25,24 +25,19 @@ const Models = function () {
   const [pageCount, setPageCount] = useState(0);
   const modelsPerPage = 12;
   useEffect(() => {
-    // Send a request to the main process for models count
-    window.electronAPI.getModelsCount();
-
-    // Listen for the response from the main process
-    window.electronAPI.handleSetModels((event, response) => {
-      setModels(response.data);
-    });
-
-    window.electronAPI.handleSetModelsCount((event, request) => {
-      let newPageCount = Math.ceil(request.data / modelsPerPage);
-      setPageCount(newPageCount);
-      // Send a request to the main process for models
-      window.electronAPI.getModels({
-        page: page,
-        modelsPerPage: modelsPerPage,
-      });
-    });
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    const newModelsCount = await window.electronAPI.getModelsCount();
+    let newPageCount = Math.ceil(newModelsCount / modelsPerPage);
+    setPageCount(newPageCount);
+    const newModels = await window.electronAPI.getModels({
+      page: page,
+      modelsPerPage: modelsPerPage,
+    });
+    setModels(newModels);
+  };
 
   const handleClick = (event) => {
     navigate('/models/create');

@@ -26,7 +26,6 @@ export default function LayersDisplay({
   const handleAddLayer = () => {
     let newLayers = [...layers];
     newLayers.unshift({ type: 'dense', nodes: '64', activation: 'relu' });
-    console.log(newLayers);
     setLayers(newLayers);
   };
 

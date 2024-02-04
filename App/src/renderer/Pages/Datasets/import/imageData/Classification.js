@@ -21,7 +21,6 @@ function Classification() {
   const { t } = useTranslation();
   const [labels, setLabels, classes, setClasses, page] = useOutletContext();
   const [inputValue, setInputValue] = useState('');
-  console.log(classes);
   const handleChangeLabel = (event, value) => {
     let newLabels = [...labels];
     newLabels[page - 1] = event.target.value;
@@ -40,20 +39,20 @@ function Classification() {
     }
   };
   const handleRemoveClass = (item) => {
-    const removedClass = classes.filter(classItem => classItem !== item)
-    
+    const removedClass = classes.filter((classItem) => classItem !== item);
+
     setClasses(removedClass);
-  }
+  };
   return (
-    <Box display={'flex'} justifyContent={'right'} height={'100%'} >
+    <Box display={'flex'} justifyContent={'right'} height={'100%'}>
       <Box
         sx={{
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'right',
-          height: "100%",
-          overflow: 'scroll'
+          height: '100%',
+          overflow: 'scroll',
         }}
       >
         <FormControl>

@@ -22,40 +22,37 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 const Datasets = function () {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [datasetsInfo, setDatasetsInfo] = useState(null);
+  const [datasets, setDatasets] = useState(null);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const datasetsPerPage = 12;
+
   useEffect(() => {
-    // Send a request to the main process for datasets count
-    window.electronAPI.getDatasetsCount();
-
-    // Listen for the response from the main process
-    window.electronAPI.handleRequestDatasetsInfo((event, datasets) => {
-      setDatasetsInfo(datasets.data);
-    });
-
-    window.electronAPI.handleSetDatasetsCount((event, datasetsCount) => {
-      let newPageCount = Math.ceil(datasetsCount.data / datasetsPerPage);
-      setPageCount(newPageCount);
-      // Send a request to the main process for datasets
-      window.electronAPI.requestDatasetsInfo({
-        page: page,
-        datasetsPerPage: datasetsPerPage,
-      });
-    });
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    const newDatasetsCount = await window.electronAPI.getDatasetsCount();
+    let newPageCount = Math.ceil(newDatasetsCount / datasetsPerPage);
+    setPageCount(newPageCount);
+    const newDatasets = await window.electronAPI.getDatasets({
+      page: page,
+      datasetsPerPage: datasetsPerPage,
+    });
+    setDatasets(newDatasets);
+  };
 
   const handleClick = (event) => {
     navigate('/data/import');
   };
 
-  const handleChangePage = (event, value) => {
+  const handleChangePage = async (event, value) => {
     setPage(value);
-    window.electronAPI.requestDatasetsInfo({
+    const newDatasets = await window.electronAPI.getDatasets({
       page: value,
       datasetsPerPage: datasetsPerPage,
     });
+    setDatasets(newDatasets);
   };
 
   return (
@@ -103,9 +100,9 @@ const Datasets = function () {
           </Box>
         </Box>
 
-        {datasetsInfo != null && datasetsInfo.length > 0 ? (
+        {datasets != null && datasets.length > 0 ? (
           <Grid container spacing={4}>
-            {datasetsInfo?.map((dataset, index) => (
+            {datasets?.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
                 <CardElement
                   title={dataset.name}
@@ -126,7 +123,7 @@ const Datasets = function () {
               mt: 30,
             }}
           >
-            {datasetsInfo == null ? (
+            {datasets == null ? (
               <CircularProgress />
             ) : (
               <>
@@ -141,7 +138,7 @@ const Datasets = function () {
             )}
           </Box>
         )}
-        {datasetsInfo != null && datasetsInfo.length > 0 && (
+        {datasets != null && datasets.length > 0 && (
           <Box
             sx={{
               display: 'flex',
