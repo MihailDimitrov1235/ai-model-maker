@@ -17,6 +17,7 @@ import Classification from './Pages/Datasets/import/imageData/Classification';
 import Models from './Pages/Models';
 import CreateModel from './Pages/Models/CreateModel';
 import CreateTabular from './Pages/Models/CreateModel/CreateTabular';
+import TableModel from './Pages/Models/TableModel';
 
 const routes = [
   {
@@ -81,12 +82,6 @@ const routes = [
           {
             path: '',
             element: <Models />,
-            // children: [
-            //   { path: 'tabular/:id', element: <Tabular /> },
-            //   { path: 'image/classification/:id', element: <Models /> },
-            //   { path: 'table/detection/:id', element: <Models /> },
-            //   { path: 'table/captioning/:id', element: <Models /> },
-            // ],
           },
           {
             path: 'create',
@@ -102,6 +97,10 @@ const routes = [
               },
             ],
           },
+          { path: 'table/:id', element: <TableModel /> },
+          { path: 'image/classification/:id', element: <Models /> },
+          { path: 'image/detection/:id', element: <Models /> },
+          { path: 'image/captioning/:id', element: <Models /> },
         ],
       },
       {

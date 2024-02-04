@@ -51,6 +51,14 @@ const Models = function () {
     });
   };
 
+  const handleOpenModel = (name, type, subtype) => {
+    if (!subtype) {
+      navigate(`/models/${type}/${name}`);
+    } else {
+      navigate(`/models/${type}/${subtype}/${name}`);
+    }
+  };
+
   return (
     <>
       <Box
@@ -100,12 +108,13 @@ const Models = function () {
           <Grid container spacing={4}>
             {models?.map((model, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                {/* <CardElement
-                    title={dataset.name}
-                    type={dataset.type}
-                    subType={dataset.subType}
-                    records={dataset.records}
-                  /> */}
+                <Button
+                  onClick={() =>
+                    handleOpenModel(model.name, model.type, model.subtype)
+                  }
+                >
+                  {model.name}
+                </Button>
               </Grid>
             ))}
           </Grid>
