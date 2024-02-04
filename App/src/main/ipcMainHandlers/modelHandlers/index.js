@@ -208,4 +208,41 @@ export function setupIPCModelHandlers(win) {
     });
     return modelsCount;
   });
+
+  ipcMain.handle('get-model', async (event, data) => {
+    const model = data.model;
+    const type = data.type;
+    const subType = data.subType;
+
+    if (pyShell) {
+      pyShell.kill('SIGINT');
+    }
+
+    const config = getConfig();
+
+    if (type == 'table') {
+      const data = fs.readFileSync(
+        getAssetPath(`models/table/${model}/info.json`),
+      );
+      // let options = {
+      //   mode: 'text',
+      //   pythonPath: config.python_exe_path,
+      //   pythonOptions: ['-u'],
+      //   scriptPath: getAssetPath('/python-scripts/tabularData'),
+      //   args: [getAssetPath(`/models/table/${model}/model.keras`)],
+      // };
+
+      // pyShell = new PythonShell('get_model_summary.py', options);
+
+      // pyShell.stdout.on('data', function (message) {
+      //   console.log(message);
+      // });
+
+      // pyShell.stderr.on('data', function (err) {
+      //   console.log(err);
+      // });
+
+      return JSON.parse(data);
+    }
+  });
 }
