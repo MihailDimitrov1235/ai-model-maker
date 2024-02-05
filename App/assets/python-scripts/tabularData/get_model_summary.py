@@ -9,4 +9,4 @@ model_path = args.model_path
 
 model = tf.keras.models.load_model(model_path)
 
-model.summary()
+print(model.to_json())
