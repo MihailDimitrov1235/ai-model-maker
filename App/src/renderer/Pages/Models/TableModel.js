@@ -1,4 +1,11 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+  TextField,
+  Select,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
@@ -28,7 +35,54 @@ export default function TableModel() {
   const [modelData, setModelData] = useState(null);
   const [lossData, setLossData] = useState(null);
   const [accuracyData, setAccuracyData] = useState(null);
-  console.log(id);
+
+  const [learningRate, setLearningRate] = useState('');
+  const [epochs, setEpochs] = useState('');
+  const [learningRateError, setLearningRateError] = useState('');
+  const [epochsError, setEpochsError] = useState('');
+
+  const handleLearningRateChange = (event) => {
+    const newValue = event.target.value;
+    setLearningRate(newValue);
+  };
+
+  const handleEpochsChange = (event) => {
+    const newValue = event.target.value;
+    setEpochs(newValue);
+  };
+
+  const handleTrain = () => {
+    if (!(learningRate > 0 && learningRate < 1)) {
+      setLearningRateError(
+        t('expected-number-between') + ' ' + 0 + ' ' + t('and') + ' ' + 1,
+      );
+      return;
+    } else {
+      setLearningRateError('');
+    }
+
+    if (!(epochs > 0 && epochs <= 100) || epochs % 1 != 0) {
+      setEpochsError(
+        t('expected-whole-number-between') +
+          ' ' +
+          0 +
+          ' ' +
+          t('and') +
+          ' ' +
+          100,
+      );
+      return;
+    } else {
+      setEpochsError('');
+    }
+
+    window.electronAPI.trainModel({
+      type: 'table',
+      model: id,
+      learningRate: learningRate,
+      epochs: epochs,
+    });
+  };
 
   const fetchData = async () => {
     const response = await window.electronAPI.getModel({
@@ -36,6 +90,8 @@ export default function TableModel() {
       type: 'table',
     });
     setModelData(response);
+    setLearningRate(0.001);
+    setEpochs(10);
     console.log(response);
     if (response.epochs.length > 0) {
       let accuracyArray = [];
@@ -104,7 +160,45 @@ export default function TableModel() {
               {t('model-trained-for')}: {modelData.epochs.length} {t('epochs')}
             </Typography>
             <Box sx={{ display: 'flex' }}>
-              <Button variant="contrast">{t('train-model')}</Button>
+              <Button onClick={handleTrain} variant="contrast">
+                {t('train-model')}
+              </Button>
+            </Box>
+          </Box>
+
+          <Box display={'flex'} flexDirection={'column'} flex={1} gap={3}>
+            <Box display={'flex'} gap={3} alignItems={'center'}>
+              <Typography textAlign={'right'} flex={1}>
+                {t('learning-rate')}
+              </Typography>
+              <TextField
+                onChange={handleLearningRateChange}
+                sx={{ flex: 8 }}
+                type="number"
+                inputProps={{
+                  min: 0,
+                  max: 1,
+                  step: 0.001,
+                }}
+                error={learningRateError ? true : false}
+                helperText={learningRateError}
+                value={learningRate}
+              />
+            </Box>
+
+            <Box display={'flex'} gap={3} alignItems={'center'}>
+              <Typography textAlign={'right'} flex={1}>
+                {t('epochs')}
+              </Typography>
+              <TextField
+                type="number"
+                error={epochsError ? true : false}
+                helperText={epochsError}
+                value={epochs}
+                onChange={handleEpochsChange}
+                sx={{ flex: 8 }}
+                fullWidth
+              />
             </Box>
           </Box>
         </>
