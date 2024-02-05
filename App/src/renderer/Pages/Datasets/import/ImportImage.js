@@ -46,6 +46,7 @@ function ImportImage() {
       setLabels(JSON.parse(decodeURIComponent(queryParameters.get('labels'))));
       setImages(JSON.parse(decodeURIComponent(queryParameters.get('images'))));
       setSelectedValue(queryParameters.get('selectedValue'));
+      document.getElementById('mySelect').value = selectedValue;
     }
   }, []);
 
@@ -195,7 +196,9 @@ function ImportImage() {
             <Box sx={{ display: 'flex', width: '100%', gap: 3 }}>
               <InputLabel>{t('type')}</InputLabel>
               <Select
+                id="mySelect"
                 label={'type'}
+                value={selectedValue}
                 sx={{ flex: 1, height: '56px' }}
                 onChange={handleSelectChange}
               >

@@ -64,7 +64,7 @@ function CreateLabels() {
   };
 
   const handleGoBack = () => {
-    if (labels.length !== imagesPath.length) {
+    if (labels.length == imagesPath.length) {
       navigate(
         `/data/import/image/?labels=${encodeURIComponent(
           JSON.stringify(labels),
@@ -72,6 +72,8 @@ function CreateLabels() {
           JSON.stringify(imagesPath),
         )}&selectedValue=${queryParameters.get('selectedValue')}`,
       );
+    } else {
+      alert('no-selected-all-labels');
     }
   };
 
