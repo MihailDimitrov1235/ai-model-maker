@@ -64,11 +64,15 @@ function CreateLabels() {
   };
 
   const handleGoBack = () => {
-    navigate(
-      `/data/import/image/?labels=${encodeURIComponent(
-        JSON.stringify(labels),
-      )}`,
-    ); //${classes}`);
+    if (labels.length !== imagesPath.length) {
+      navigate(
+        `/data/import/image/?labels=${encodeURIComponent(
+          JSON.stringify(labels),
+        )}&images=${encodeURIComponent(
+          JSON.stringify(imagesPath),
+        )}&selectedValue=${queryParameters.get('selectedValue')}`,
+      );
+    }
   };
 
   return (

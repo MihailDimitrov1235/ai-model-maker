@@ -40,12 +40,14 @@ function ImportImage() {
   };
   useEffect(() => {
     // Check labels
-    if (
-      JSON.parse(decodeURIComponent(queryParameters.get('labels'))).length > 0
-    ) {
+    console.log('PISNA MI');
+    console.log(queryParameters.get('labels'));
+    if (JSON.parse(decodeURIComponent(queryParameters.get('labels'))) != null) {
       setLabels(JSON.parse(decodeURIComponent(queryParameters.get('labels'))));
+      setImages(JSON.parse(decodeURIComponent(queryParameters.get('images'))));
+      setSelectedValue(queryParameters.get('selectedValue'));
     }
-  }, [images, labels]);
+  }, []);
 
   useEffect(() => {
     // Check labels
@@ -158,7 +160,7 @@ function ImportImage() {
     navigate(
       `/data/import/image/labels/${selectedValue}/?images=${encodeURIComponent(
         JSON.stringify(images),
-      )}`,
+      )}&selectedValue=${selectedValue}`,
     );
   };
 
