@@ -79,8 +79,14 @@ export default function TableModel() {
     window.electronAPI.trainModel({
       type: 'table',
       model: id,
-      learningRate: learningRate,
+      dataset: modelData.dataset,
+      learning_rate: learningRate,
       epochs: epochs,
+      initial_epoch: modelData.epochs.length,
+      batch_size: modelData.batch_size,
+      target: modelData.target,
+      validation_split: modelData.validation_split,
+      test_split: modelData.test_split,
     });
   };
 
@@ -94,21 +100,44 @@ export default function TableModel() {
     setEpochs(10);
     console.log(response);
     if (response.epochs.length > 0) {
-      let accuracyArray = [];
-      let lossArray = [];
+      let trainAccuracyArray = [];
+      let trainLossArray = [];
+      let valAccuracyArray = [];
+      let valLossArray = [];
+      let testAccuracyArray = [];
+      let testLossArray = [];
+
       let xAxis = [];
       response.epochs.forEach((epoch, idx) => {
         xAxis.push(idx + 1);
-        accuracyArray.push(epoch.accuracy);
-        lossArray.push(epoch.loss);
+        trainAccuracyArray.push(epoch.train_accuracy);
+        trainLossArray.push(epoch.train_loss);
+        valAccuracyArray.push(epoch.val_accuracy);
+        valLossArray.push(epoch.val_loss);
+        testAccuracyArray.push(epoch.test_accuracy);
+        testLossArray.push(epoch.test_loss);
       });
 
       const newLossData = {
         labels: xAxis,
         datasets: [
           {
-            label: t('loss'),
-            data: lossArray,
+            label: t('train-loss'),
+            data: trainLossArray,
+            fill: false,
+            tension: 0.1,
+            borderColor: 'rgb(75, 192, 192)',
+          },
+          {
+            label: t('val-loss'),
+            data: valLossArray,
+            fill: false,
+            tension: 0.1,
+            borderColor: 'rgb(75, 192, 192)',
+          },
+          {
+            label: t('test-loss'),
+            data: testLossArray,
             fill: false,
             tension: 0.1,
             borderColor: 'rgb(75, 192, 192)',
@@ -120,8 +149,22 @@ export default function TableModel() {
         labels: xAxis,
         datasets: [
           {
-            label: t('accuracy'),
-            data: accuracyArray,
+            label: t('train-accuracy'),
+            data: trainAccuracyArray,
+            fill: false,
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1,
+          },
+          {
+            label: t('val-accuracy'),
+            data: valAccuracyArray,
+            fill: false,
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1,
+          },
+          {
+            label: t('test-accuracy'),
+            data: testAccuracyArray,
             fill: false,
             borderColor: 'rgb(255, 99, 132)',
             tension: 0.1,

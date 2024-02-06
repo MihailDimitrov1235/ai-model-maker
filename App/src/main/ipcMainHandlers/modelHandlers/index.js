@@ -126,7 +126,7 @@ export function setupIPCModelHandlers(win) {
       args: argsArray,
     };
 
-    pyShell = new PythonShell('create_data_and_model.py', options);
+    pyShell = new PythonShell('init_model.py', options);
 
     pyShell.stdout.on('data', function (message) {
       console.log(message);
@@ -243,6 +243,77 @@ export function setupIPCModelHandlers(win) {
       // });
 
       return JSON.parse(data);
+    }
+  });
+
+  ipcMain.handle('train-model', async (event, data) => {
+    if (pyShell) {
+      pyShell.kill('SIGINT');
+    }
+    const config = getConfig();
+
+    if (data.type == 'table') {
+      let eps = [];
+
+      const folder_path = path.join(
+        getAssetPath(`datasets/table`),
+        data.dataset,
+      );
+      const model_path = path.join(getAssetPath(`models/table`), data.model);
+
+      const args = [
+        folder_path,
+        path.join(model_path, 'model.keras'),
+        data.learning_rate,
+        data.epochs,
+        data.initial_epoch,
+        data.batch_size,
+        data.target,
+        data.validation_split,
+        data.test_split,
+      ];
+
+      let options = {
+        mode: 'text',
+        pythonPath: config.python_exe_path,
+        pythonOptions: ['-u'],
+        scriptPath: getAssetPath('/python-scripts/tabularData'),
+        args: args,
+      };
+
+      pyShell = new PythonShell('train_model.py', options);
+
+      pyShell.stdout.on('data', function (message) {
+        try {
+          const jsonData = JSON.parse(message);
+          eps.push(jsonData);
+          console.log(jsonData);
+        } catch (e) {}
+      });
+
+      pyShell.stderr.on('data', function (err) {
+        console.log(err);
+      });
+
+      pyShell.stderr.on('data', function (err) {
+        console.log(err);
+      });
+
+      pyShell.on('close', (code, signal) => {
+        const data = fs.readFileSync(
+          path.join(model_path, 'info.json'),
+          'utf8',
+        );
+        const jsonData = JSON.parse(data);
+        let newEpochs = jsonData.epochs;
+        newEpochs.push(...eps);
+        jsonData.epochs = newEpochs;
+
+        fs.writeFileSync(
+          path.join(model_path, 'info.json'),
+          JSON.stringify(jsonData, null, 2),
+        );
+      });
     }
   });
 }
