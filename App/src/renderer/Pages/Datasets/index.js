@@ -10,6 +10,9 @@ import {
   MenuItem,
   Typography,
   CircularProgress,
+  InputLabel,
+  Select,
+  FormControl,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +28,8 @@ const Datasets = function () {
   const [datasets, setDatasets] = useState(null);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
+  const [selectedTypeValue, setSelectedTypeValue] = useState('');
+  const [selectedSearchValue, setSelectedSearchValue] = useState('');
   const datasetsPerPage = 12;
 
   useEffect(() => {
@@ -54,6 +59,16 @@ const Datasets = function () {
     });
     setDatasets(newDatasets);
   };
+  const handleSelectTypeChange = (event) => {
+    const value = event.target.value;
+    setSelectedTypeValue(value);
+    console.log(value);
+  };
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSelectedSearchValue(value);
+    console.log(value);
+  };
 
   return (
     <>
@@ -80,11 +95,30 @@ const Datasets = function () {
               display: 'flex',
               alignItems: 'center',
               gap: 3,
+              width: '70%',
             }}
           >
+            <FormControl sx={{ width: '35%' }}>
+              <InputLabel>{t('type')}</InputLabel>
+              <Select
+                id="mySelect"
+                label={'type'}
+                value={selectedTypeValue}
+                sx={{ flex: 1, height: '56px' }}
+                onChange={handleSelectTypeChange}
+              >
+                <MenuItem value={'tabular'}>{t('tabular data')}</MenuItem>
+                <MenuItem value={'classification'}>
+                  {t('image-classification')}
+                </MenuItem>
+                <MenuItem value={'detection'}>{t('object-detection')}</MenuItem>
+                <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               variant="outlined"
               placeholder="Search"
+              onChange={handleSearchChange}
               InputProps={{
                 startAdornment: <SearchIcon />,
               }}
@@ -104,12 +138,16 @@ const Datasets = function () {
           <Grid container spacing={4}>
             {datasets?.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <CardElement
-                  title={dataset.name}
-                  type={dataset.type}
-                  subType={dataset.subType}
-                  records={dataset.records}
-                />
+                {dataset.name.toLowerCase().includes(selectedSearchValue) && (
+                  // {console.log(dataset.subType)}
+                  // {dataset.subType === selectedTypeValue && (
+                  <CardElement
+                    title={dataset.name}
+                    type={dataset.type}
+                    subType={dataset.subType}
+                    records={dataset.records}
+                  />
+                )}
               </Grid>
             ))}
           </Grid>
