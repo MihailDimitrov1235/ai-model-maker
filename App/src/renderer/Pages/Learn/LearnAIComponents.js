@@ -52,15 +52,82 @@ const Datasets = function () {
           <h2>{t('learn-ai')}</h2>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mt: 3 }}>
-          <Typography sx={{ textIndent: '60px', fontSize: 'large' }}>
+          <Typography sx={{ textIndent: '60px', fontSize: 'large' }} mb={4}>
             <b>Welcome</b> to the learning page focused on essential properties
             in machine learning (ML). In this module, we'll delve into key
             properties that significantly impact the training and performance of
             ML models. Understanding these properties is fundamental for
             building effective and robust ML systems.
           </Typography>
+
+          <h3>Neural Network </h3>
+          <Typography sx={{ textIndent: '60px' }} fontSize={'large'} mb={5}>
+            Neural network is a computer system inspired by the structure and
+            functioning of the human brain. It's used for solving problems that
+            are too complex for traditional algorithms. Neural networks consist
+            of interconnected nodes, called neurons, arranged in layers. These
+            networks can learn patterns and relationships from data, making them
+            powerful tools for tasks like image recognition, language
+            translation, and predictive analysis.
+          </Typography>
+          <h3>Components of a Neural Network </h3>
+          <ol>
+            <Typography fontSize={'large'}>
+              <li>
+                <b>Neurons:</b>
+              </li>
+              Neurons are the basic building blocks of a neural network. They
+              receive input, process it, and produce an output. Neurons are
+              organized into layers: input layer, hidden layers, and output
+              layer.
+            </Typography>
+            <Typography fontSize={'large'} mt={3}>
+              <li>
+                <b>Layers:</b>
+              </li>
+              A neural network typically consists of three types of layers:
+              <ul>
+                <li>Input Layer:</li>
+                <Typography fontSize={'large'}>
+                  This layer receives the initial data. Each neuron in the input
+                  layer represents a feature or attribute of the input data.
+                </Typography>
+                <li>Hidden Layers:</li>
+                <Typography fontSize={'large'}>
+                  These layers process the input data through a series of
+                  transformations. Each hidden layer performs calculations using
+                  weighted connections between neurons.
+                </Typography>
+                <li>Output Layer:</li>
+                <Typography fontSize={'large'}>
+                  The final layer produces the network's output, which could be
+                  a prediction, classification, or any desired result.
+                </Typography>
+              </ul>
+            </Typography>
+            <Typography fontSize={'large'} mt={3}>
+              <li>
+                <b>Weights and Bias:</b>
+              </li>
+              Each connection between neurons has a weight associated with it,
+              which determines the strength of the connection. The network
+              learns by adjusting these weights based on the input data.
+              Additionally, each neuron has a bias term that helps control the
+              output of that neuron.
+            </Typography>
+            <Typography fontSize={'large'} mt={3}>
+              <li>
+                <b>Activation Function:</b>
+              </li>
+              Activation functions introduce non-linearity into the network,
+              allowing it to learn complex patterns. Popular activation
+              functions include ReLU (Rectified Linear Unit), sigmoid, and tanh.
+            </Typography>
+          </ol>
+
           <Typography fontSize={'large'} mt={2}>
-            Let's look at some of the characteristics of machine learning:
+            But now let's look at some of the characteristics of machine
+            learning:
           </Typography>
           <h3>Epoches</h3>
           <Typography sx={{ textIndent: '60px' }} fontSize={'large'}>
@@ -123,6 +190,7 @@ const Datasets = function () {
             cross-validation techniques to assess model performance and optimize
             hyperparameters for better results.
           </Typography>
+
           <Typography
             sx={{ textIndent: '60px' }}
             mt={2}
