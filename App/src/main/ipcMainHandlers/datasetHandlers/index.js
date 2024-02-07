@@ -148,6 +148,7 @@ function setupIPCDatasets(win) {
   });
 
   ipcMain.handle('get-datasets', (event, data) => {
+    const filter = data.filter;
     const page = data.page;
     const datasetsPerPage = data.datasetsPerPage;
 
@@ -158,7 +159,10 @@ function setupIPCDatasets(win) {
 
     let passed = 0;
     datasetsFolderPaths.forEach((folderPath) => {
-      if (fs.existsSync(folderPath.path)) {
+      if (
+        fs.existsSync(folderPath.path) &&
+        (!filter || folderPath.type == filter || folderPath.subType == filter)
+      ) {
         const folders = fs.readdirSync(folderPath.path);
 
         const startIndex = passed;
@@ -201,6 +205,7 @@ function setupIPCDatasets(win) {
               jsonData.subType = 'captioning';
             }
           }
+
           datasetsInfo.push(jsonData);
         }
       }
@@ -210,8 +215,12 @@ function setupIPCDatasets(win) {
 
   ipcMain.handle('get-datasets-count', async (event, data) => {
     let datasetCount = 0;
+    const filter = data.filter;
     datasetsFolderPaths.forEach((folderPath) => {
-      if (fs.existsSync(folderPath.path)) {
+      if (
+        fs.existsSync(folderPath.path) &&
+        (!filter || folderPath.type == filter || folderPath.subType == filter)
+      ) {
         const folders = fs.readdirSync(folderPath.path);
         datasetCount += folders.length;
       }

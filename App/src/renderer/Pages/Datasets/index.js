@@ -28,19 +28,22 @@ const Datasets = function () {
   const [datasets, setDatasets] = useState(null);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [selectedTypeValue, setSelectedTypeValue] = useState('');
+  const [filter, setFilter] = useState('');
   const [selectedSearchValue, setSelectedSearchValue] = useState('');
   const datasetsPerPage = 12;
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [filter]);
 
   const fetchData = async () => {
-    const newDatasetsCount = await window.electronAPI.getDatasetsCount();
+    const newDatasetsCount = await window.electronAPI.getDatasetsCount({
+      filter: filter,
+    });
     let newPageCount = Math.ceil(newDatasetsCount / datasetsPerPage);
     setPageCount(newPageCount);
     const newDatasets = await window.electronAPI.getDatasets({
+      filter: filter,
       page: page,
       datasetsPerPage: datasetsPerPage,
     });
@@ -59,10 +62,9 @@ const Datasets = function () {
     });
     setDatasets(newDatasets);
   };
-  const handleSelectTypeChange = (event) => {
+  const handleFilter = (event) => {
     const value = event.target.value;
-    setSelectedTypeValue(value);
-    console.log(value);
+    setFilter(value);
   };
   const handleSearchChange = (event) => {
     const value = event.target.value;
@@ -95,19 +97,18 @@ const Datasets = function () {
               display: 'flex',
               alignItems: 'center',
               gap: 3,
-              width: '70%',
             }}
           >
-            <FormControl sx={{ width: '35%' }}>
+            <FormControl sx={{ width: '200px' }}>
               <InputLabel>{t('type')}</InputLabel>
               <Select
                 id="mySelect"
                 label={'type'}
-                value={selectedTypeValue}
+                value={filter}
                 sx={{ flex: 1, height: '56px' }}
-                onChange={handleSelectTypeChange}
+                onChange={handleFilter}
               >
-                <MenuItem value={'tabular'}>{t('tabular data')}</MenuItem>
+                <MenuItem value={'table'}>{t('tabular data')}</MenuItem>
                 <MenuItem value={'classification'}>
                   {t('image-classification')}
                 </MenuItem>
@@ -123,12 +124,18 @@ const Datasets = function () {
                 startAdornment: <SearchIcon />,
               }}
               sx={{
+                width: '200px',
                 input: {
-                  padding: '8px',
+                  height: '56px',
+                  padding: '0',
                 },
               }}
             />
-            <Button variant="contrast" onClick={handleClick}>
+            <Button
+              sx={{ height: '56px' }}
+              variant="contrast"
+              onClick={handleClick}
+            >
               {t('new-dataset')}
             </Button>
           </Box>
@@ -169,7 +176,11 @@ const Datasets = function () {
                 <Typography variant="h3" sx={{ mb: 4 }}>
                   {t('no-datasets-found')}
                 </Typography>
-                <Button variant="contrast" onClick={handleClick}>
+                <Button
+                  sx={{ height: '56px' }}
+                  variant="contrast"
+                  onClick={handleClick}
+                >
                   {t('new-dataset')}
                 </Button>
               </>
