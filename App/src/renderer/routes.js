@@ -21,6 +21,7 @@ import CreateTabular from './Pages/Models/CreateModel/CreateTabular';
 import TableModel from './Pages/Models/TableModel';
 
 import LearnAIComponents from './Pages/Learn/LearnAIComponents';
+import LearnDatasets from './Pages/Learn/LearnDatasets';
 
 const routes = [
   {
@@ -142,8 +143,8 @@ const routes = [
         element: <InnerLayout type={'learn'} />,
         children: [
           { path: '', element: <LearnAIComponents /> },
-          { path: 'data1', element: <Landing /> },
-          { path: 'data2', element: <Landing /> },
+          { path: 'dataset', element: <LearnDatasets /> },
+          { path: 'model', element: <LearnAIComponents /> },
         ],
       },
       {

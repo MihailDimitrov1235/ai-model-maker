@@ -62,38 +62,98 @@ const learnItems = [
   {
     type: 'section',
     name: 'datasets',
-    href: '/learn/datasets',
+    href: '/learn/dataset',
     items: [
-      { type: 'item', name: 'tabular', href: '/learn/datasets/tabular'},
-      { type: 'section', name: 'image', href: '/learn/datasets/image', items:[
-        { type: 'item', name: 'classification', href: '/learn/datasets/classification'},
-        { type: 'item', name: 'detection', href: '/learn/datasets/detection'},
-        { type: 'item', name: 'captioning', href: '/learn/datasets/captioning'},
-      ]},
+      { type: 'item', name: 'tabular', href: '/learn/datasets/tabular' },
+      {
+        type: 'section',
+        name: 'image',
+        href: '/learn/datasets/image',
+        items: [
+          {
+            type: 'item',
+            name: 'classification',
+            href: '/learn/datasets/classification',
+          },
+          {
+            type: 'item',
+            name: 'detection',
+            href: '/learn/datasets/detection',
+          },
+          {
+            type: 'item',
+            name: 'captioning',
+            href: '/learn/datasets/captioning',
+          },
+        ],
+      },
     ],
   },
   {
     type: 'section',
     name: 'models',
-    href: '/learn/models',
+    href: '/learn/model',
     items: [
-      { type: 'section', name: 'neural-network', href: '/learn/models/nn', items:[
-        { type: 'section', name: 'layers', href: '/learn/models/nn/layers', items:[
-          { type: 'item', name: 'dense', href: '/learn/models/nn/layers/dense' },
-          { type: 'item', name: 'dropout', href: '/learn/models/nn/layers/dropout' },
-          { type: 'item', name: 'conv-2D', href: '/learn/models/nn/layers/conv2D' },
-          { type: 'item', name: 'max-pooling-2D', href: '/learn/models/nn/layers/mp2D' },
-        ] },
-        { type: 'item', name: 'batch-size', href: '/learn/models/nn/bs' },
-        { type: 'section', name: 'dataset-split', href: '/learn/models/nn/ds', items:[
-          { type: 'item', name: 'training', href: '/learn/models/nn/ds/training' },
-          { type: 'item', name: 'validation', href: '/learn/models/nn/ds/validation' },
-          { type: 'item', name: 'testing', href: '/learn/models/nn/ds/testing' },
-        ] },
-        { type: 'item', name: 'target', href: '/learn/models/nn/target' },
-        { type: 'item', name: 'learning-rate', href: '/learn/models/nn/lr' },
-        { type: 'item', name: 'epoch', href: '/learn/models/nn/epoch' },
-      ] },
+      {
+        type: 'section',
+        name: 'neural-network',
+        href: '/learn/#nn',
+        items: [
+          {
+            type: 'section',
+            name: 'layers',
+            href: '/learn/models/nn/layers',
+            items: [
+              {
+                type: 'item',
+                name: 'dense',
+                href: '/learn/models/nn/layers/dense',
+              },
+              {
+                type: 'item',
+                name: 'dropout',
+                href: '/learn/models/nn/layers/dropout',
+              },
+              {
+                type: 'item',
+                name: 'conv-2D',
+                href: '/learn/models/nn/layers/conv2D',
+              },
+              {
+                type: 'item',
+                name: 'max-pooling-2D',
+                href: '/learn/models/nn/layers/mp2D',
+              },
+            ],
+          },
+          { type: 'item', name: 'batch-size', href: '/learn/models/nn/bs' },
+          {
+            type: 'section',
+            name: 'dataset-split',
+            href: '/learn/models/nn/ds',
+            items: [
+              {
+                type: 'item',
+                name: 'training',
+                href: '/learn/models/nn/ds/training',
+              },
+              {
+                type: 'item',
+                name: 'validation',
+                href: '/learn/models/nn/ds/validation',
+              },
+              {
+                type: 'item',
+                name: 'testing',
+                href: '/learn/models/nn/ds/testing',
+              },
+            ],
+          },
+          { type: 'item', name: 'target', href: '/learn/models/nn/target' },
+          { type: 'item', name: 'learning-rate', href: '/learn/models/nn/lr' },
+          { type: 'item', name: 'epoch', href: '/learn/models/nn/epoch' },
+        ],
+      },
     ],
   },
 ];

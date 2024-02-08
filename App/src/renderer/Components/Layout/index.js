@@ -135,7 +135,7 @@ export default function Layout() {
           display: 'flex',
           flexDirection: 'column',
           width: '70px',
-          minWidth:'70px',
+          minWidth: '70px',
           bgcolor: 'background.standOut',
           m: 1,
           borderRadius: '20px',
