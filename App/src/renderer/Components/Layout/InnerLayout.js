@@ -114,7 +114,7 @@ export default function InnerLayout({ type = null }) {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: '250px',
+            minWidth: '250px',
             bgcolor: 'background.standOut',
             borderRadius: '20px',
             m: 1,
