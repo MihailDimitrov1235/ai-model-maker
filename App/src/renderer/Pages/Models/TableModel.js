@@ -98,7 +98,6 @@ export default function TableModel() {
     setModelData(response);
     setLearningRate(0.001);
     setEpochs(10);
-    console.log(response);
     if (response.epochs.length > 0) {
       let trainAccuracyArray = [];
       let trainLossArray = [];
@@ -133,14 +132,14 @@ export default function TableModel() {
             data: valLossArray,
             fill: false,
             tension: 0.1,
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(2, 173, 73)',
           },
           {
             label: t('test-loss'),
             data: testLossArray,
             fill: false,
             tension: 0.1,
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(255, 99, 132)',
           },
         ],
       };
@@ -152,14 +151,14 @@ export default function TableModel() {
             label: t('train-accuracy'),
             data: trainAccuracyArray,
             fill: false,
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(75, 192, 192)',
             tension: 0.1,
           },
           {
             label: t('val-accuracy'),
             data: valAccuracyArray,
             fill: false,
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(2, 173, 73)',
             tension: 0.1,
           },
           {

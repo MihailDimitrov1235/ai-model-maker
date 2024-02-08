@@ -7,10 +7,11 @@ import sys
 
 
 class CustomCallback(tf.keras.callbacks.Callback):
-    def __init__(self, validation_data, test_data):
+    def __init__(self, validation_data, test_data, initial_epochs):
         super(CustomCallback, self).__init__()
         self.validation_data = validation_data
         self.test_data = test_data
+        self.initial_epochs = initial_epochs
 
     def on_epoch_end(self, epoch, logs=None):
         train_loss = logs.get("loss")
@@ -19,7 +20,7 @@ class CustomCallback(tf.keras.callbacks.Callback):
         test_loss, test_accuracy = self.model.evaluate(self.test_data, verbose=0)
 
         results = {
-            "epoch": epoch + 1,
+            "epoch": epoch + self.initial_epochs,
             "train_loss": float(train_loss),
             "train_accuracy": float(train_accuracy),
             "val_loss": float(val_loss),
@@ -65,11 +66,11 @@ dataframe = pd.read_csv(folder_path + "/data.csv")
 
 train_ds, val_ds, test_ds = create_train_val_test(dataframe, batch_size, target, info)
 
-custom_callback = CustomCallback(val_ds, test_ds)
+custom_callback = CustomCallback(val_ds, test_ds, initial_epochs)
 model.fit(
     train_ds,
-    initial_epoch=initial_epochs,
     epochs=epochs,
     validation_data=val_ds,
     callbacks=[custom_callback],
 )
+model.save(model_path)
