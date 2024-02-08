@@ -5,6 +5,8 @@ import {
   ListItemButton,
   ListItemText,
   IconButton,
+  Divider,
+  Box
 } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -53,7 +55,7 @@ export default function SidebarMenu({ items }) {
 
 function Section({ item }) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
   const handleClick = () => {
@@ -88,9 +90,13 @@ function Section({ item }) {
         </IconButton>
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding sx={{ ml: 1 }}>
+        <Box display={'flex'} sx={{ ml: 2 }}>
+        <Divider orientation="vertical" variant="middle" flexItem />
+        <List component="div" disablePadding >
           <SidebarMenu items={item.items} />
         </List>
+        </Box>
+        
       </Collapse>
     </>
   );
