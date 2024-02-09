@@ -8,7 +8,15 @@ import {
   Button,
 } from '@mui/material';
 
-function CustomDialog({ open, setOpen, title, text, buttons, loading = true }) {
+function CustomDialog({
+  open,
+  setOpen,
+  title,
+  text,
+  buttons,
+  loading = true,
+  progress = null,
+}) {
   const handleClose = () => {
     if (setOpen) {
       setOpen(false);
@@ -27,7 +35,15 @@ function CustomDialog({ open, setOpen, title, text, buttons, loading = true }) {
       >
         <Box display="flex" flexDirection={'column'} gap={2}>
           {text}
-          {loading && <LinearProgress />}
+          {loading && (
+            <>
+              {progress == null ? (
+                <LinearProgress />
+              ) : (
+                <LinearProgress variant="determinate" value={progress * 100} />
+              )}
+            </>
+          )}
         </Box>
       </DialogContent>
       <DialogActions sx={{ bgcolor: 'background.main', py: 2, px: 3, gap: 5 }}>

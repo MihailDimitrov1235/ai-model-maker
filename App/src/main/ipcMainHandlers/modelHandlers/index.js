@@ -272,7 +272,6 @@ export function setupIPCModelHandlers(win) {
         data.validation_split,
         data.test_split,
       ];
-      console.log(args);
 
       let options = {
         mode: 'text',
@@ -285,11 +284,21 @@ export function setupIPCModelHandlers(win) {
       pyShell = new PythonShell('train_model.py', options);
 
       pyShell.stdout.on('data', function (message) {
-        console.log(message);
         try {
           const jsonData = JSON.parse(message);
           eps.push(jsonData);
-        } catch (e) {}
+        } catch (e) {
+          const wordArr = message.split(' ');
+          if (wordArr[0] == 'Epoch') {
+            win.webContents.send('change-training-text', wordArr[1]);
+          }
+          if (wordArr[0].split('/').length == 2) {
+            win.webContents.send(
+              'change-training-progress',
+              wordArr[0].split('/')[0] / wordArr[0].split('/')[1],
+            );
+          }
+        }
       });
 
       pyShell.stderr.on('data', function (err) {
@@ -314,6 +323,7 @@ export function setupIPCModelHandlers(win) {
           path.join(model_path, 'info.json'),
           JSON.stringify(jsonData, null, 2),
         );
+        win.webContents.send('close-training-dialog');
       });
     }
   });

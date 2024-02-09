@@ -29,4 +29,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('change-create-env-text', callback),
   handleCloseCreateEnv: (callback) =>
     ipcRenderer.on('close-create-env', callback),
+  handleCloseTrainingDialog: (callback) =>
+    ipcRenderer.on('close-training-dialog', callback),
+  handleChangeTrainingText: (callback) =>
+    ipcRenderer.on('change-training-text', callback),
+  handleChangeTrainingProgress: (callback) =>
+    ipcRenderer.on('change-training-progress', callback),
+  removeListener: (callback) => {
+    ipcRenderer.removeAllListeners(callback);
+  },
 });
