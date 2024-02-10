@@ -38,253 +38,106 @@ const Datasets = function () {
   const items = [
     {
       type: 'text',
-      title: 'Learn AI',
+      title: t('learn-ai'),
       titleType: 'h3',
-      text: (
-        <>
-          <b>Welcome</b> to the learning page focused on essential properties in
-          machine learning (ML). In this module, we'll delve into key properties
-          that significantly impact the training and performance of ML models.
-          Understanding these properties is fundamental for building effective
-          and robust ML systems.
-        </>
-      ),
+      text: <>{t('ml-introduction')}</>,
     },
     {
       type: 'text',
-      title: 'Neural Network',
+      title: t('neural-network'),
       titleType: 'h4',
-      text: (
-        <>
-          Neural network is a computer system inspired by the structure and
-          functioning of the human brain. It's used for solving problems that
-          are too complex for traditional algorithms. Neural networks consist of
-          interconnected nodes, called neurons, arranged in layers. These
-          networks can learn patterns and relationships from data, making them
-          powerful tools for tasks like image recognition, language translation,
-          and predictive analysis.
-        </>
-      ),
+      text: t('neural-network-text'),
     },
     {
       type: 'text',
-      title: 'Components of a Neural Network',
+      title: t('components-of-neural-network'),
       id: 'nn',
       titleType: 'h4',
     },
     {
       type: 'text',
-      title: 'Neurons',
+      title: t('neurons'),
       id: 'neurons',
       titleType: 'h5',
-      text: (
-        <>
-          Neurons are the basic building blocks of a neural network. They
-          receive input, process it, and produce an output. Neurons are
-          organized into layers: input layer, hidden layers, and output layer.
-        </>
-      ),
+      text: t('neurons-text'),
     },
 
     {
       type: 'list',
-      title: 'Layers',
+      title: t('layers'),
       id: 'layers',
       listItems: [
         {
-          text: (
-            <>
-              <b>Dense</b> layer, also known as a fully connected layer, is a
-              fundamental building block in neural networks. Imagine it as a
-              layer where every neuron is connected to every neuron in the
-              previous and next layers. Each neuron in a dense layer receives
-              input from all neurons in the previous layer and produces an
-              output value. Dense layers are commonly used for learning patterns
-              in data and making predictions. For example, in a simple neural
-              network for image classification, the first dense layer might
-              receive flattened pixel values of an image as input and learn to
-              recognize patterns in the data, such as edges or shapes.
-            </>
-          ),
+          text: t('dense-text'),
           subId: 'dense',
         },
         {
-          text: (
-            <>
-              <b>Dropout</b> is a regularization technique used to prevent
-              overfitting in neural networks. It works by randomly dropping a
-              certain percentage of neurons (along with their connections)
-              during training, effectively forcing the network to learn more
-              robust and generalizable features. Dropout helps prevent the
-              network from relying too heavily on specific neurons or features,
-              making it less likely to memorize the training data and better
-              able to generalize to unseen data. For example, in a dropout layer
-              with a dropout rate of 0.5, each neuron has a 50% chance of being
-              temporarily dropped during training.
-            </>
-          ),
+          text: t('dropout-text'),
           subId: 'dropout',
         },
         {
-          text: (
-            <>
-              <b>Convolutional 2D (Conv2D)</b> layer is a fundamental component
-              of convolutional neural networks (CNNs), which are widely used for
-              tasks like image recognition and object detection. Conv2D layers
-              apply a convolution operation to the input data, sliding a small
-              filter (also known as a kernel) across the input image to extract
-              features. This process helps the network learn hierarchical
-              representations of the input data, capturing patterns at different
-              levels of abstraction. For example, in image classification, the
-              first Conv2D layer might learn low-level features like edges and
-              textures, while subsequent layers learn higher-level features like
-              shapes and objects.
-            </>
-          ),
+          text: t('conv2D-text'),
           subId: 'conv-2D',
         },
         {
-          text: (
-            <>
-              <b>MaxPooling2D</b> is a pooling operation commonly used in CNNs
-              to reduce the spatial dimensions of feature maps while retaining
-              important information. It works by dividing the input feature map
-              into non-overlapping regions and retaining only the maximum value
-              within each region. This reduces the computational complexity of
-              the network and helps prevent overfitting by reducing the number
-              of parameters. For example, in an image classification CNN,
-              MaxPooling2D layers are typically used to downsample feature maps
-              after convolutional layers, reducing their spatial resolution
-              while preserving the most relevant information.
-            </>
-          ),
+          text: t('max-poling2D-text'),
           subId: 'max-pooling-2D',
         },
       ],
     },
     {
       type: 'text',
-      title: 'Batch Size',
+      title: t('batch-size'),
       id: 'batch-size',
       titleType: 'h5',
-      text: (
-        <>
-          Batch size determines the number of training examples used in one
-          iteration of training. Larger batch sizes can speed up training but
-          require more memory, while smaller batch sizes can lead to more stable
-          training. Adjust batch size based on hardware constraints and dataset
-          characteristics to achieve optimal training performance.
-        </>
-      ),
+      text: t('batch-size-text'),
     },
     {
       type: 'list',
-      title: 'Dataset split',
+      title: t('dataset-split'),
       id: 'dataset-split',
       listItems: [
         {
-          text: (
-            <>
-              <b>The training</b> set is the set of data used to train the
-              model. It comprises a large portion of the available data and is
-              the basis for model parameter estimation. The training set must
-              include all the possible inputs the model can process. For
-              example, if your model must classify pictures of cats and dogs,
-              the training set must include both cats and dogs.
-            </>
-          ),
+          text: t('training-text'),
           subId: 'training',
         },
         {
-          text: (
-            <>
-              <b>The validation</b> set, sometimes called the development set,
-              is an intermediary between the training and test sets. Its primary
-              purpose is to fine-tune the model's hyperparameters and assess its
-              performance during training. Unlike the test set, the validation
-              set is used iteratively during the model development. By
-              evaluating the model's performance on the validation set, we can
-              make informed decisions about adjusting hyperparameters, selecting
-              the best-performing model, or identifying potential overfitting or
-              underfitting issues.
-            </>
-          ),
+          text: t('validation-text'),
           subId: 'validation',
         },
         {
-          text: (
-            <>
-              <b>The test</b> set is a separate subset of the data withheld
-              during the training phase. It is an unbiased benchmark to evaluate
-              the model's performance after training. The test set simulates
-              real-world data that the model is likely to encounter in
-              production. By assessing the model's performance on previously
-              unseen examples, we can gauge its ability to generalize and make
-              accurate predictions on new, unseen data.
-            </>
-          ),
+          text: t('testing-text'),
           subId: 'testing',
         },
       ],
     },
     {
       type: 'text',
-      title: 'Weights and Bias',
+      title: t('weights-bias'),
       id: 'weight-bias',
       titleType: 'h5',
-      text: (
-        <>
-          Each connection between neurons has a weight associated with it, which
-          determines the strength of the connection. The network learns by
-          adjusting these weights based on the input data. Additionally, each
-          neuron has a bias term that helps control the output of that neuron.
-        </>
-      ),
+      text: t('weights-bias-text'),
     },
     {
       type: 'text',
-      title: 'Target',
+      title: t('target'),
       id: 'target',
       titleType: 'h5',
-      text: (
-        <>
-          In machine learning (ML), the target, also known as the target
-          variable or dependent variable, is the variable that the model aims to
-          predict or estimate based on the input features.
-        </>
-      ),
+      text: t('target-text'),
     },
     {
       type: 'text',
-      title: 'Learning Rate',
+      title: t('learning-rate'),
       id: 'learning-rate',
       titleType: 'h5',
-      text: (
-        <>
-          Learning rate controls the step size at which the model's parameters
-          are updated during training. Proper selection of the learning rate is
-          crucial for achieving fast convergence without overshooting or getting
-          stuck in local minima. Experiment with different learning rates and
-          consider using adaptive learning rate algorithms for improved
-          performance.
-        </>
-      ),
+      text: t('learning-rate-text'),
     },
     {
       type: 'text',
-      title: 'Epoch',
+      title: t('epoch'),
       id: 'epoch',
       titleType: 'h5',
-      text: (
-        <>
-          Epochs refer to the number of times the entire dataset is passed
-          forward and backward through the neural network during training.
-          Increasing epochs can improve model accuracy by allowing it to learn
-          from the data multiple times. However, too many epochs can lead to
-          overfitting. Experiment with different epoch values to find the
-          optimal balance between model performance and training time.
-        </>
-      ),
+      text: t('epoch-text'),
     },
   ];
 

@@ -71,12 +71,12 @@ const learnItems = [
         items: [
           {
             type: 'item',
-            name: 'classification',
+            name: 'image-classification',
             href: '/learn/datasets/?id=classification',
           },
           {
             type: 'item',
-            name: 'detection',
+            name: 'object-detection',
             href: '/learn/datasets/?id=detection',
           },
           {
@@ -115,12 +115,12 @@ const learnItems = [
               },
               {
                 type: 'item',
-                name: 'conv-2D',
+                name: 'conv2D',
                 href: '/learn/model/?id=conv-2D',
               },
               {
                 type: 'item',
-                name: 'max-pooling-2D',
+                name: 'max-poling2D',
                 href: '/learn/model/?id=max-pooling-2D',
               },
             ],
@@ -154,7 +154,7 @@ const learnItems = [
           },
           {
             type: 'item',
-            name: 'weight-bias',
+            name: 'weights-bias',
             href: '/learn/model/?id=weight-bias',
           },
           { type: 'item', name: 'target', href: '/learn/model/?id=target' },
