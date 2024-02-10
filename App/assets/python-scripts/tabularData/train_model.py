@@ -14,6 +14,10 @@ class CustomCallback(tf.keras.callbacks.Callback):
         self.initial_epochs = initial_epochs
 
     def on_epoch_end(self, epoch, logs=None):
+        print("request-input")
+        sys.stdout.flush()
+        cancel = input()
+
         train_loss = logs.get("loss")
         train_accuracy = logs.get("accuracy")
         val_loss, val_accuracy = self.model.evaluate(self.validation_data, verbose=0)
@@ -32,6 +36,9 @@ class CustomCallback(tf.keras.callbacks.Callback):
         # Send results to Node.js and request input
         print(json.dumps(results))
         sys.stdout.flush()
+
+        if cancel == "true":
+            self.model.stop_training = True
 
 
 parser = argparse.ArgumentParser()
@@ -67,6 +74,14 @@ dataframe = pd.read_csv(folder_path + "/data.csv")
 train_ds, val_ds, test_ds = create_train_val_test(dataframe, batch_size, target, info)
 
 custom_callback = CustomCallback(val_ds, test_ds, initial_epochs)
+
+# model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+#     filepath=model_path,
+#     save_weights_only=True,
+#     monitor='val_loss',
+#     mode='min',
+#     save_best_only=True)
+
 model.fit(
     train_ds,
     epochs=epochs,

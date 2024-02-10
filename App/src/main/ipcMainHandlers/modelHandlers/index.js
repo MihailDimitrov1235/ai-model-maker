@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 let pyShell;
+let cancelTraining = false;
 
 export function setupIPCModelHandlers(win) {
   const tabularDatasetsFolder = getAssetPath(`datasets/table`);
@@ -246,7 +247,12 @@ export function setupIPCModelHandlers(win) {
     }
   });
 
+  ipcMain.handle('cancel-train-model', async (event, data) => {
+    cancelTraining = true;
+  });
+
   ipcMain.handle('train-model', async (event, data) => {
+    cancelTraining = false;
     if (pyShell) {
       pyShell.kill('SIGINT');
     }
@@ -284,10 +290,15 @@ export function setupIPCModelHandlers(win) {
       pyShell = new PythonShell('train_model.py', options);
 
       pyShell.stdout.on('data', function (message) {
+        if (message.includes('request-input')) {
+          pyShell.stdin.write(cancelTraining + '\n');
+        }
         try {
           const jsonData = JSON.parse(message);
+          console.log('jsoooooooooon');
           eps.push(jsonData);
         } catch (e) {
+          console.log(message);
           const wordArr = message.split(' ');
           if (wordArr[0] == 'Epoch') {
             win.webContents.send('change-training-text', wordArr[1]);
