@@ -177,8 +177,10 @@ export default function TableModel() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [id]);
+    if (!openTrainDialog) {
+      fetchData();
+    }
+  }, [id, openTrainDialog]);
 
   useEffect(() => {
     window.electronAPI.handleChangeTrainingText((event, value) => {

@@ -31,11 +31,11 @@ export default function Layout() {
 
   useEffect(() => {
     window.electronAPI.checkEnv();
-    window.electronAPI.handleMissingConda((event, value) => {
-      setOpenNoConda(true);
-    });
     window.electronAPI.handleMissingVenv((event, value) => {
       setOpenNoPython(true);
+    });
+    window.electronAPI.handleMissingConda((event, value) => {
+      setOpenNoConda(true);
     });
     window.electronAPI.handleChangeCreateEnvText((event, value) => {
       if (value == 'cancel') {
@@ -46,6 +46,13 @@ export default function Layout() {
     window.electronAPI.handleCloseCreateEnv((event, value) => {
       setOpenCreateEnv(false);
     });
+
+    return () => {
+      window.electronAPI.removeListener('no-env');
+      window.electronAPI.removeListener('no-conda');
+      window.electronAPI.removeListener('change-create-env-text');
+      window.electronAPI.removeListener('close-create-env');
+    };
   }, []);
 
   const handleCloseNoPython = () => {
