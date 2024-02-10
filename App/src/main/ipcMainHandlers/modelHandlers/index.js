@@ -260,6 +260,7 @@ export function setupIPCModelHandlers(win) {
 
     if (data.type == 'table') {
       let eps = [];
+      let acc = 0;
 
       const folder_path = path.join(
         getAssetPath(`datasets/table`),
@@ -270,6 +271,7 @@ export function setupIPCModelHandlers(win) {
       const args = [
         folder_path,
         path.join(model_path, 'model.keras'),
+        path.join(model_path, 'ckpt', 'checkpoint'),
         data.learning_rate,
         data.epochs,
         data.initial_epoch,
@@ -290,13 +292,11 @@ export function setupIPCModelHandlers(win) {
       pyShell = new PythonShell('train_model.py', options);
 
       pyShell.stdout.on('data', function (message) {
-        if (message.includes('request-input')) {
-          pyShell.stdin.write(cancelTraining + '\n');
-        }
         try {
           const jsonData = JSON.parse(message);
-          console.log('jsoooooooooon');
           eps.push(jsonData);
+          acc = Math.max(jsonData.val_accuracy, acc);
+          pyShell.stdin.write(cancelTraining + '\n');
         } catch (e) {
           console.log(message);
           const wordArr = message.split(' ');
@@ -329,6 +329,7 @@ export function setupIPCModelHandlers(win) {
         let newEpochs = jsonData.epochs;
         newEpochs.push(...eps);
         jsonData.epochs = newEpochs;
+        jsonData.accuracy = Math.max(acc, jsonData.accuracy);
 
         fs.writeFileSync(
           path.join(model_path, 'info.json'),

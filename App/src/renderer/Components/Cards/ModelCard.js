@@ -130,8 +130,14 @@ export default function ModelCard({
                 textAlign: 'center',
               }}
             >
-              <Typography>{accuracy}</Typography>
-              <Typography>{t('accuracy')}</Typography>
+              {model && model.epochs.length > 0 ? (
+                <>
+                  <Typography>{model.accuracy.toFixed(2)}</Typography>
+                  <Typography>{t('accuracy')}</Typography>
+                </>
+              ) : (
+                <Typography>{t('not-trained')}</Typography>
+              )}
             </Box>
           </CardActions>
         </Card>

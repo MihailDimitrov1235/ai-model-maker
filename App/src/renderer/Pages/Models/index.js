@@ -105,19 +105,12 @@ const Models = function () {
           <Grid container spacing={4}>
             {models?.map((model, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                {/* <Button
-                  sx={{ width: '100%' }}
-                  onClick={() =>
-                    handleOpenModel(model.name, model.type, model.subtype)
-                  }
-                > */}
                 <ModelCard
                   model={model}
                   handleOpenModel={() =>
                     handleOpenModel(model.name, model.type, model.subtype)
                   }
                 />
-                {/* </Button> */}
               </Grid>
             ))}
           </Grid>

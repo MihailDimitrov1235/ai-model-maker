@@ -228,7 +228,7 @@ export default function TableModel() {
       </Box>
       {modelData ? (
         <>
-          {modelData.epochs.length && (
+          {modelData.epochs.length > 0 && (
             <Box sx={{ display: 'flex', gap: 3 }}>
               <Box sx={{ flex: 1 }}>
                 <Line
@@ -303,13 +303,12 @@ export default function TableModel() {
               </Box>
             </Box>
           )}
-          {modelData.epochs.length && (
+          {modelData.epochs.length > 0 && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               <Typography variant="p">{t('records-per-graph')}</Typography>
               <Slider
                 value={maxRecordsPerGraph}
                 valueLabelDisplay="auto"
-                shiftStep={1}
                 step={1}
                 marks
                 min={2}
