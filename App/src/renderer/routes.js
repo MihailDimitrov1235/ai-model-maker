@@ -22,6 +22,7 @@ import TableModel from './Pages/Models/TableModel';
 
 import LearnAIComponents from './Pages/Learn/LearnAIComponents';
 import LearnDatasets from './Pages/Learn/LearnDatasets';
+import LearnSetup from './Pages/Learn/LearnSetup';
 
 const routes = [
   {
@@ -142,7 +143,11 @@ const routes = [
         path: '/learn',
         element: <InnerLayout type={'learn'} />,
         children: [
-          { path: '', element: <LearnAIComponents /> },
+          {
+            path: '',
+            element: <LearnDatasets />,
+          },
+          { path: 'setup', element: <LearnSetup /> },
           { path: 'datasets', element: <LearnDatasets /> },
           { path: 'model', element: <LearnAIComponents /> },
         ],

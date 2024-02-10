@@ -23,8 +23,6 @@ const Datasets = function () {
 
   useEffect(() => {
     let id = queryParameters.get('id') != null ? queryParameters.get('id') : '';
-    console.log('element');
-    console.log(id);
     const element = document.getElementById(queryParameters.get('id'));
     if (element) {
       element.scrollIntoView({
@@ -33,7 +31,7 @@ const Datasets = function () {
         inline: 'nearest',
       });
     }
-  }, [queryParameters.get('id')]);
+  }, [queryParameters]);
 
   const items = [
     {
@@ -48,17 +46,16 @@ const Datasets = function () {
       titleType: 'h4',
       text: t('neural-network-text'),
     },
-    {
-      type: 'text',
-      title: t('components-of-neural-network'),
-      id: 'nn',
-      titleType: 'h4',
-    },
+    // {
+    //   type: 'text',
+    //   title: t('components-of-neural-network'),
+    //   id: 'nn',
+    //   titleType: 'h4',
+    // },
     {
       type: 'text',
       title: t('neurons'),
       id: 'neurons',
-      titleType: 'h5',
       text: t('neurons-text'),
     },
 
@@ -89,7 +86,6 @@ const Datasets = function () {
       type: 'text',
       title: t('batch-size'),
       id: 'batch-size',
-      titleType: 'h5',
       text: t('batch-size-text'),
     },
     {
@@ -115,28 +111,24 @@ const Datasets = function () {
       type: 'text',
       title: t('weights-bias'),
       id: 'weight-bias',
-      titleType: 'h5',
       text: t('weights-bias-text'),
     },
     {
       type: 'text',
       title: t('target'),
       id: 'target',
-      titleType: 'h5',
       text: t('target-text'),
     },
     {
       type: 'text',
       title: t('learning-rate'),
       id: 'learning-rate',
-      titleType: 'h5',
       text: t('learning-rate-text'),
     },
     {
       type: 'text',
       title: t('epoch'),
       id: 'epoch',
-      titleType: 'h5',
       text: t('epoch-text'),
     },
   ];
@@ -146,10 +138,8 @@ const Datasets = function () {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        px: '50px',
+        px: 3,
         gap: 3,
-        minHeight: '100%',
-        mb: 3,
       }}
     >
       {items.map((item) => (
@@ -164,9 +154,7 @@ const Datasets = function () {
           </Typography>
           {item.type == 'text' && (
             <>
-              <Typography mt={2} sx={{ fontSize: 'large' }}>
-                {item.text}
-              </Typography>
+              <Typography sx={{ fontSize: 'large' }}>{item.text}</Typography>
             </>
           )}
           {item.type == 'list' && (

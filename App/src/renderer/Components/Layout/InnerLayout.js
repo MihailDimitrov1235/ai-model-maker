@@ -54,9 +54,10 @@ const useItems = [
 ];
 const learnItems = [
   {
-    type: 'item',
-    name: 'Home',
+    type: 'section',
+    name: 'getting-started',
     href: '/learn',
+    items: [{ type: 'item', name: 'setup', href: '/learn/setup' }],
   },
   {
     type: 'section',
