@@ -35,12 +35,12 @@ export default function Settings() {
   };
   const handleSelectPythonExe = async () => {
     const response = await window.electronAPI.selectPythonExe();
+    if (response.canceled) {
+      return;
+    }
     if (response.filePaths[0].endsWith('python.exe')) {
       setPythonExeError('');
-      if (
-        !response.canceled &&
-        config.python_exe_path != response.filePaths[0]
-      ) {
+      if (config.python_exe_path != response.filePaths[0]) {
         setConfig({ ...config, python_exe_path: response.filePaths[0] });
         setDisableApply(false);
       }
