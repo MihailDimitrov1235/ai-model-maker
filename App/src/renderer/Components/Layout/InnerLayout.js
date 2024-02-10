@@ -52,7 +52,6 @@ const useItems = [
   { type: 'item', name: 'Model1', href: '/test' },
   { type: 'item', name: 'Model2', href: '/test' },
 ];
-
 const learnItems = [
   {
     type: 'item',
@@ -62,28 +61,28 @@ const learnItems = [
   {
     type: 'section',
     name: 'datasets',
-    href: '/learn/dataset',
+    href: '/learn/datasets/?id=dataset',
     items: [
-      { type: 'item', name: 'tabular', href: '/learn/datasets/tabular' },
+      { type: 'item', name: 'tabular', href: '/learn/datasets/?id=tabular' },
       {
         type: 'section',
         name: 'image',
-        href: '/learn/datasets/image',
+        href: '/learn/datasets/?id=image',
         items: [
           {
             type: 'item',
             name: 'classification',
-            href: '/learn/datasets/classification',
+            href: '/learn/datasets/?id=classification',
           },
           {
             type: 'item',
             name: 'detection',
-            href: '/learn/datasets/detection',
+            href: '/learn/datasets/?id=detection',
           },
           {
             type: 'item',
             name: 'captioning',
-            href: '/learn/datasets/captioning',
+            href: '/learn/datasets/?id=captioning',
           },
         ],
       },
@@ -97,61 +96,74 @@ const learnItems = [
       {
         type: 'section',
         name: 'neural-network',
-        href: '/learn/#nn',
+        href: `/learn/model/?id=nn`,
         items: [
           {
             type: 'section',
             name: 'layers',
-            href: '/learn/models/nn/layers',
+            href: '/learn/model/?id=layers',
             items: [
               {
                 type: 'item',
                 name: 'dense',
-                href: '/learn/models/nn/layers/dense',
+                href: '/learn/model/?id=dense',
               },
               {
                 type: 'item',
                 name: 'dropout',
-                href: '/learn/models/nn/layers/dropout',
+                href: '/learn/model/?id=dropout',
               },
               {
                 type: 'item',
                 name: 'conv-2D',
-                href: '/learn/models/nn/layers/conv2D',
+                href: '/learn/model/?id=conv-2D',
               },
               {
                 type: 'item',
                 name: 'max-pooling-2D',
-                href: '/learn/models/nn/layers/mp2D',
+                href: '/learn/model/?id=max-pooling-2D',
               },
             ],
           },
-          { type: 'item', name: 'batch-size', href: '/learn/models/nn/bs' },
+          {
+            type: 'item',
+            name: 'batch-size',
+            href: '/learn/model/?id=batch-size',
+          },
           {
             type: 'section',
             name: 'dataset-split',
-            href: '/learn/models/nn/ds',
+            href: '/learn/model/?id=dataset-split',
             items: [
               {
                 type: 'item',
                 name: 'training',
-                href: '/learn/models/nn/ds/training',
+                href: '/learn/model/?id=training',
               },
               {
                 type: 'item',
                 name: 'validation',
-                href: '/learn/models/nn/ds/validation',
+                href: '/learn/model/?id=validation',
               },
               {
                 type: 'item',
                 name: 'testing',
-                href: '/learn/models/nn/ds/testing',
+                href: '/learn/model/?id=testing',
               },
             ],
           },
-          { type: 'item', name: 'target', href: '/learn/models/nn/target' },
-          { type: 'item', name: 'learning-rate', href: '/learn/models/nn/lr' },
-          { type: 'item', name: 'epoch', href: '/learn/models/nn/epoch' },
+          {
+            type: 'item',
+            name: 'weight-bias',
+            href: '/learn/model/?id=weight-bias',
+          },
+          { type: 'item', name: 'target', href: '/learn/model/?id=target' },
+          {
+            type: 'item',
+            name: 'learning-rate',
+            href: '/learn/model/?id=learning-rate',
+          },
+          { type: 'item', name: 'epoch', href: '/learn/model/?id=epoch' },
         ],
       },
     ],

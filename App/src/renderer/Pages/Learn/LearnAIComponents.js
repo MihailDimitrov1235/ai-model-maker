@@ -13,12 +13,27 @@ import {
   ListItem,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Datasets = function () {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [queryParameters] = useSearchParams();
+
+  useEffect(() => {
+    let id = queryParameters.get('id') != null ? queryParameters.get('id') : '';
+    console.log('element');
+    console.log(id);
+    const element = document.getElementById(queryParameters.get('id'));
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+  }, [queryParameters.get('id')]);
 
   const items = [
     {
@@ -60,6 +75,7 @@ const Datasets = function () {
     {
       type: 'text',
       title: 'Neurons',
+      id: 'neurons',
       titleType: 'h5',
       text: (
         <>
@@ -73,6 +89,7 @@ const Datasets = function () {
     {
       type: 'list',
       title: 'Layers',
+      id: 'layers',
       listItems: [
         {
           text: (
@@ -89,6 +106,7 @@ const Datasets = function () {
               recognize patterns in the data, such as edges or shapes.
             </>
           ),
+          subId: 'dense',
         },
         {
           text: (
@@ -105,6 +123,7 @@ const Datasets = function () {
               temporarily dropped during training.
             </>
           ),
+          subId: 'dropout',
         },
         {
           text: (
@@ -122,6 +141,7 @@ const Datasets = function () {
               shapes and objects.
             </>
           ),
+          subId: 'conv-2D',
         },
         {
           text: (
@@ -138,12 +158,14 @@ const Datasets = function () {
               while preserving the most relevant information.
             </>
           ),
+          subId: 'max-pooling-2D',
         },
       ],
     },
     {
       type: 'text',
       title: 'Batch Size',
+      id: 'batch-size',
       titleType: 'h5',
       text: (
         <>
@@ -158,6 +180,7 @@ const Datasets = function () {
     {
       type: 'list',
       title: 'Dataset split',
+      id: 'dataset-split',
       listItems: [
         {
           text: (
@@ -170,6 +193,7 @@ const Datasets = function () {
               the training set must include both cats and dogs.
             </>
           ),
+          subId: 'training',
         },
         {
           text: (
@@ -185,6 +209,7 @@ const Datasets = function () {
               underfitting issues.
             </>
           ),
+          subId: 'validation',
         },
         {
           text: (
@@ -198,12 +223,14 @@ const Datasets = function () {
               accurate predictions on new, unseen data.
             </>
           ),
+          subId: 'testing',
         },
       ],
     },
     {
       type: 'text',
       title: 'Weights and Bias',
+      id: 'weight-bias',
       titleType: 'h5',
       text: (
         <>
@@ -217,6 +244,7 @@ const Datasets = function () {
     {
       type: 'text',
       title: 'Target',
+      id: 'target',
       titleType: 'h5',
       text: (
         <>
@@ -229,6 +257,7 @@ const Datasets = function () {
     {
       type: 'text',
       title: 'Learning Rate',
+      id: 'learning-rate',
       titleType: 'h5',
       text: (
         <>
@@ -244,6 +273,7 @@ const Datasets = function () {
     {
       type: 'text',
       title: 'Epoch',
+      id: 'epoch',
       titleType: 'h5',
       text: (
         <>
@@ -276,7 +306,7 @@ const Datasets = function () {
             flexDirection: 'column',
           }}
         >
-          <Typography mt={3} variant={item.titleType || 'h5'} id={item.id}>
+          <Typography variant={item.titleType || 'h5'} id={item.id || ''}>
             {item.title}
           </Typography>
           {item.type == 'text' && (
@@ -298,7 +328,7 @@ const Datasets = function () {
                 }}
               >
                 {item.listItems.map((listItem) => (
-                  <ListItem>{listItem.text}</ListItem>
+                  <ListItem id={listItem.subId || ''}>{listItem.text}</ListItem>
                 ))}
               </List>
             </>

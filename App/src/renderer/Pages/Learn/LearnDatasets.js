@@ -15,16 +15,34 @@ import {
   Link,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Datasets = function () {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const [queryParameters] = useSearchParams();
+
+  useEffect(() => {
+    let id = queryParameters.get('id') != null ? queryParameters.get('id') : '';
+    console.log('element');
+    console.log(id);
+    const element = document.getElementById(queryParameters.get('id'));
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+  }, [queryParameters.get('id')]);
+
   const items = [
     {
       type: 'text',
       title: 'Datasets',
+      id: 'datasets',
       titleType: 'h3',
       text: (
         <>
@@ -38,6 +56,7 @@ const Datasets = function () {
     {
       type: 'list',
       title: 'Tabular',
+      id: 'tabular',
       listItems: [
         {
           text: (
@@ -77,6 +96,7 @@ const Datasets = function () {
     {
       type: 'list',
       title: 'Image Classification',
+      id: 'classification',
       listItems: [
         {
           text: (
@@ -116,6 +136,7 @@ const Datasets = function () {
     {
       type: 'list',
       title: 'Object Detection',
+      id: 'detection',
       listItems: [
         {
           text: (
@@ -153,6 +174,7 @@ const Datasets = function () {
     {
       type: 'list',
       title: 'Image Captioning',
+      id: 'captioning',
       listItems: [
         {
           text: (
@@ -208,7 +230,7 @@ const Datasets = function () {
             flexDirection: 'column',
           }}
         >
-          <Typography mt={3} variant={item.titleType || 'h5'}>
+          <Typography id={item.id} mt={3} variant={item.titleType || 'h5'}>
             {item.title}
           </Typography>
           {item.type == 'text' && (

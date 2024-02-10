@@ -143,7 +143,7 @@ const routes = [
         element: <InnerLayout type={'learn'} />,
         children: [
           { path: '', element: <LearnAIComponents /> },
-          { path: 'dataset', element: <LearnDatasets /> },
+          { path: 'datasets', element: <LearnDatasets /> },
           { path: 'model', element: <LearnAIComponents /> },
         ],
       },
