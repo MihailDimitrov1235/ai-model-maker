@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react';
 import logo from '../../../../assets/logo.png';
 import Snack from '../Utils/Snack';
 import CustomDialog from '../Utils/CustomDialog';
+import Settings from './Settings';
 
 export default function Layout() {
   const { t } = useTranslation();
@@ -31,11 +32,11 @@ export default function Layout() {
 
   useEffect(() => {
     window.electronAPI.checkEnv();
-    window.electronAPI.handleMissingConda((event, value) => {
-      setOpenNoConda(true);
-    });
     window.electronAPI.handleMissingVenv((event, value) => {
       setOpenNoPython(true);
+    });
+    window.electronAPI.handleMissingConda((event, value) => {
+      setOpenNoConda(true);
     });
     window.electronAPI.handleChangeCreateEnvText((event, value) => {
       if (value == 'cancel') {
@@ -46,6 +47,13 @@ export default function Layout() {
     window.electronAPI.handleCloseCreateEnv((event, value) => {
       setOpenCreateEnv(false);
     });
+
+    return () => {
+      window.electronAPI.removeListener('no-env');
+      window.electronAPI.removeListener('no-conda');
+      window.electronAPI.removeListener('change-create-env-text');
+      window.electronAPI.removeListener('close-create-env');
+    };
   }, []);
 
   const handleCloseNoPython = () => {
@@ -187,6 +195,8 @@ export default function Layout() {
         <Box sx={{ width: '100%', display: 'flex' }}>
           <ThemeToggle />
         </Box>
+
+        <Settings />
       </Box>
 
       <Outlet />

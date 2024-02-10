@@ -4,10 +4,6 @@ import {
   Box,
   Pagination,
   TextField,
-  alpha,
-  InputAdornment,
-  Menu,
-  MenuItem,
   Typography,
   CircularProgress,
 } from '@mui/material';
@@ -16,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import ModelCard from '../../Components/Cards/ModelCard';
 
 const Models = function () {
   const { t, i18n } = useTranslation();
@@ -65,7 +62,7 @@ const Models = function () {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          px: '50px',
+          px: 3,
           gap: 3,
           minHeight: '100%',
         }}
@@ -108,13 +105,12 @@ const Models = function () {
           <Grid container spacing={4}>
             {models?.map((model, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
-                <Button
-                  onClick={() =>
+                <ModelCard
+                  model={model}
+                  handleOpenModel={() =>
                     handleOpenModel(model.name, model.type, model.subtype)
                   }
-                >
-                  {model.name}
-                </Button>
+                />
               </Grid>
             ))}
           </Grid>

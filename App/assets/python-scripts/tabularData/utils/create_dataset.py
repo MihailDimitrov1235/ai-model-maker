@@ -56,9 +56,13 @@ def get_categorical_and_numeric_cols(info, target):
     return categorical_cols, numeric_cols
 
 
-def create_train_val_test(dataframe, batch_size, target, info):
+def create_train_val_test(dataframe, batch_size, target, info, train_split, val_split):
     train, val, test = np.split(
-        dataframe.sample(frac=1), [int(0.8 * len(dataframe)), int(0.9 * len(dataframe))]
+        dataframe.sample(frac=1),
+        [
+            int(train_split * len(dataframe)),
+            int((train_split + val_split) * len(dataframe)),
+        ],
     )
 
     train_ds = df_to_dataset(train, target, info, batch_size=batch_size)

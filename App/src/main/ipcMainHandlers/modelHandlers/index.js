@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 let pyShell;
+let cancelTraining = false;
 
 export function setupIPCModelHandlers(win) {
   const tabularDatasetsFolder = getAssetPath(`datasets/table`);
@@ -246,7 +247,12 @@ export function setupIPCModelHandlers(win) {
     }
   });
 
+  ipcMain.handle('cancel-train-model', async (event, data) => {
+    cancelTraining = true;
+  });
+
   ipcMain.handle('train-model', async (event, data) => {
+    cancelTraining = false;
     if (pyShell) {
       pyShell.kill('SIGINT');
     }
@@ -254,6 +260,7 @@ export function setupIPCModelHandlers(win) {
 
     if (data.type == 'table') {
       let eps = [];
+      let acc = 0;
 
       const folder_path = path.join(
         getAssetPath(`datasets/table`),
@@ -264,6 +271,7 @@ export function setupIPCModelHandlers(win) {
       const args = [
         folder_path,
         path.join(model_path, 'model.keras'),
+        path.join(model_path, 'ckpt', 'checkpoint'),
         data.learning_rate,
         data.epochs,
         data.initial_epoch,
@@ -287,7 +295,10 @@ export function setupIPCModelHandlers(win) {
         try {
           const jsonData = JSON.parse(message);
           eps.push(jsonData);
+          acc = Math.max(jsonData.val_accuracy, acc);
+          pyShell.stdin.write(cancelTraining + '\n');
         } catch (e) {
+          console.log(message);
           const wordArr = message.split(' ');
           if (wordArr[0] == 'Epoch') {
             win.webContents.send('change-training-text', wordArr[1]);
@@ -318,6 +329,7 @@ export function setupIPCModelHandlers(win) {
         let newEpochs = jsonData.epochs;
         newEpochs.push(...eps);
         jsonData.epochs = newEpochs;
+        jsonData.accuracy = Math.max(acc, jsonData.accuracy);
 
         fs.writeFileSync(
           path.join(model_path, 'info.json'),

@@ -6,10 +6,10 @@ import {
   ListItemText,
   IconButton,
   Divider,
-  Box
+  Box,
 } from '@mui/material';
-import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -86,17 +86,16 @@ function Section({ item }) {
           primary={t(item.name)}
         />
         <IconButton onClick={handleClick}>
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {open ? <ExpandMore /> : <ChevronRightIcon />}
         </IconButton>
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Box display={'flex'} sx={{ ml: 2 }}>
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <List component="div" disablePadding >
-          <SidebarMenu items={item.items} />
-        </List>
+          <Divider orientation="vertical" variant="middle" flexItem />
+          <List component="div" disablePadding sx={{ width: '100%' }}>
+            <SidebarMenu items={item.items} />
+          </List>
         </Box>
-        
       </Collapse>
     </>
   );

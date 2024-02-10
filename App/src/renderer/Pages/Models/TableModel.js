@@ -5,6 +5,7 @@ import {
   Typography,
   TextField,
   Select,
+  Slider,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -33,9 +34,18 @@ const options = {
 export default function TableModel() {
   const { id } = useParams();
   const { t } = useTranslation();
+
+  const [trainAccuracyArray, setTrainAccuracyArray] = useState('');
+  const [trainLossArray, setTrainLossArray] = useState('');
+  const [valAccuracyArray, setValAccuracyArray] = useState('');
+  const [valLossArray, setValLossArray] = useState('');
+  const [testAccuracyArray, setTestAccuracyArray] = useState('');
+  const [testLossArray, setTestLossArray] = useState('');
+
+  const [xAxis, setXAxis] = useState('');
+
+  const [maxRecordsPerGraph, setMaxRecordsPerGraph] = useState(50);
   const [modelData, setModelData] = useState(null);
-  const [lossData, setLossData] = useState(null);
-  const [accuracyData, setAccuracyData] = useState(null);
 
   const [learningRate, setLearningRate] = useState('');
   const [epochs, setEpochs] = useState('');
@@ -98,6 +108,37 @@ export default function TableModel() {
     });
   };
 
+  function selectRecords(array, numRecords) {
+    const totalRecords = array.length;
+
+    // Ensure we have enough records to select from
+    if (totalRecords <= numRecords) {
+      return array;
+    }
+
+    // Calculate the number of records to select from the middle
+    const middleRecordsCount = numRecords - 2;
+    const interval = Math.max(
+      1,
+      Math.floor(totalRecords / (middleRecordsCount + 1)),
+    );
+
+    // Select records from the middle
+    const middleRecords = [];
+    for (let i = interval; i < totalRecords - 1; i += interval) {
+      middleRecords.push(array[i]);
+    }
+
+    // Construct the final array
+    const selectedRecords = [
+      array[0],
+      ...middleRecords,
+      array[array.length - 1],
+    ];
+
+    return selectedRecords;
+  }
+
   const fetchData = async () => {
     const response = await window.electronAPI.getModel({
       model: id,
@@ -107,84 +148,39 @@ export default function TableModel() {
     setLearningRate(0.001);
     setEpochs(10);
     if (response.epochs.length > 0) {
-      let trainAccuracyArray = [];
-      let trainLossArray = [];
-      let valAccuracyArray = [];
-      let valLossArray = [];
-      let testAccuracyArray = [];
-      let testLossArray = [];
+      let newTrainAccuracyArray = [];
+      let newTrainLossArray = [];
+      let newValAccuracyArray = [];
+      let newValLossArray = [];
+      let newTestAccuracyArray = [];
+      let newTestLossArray = [];
 
-      let xAxis = [];
+      let newXAxis = [];
       response.epochs.forEach((epoch, idx) => {
-        xAxis.push(idx + 1);
-        trainAccuracyArray.push(epoch.train_accuracy);
-        trainLossArray.push(epoch.train_loss);
-        valAccuracyArray.push(epoch.val_accuracy);
-        valLossArray.push(epoch.val_loss);
-        testAccuracyArray.push(epoch.test_accuracy);
-        testLossArray.push(epoch.test_loss);
+        newXAxis.push(idx + 1);
+        newTrainAccuracyArray.push(epoch.train_accuracy);
+        newTrainLossArray.push(epoch.train_loss);
+        newValAccuracyArray.push(epoch.val_accuracy);
+        newValLossArray.push(epoch.val_loss);
+        newTestAccuracyArray.push(epoch.test_accuracy);
+        newTestLossArray.push(epoch.test_loss);
       });
 
-      const newLossData = {
-        labels: xAxis,
-        datasets: [
-          {
-            label: t('train-loss'),
-            data: trainLossArray,
-            fill: false,
-            tension: 0.1,
-            borderColor: 'rgb(75, 192, 192)',
-          },
-          {
-            label: t('val-loss'),
-            data: valLossArray,
-            fill: false,
-            tension: 0.1,
-            borderColor: 'rgb(2, 173, 73)',
-          },
-          {
-            label: t('test-loss'),
-            data: testLossArray,
-            fill: false,
-            tension: 0.1,
-            borderColor: 'rgb(255, 99, 132)',
-          },
-        ],
-      };
-      setLossData(newLossData);
-      const newAccuracyData = {
-        labels: xAxis,
-        datasets: [
-          {
-            label: t('train-accuracy'),
-            data: trainAccuracyArray,
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-          },
-          {
-            label: t('val-accuracy'),
-            data: valAccuracyArray,
-            fill: false,
-            borderColor: 'rgb(2, 173, 73)',
-            tension: 0.1,
-          },
-          {
-            label: t('test-accuracy'),
-            data: testAccuracyArray,
-            fill: false,
-            borderColor: 'rgb(255, 99, 132)',
-            tension: 0.1,
-          },
-        ],
-      };
-      setAccuracyData(newAccuracyData);
+      setTrainAccuracyArray(newTrainAccuracyArray);
+      setTrainLossArray(newTrainLossArray);
+      setValAccuracyArray(newValAccuracyArray);
+      setValLossArray(newValLossArray);
+      setTestAccuracyArray(newTestAccuracyArray);
+      setTestLossArray(newTestLossArray);
+      setXAxis(newXAxis);
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, [id]);
+    if (!openTrainDialog) {
+      fetchData();
+    }
+  }, [id, openTrainDialog]);
 
   useEffect(() => {
     window.electronAPI.handleChangeTrainingText((event, value) => {
@@ -205,7 +201,11 @@ export default function TableModel() {
   }, []);
 
   const handleCancelTraining = () => {
-    console.log('cancel');
+    window.electronAPI.cancelTraining();
+  };
+
+  const handleMaxRecordsPerGraphChange = (event, value) => {
+    setMaxRecordsPerGraph(value);
   };
 
   return (
@@ -222,18 +222,99 @@ export default function TableModel() {
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="h5">{id}</Typography>
-        {lossData && <Button variant="contrast">{t('use-model')}</Button>}
+        {modelData && modelData.epochs.length > 0 && (
+          <Button variant="contrast">{t('use-model')}</Button>
+        )}
       </Box>
       {modelData ? (
         <>
-          {lossData && (
+          {modelData.epochs.length > 0 && (
             <Box sx={{ display: 'flex', gap: 3 }}>
               <Box sx={{ flex: 1 }}>
-                <Line data={lossData} options={options} />
+                <Line
+                  data={{
+                    labels: selectRecords(xAxis, maxRecordsPerGraph),
+                    datasets: [
+                      {
+                        label: t('train-loss'),
+                        data: selectRecords(trainLossArray, maxRecordsPerGraph),
+                        fill: false,
+                        tension: 0.1,
+                        borderColor: 'rgb(75, 192, 192)',
+                      },
+                      {
+                        label: t('val-loss'),
+                        data: selectRecords(valLossArray, maxRecordsPerGraph),
+                        fill: false,
+                        tension: 0.1,
+                        borderColor: 'rgb(2, 173, 73)',
+                      },
+                      {
+                        label: t('test-loss'),
+                        data: selectRecords(testLossArray, maxRecordsPerGraph),
+                        fill: false,
+                        tension: 0.1,
+                        borderColor: 'rgb(255, 99, 132)',
+                      },
+                    ],
+                  }}
+                  options={options}
+                />
               </Box>
               <Box sx={{ flex: 1 }}>
-                <Line data={accuracyData} options={options} />
+                <Line
+                  data={{
+                    labels: selectRecords(xAxis, maxRecordsPerGraph),
+                    datasets: [
+                      {
+                        label: t('train-accuracy'),
+                        data: selectRecords(
+                          trainAccuracyArray,
+                          maxRecordsPerGraph,
+                        ),
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                      },
+                      {
+                        label: t('val-accuracy'),
+                        data: selectRecords(
+                          valAccuracyArray,
+                          maxRecordsPerGraph,
+                        ),
+                        fill: false,
+                        borderColor: 'rgb(2, 173, 73)',
+                        tension: 0.1,
+                      },
+                      {
+                        label: t('test-accuracy'),
+                        data: selectRecords(
+                          testAccuracyArray,
+                          maxRecordsPerGraph,
+                        ),
+                        fill: false,
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.1,
+                      },
+                    ],
+                  }}
+                  options={options}
+                />
               </Box>
+            </Box>
+          )}
+          {modelData.epochs.length > 0 && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <Typography variant="p">{t('records-per-graph')}</Typography>
+              <Slider
+                value={maxRecordsPerGraph}
+                valueLabelDisplay="auto"
+                step={1}
+                marks
+                min={2}
+                max={100}
+                onChange={handleMaxRecordsPerGraphChange}
+              />
             </Box>
           )}
 

@@ -78,7 +78,7 @@ const Datasets = function () {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          px: '50px',
+          px: 3,
           gap: 3,
           minHeight: '100%',
         }}

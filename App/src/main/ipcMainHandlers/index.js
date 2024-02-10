@@ -1,12 +1,8 @@
 const { ipcMain, dialog } = require('electron');
-const path = require('path');
-const fs = require('fs');
 const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 const { setupIPCDatasets } = require('./datasetHandlers');
 const { setupIPCModelHandlers } = require('./modelHandlers');
-const XLSX = require('xlsx');
-const { parse } = require('csv-parse/sync');
-const { getAssetPath } = require('../utils');
+const { getConfig, setConfig } = require('../utils/configUtils');
 
 function setupIPCMain(win) {
   ipcMain.setMaxListeners(20);
@@ -31,6 +27,21 @@ function setupIPCMain(win) {
     //   // results is an array consisting of messages collected during execution
     //   console.log('results: %j', messages);
     // });
+  });
+  ipcMain.handle('get-config', async (event, arg) => {
+    return getConfig();
+  });
+
+  ipcMain.handle('select-python-exe', async (event, arg) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: [{ name: 'Python executable', extensions: ['exe'] }],
+    });
+    return { canceled: canceled, filePaths: filePaths };
+  });
+
+  ipcMain.handle('change-config', async (event, arg) => {
+    setConfig(arg);
+    return;
   });
 }
 
