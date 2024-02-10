@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import { useTranslation } from 'react-i18next';
+import CustomDialog from '../../Components/Utils/CustomDialog';
 
 // Options for customization
 const options = {
@@ -40,6 +41,10 @@ export default function TableModel() {
   const [epochs, setEpochs] = useState('');
   const [learningRateError, setLearningRateError] = useState('');
   const [epochsError, setEpochsError] = useState('');
+
+  const [openTrainDialog, setOpenTrainDialog] = useState(false);
+  const [trainText, setTrainText] = useState(t('starting-training'));
+  const [trainProgress, setTrainProgress] = useState(null);
 
   const handleLearningRateChange = (event) => {
     const newValue = event.target.value;
@@ -76,6 +81,9 @@ export default function TableModel() {
       setEpochsError('');
     }
 
+    setTrainText(t('starting-training'));
+    setTrainProgress(null);
+    setOpenTrainDialog(true);
     window.electronAPI.trainModel({
       type: 'table',
       model: id,
@@ -178,8 +186,40 @@ export default function TableModel() {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    window.electronAPI.handleChangeTrainingText((event, value) => {
+      setTrainText(value);
+    });
+    window.electronAPI.handleChangeTrainingProgress((event, value) => {
+      setTrainProgress(value);
+    });
+    window.electronAPI.handleCloseTrainingDialog((event, value) => {
+      setOpenTrainDialog(false);
+    });
+
+    return () => {
+      window.electronAPI.removeListener('change-training-text');
+      window.electronAPI.removeListener('change-training-progress');
+      window.electronAPI.removeListener('close-training-dialog');
+    };
+  }, []);
+
+  const handleCancelTraining = () => {
+    console.log('cancel');
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', m: 3, gap: 3 }}>
+      <CustomDialog
+        open={openTrainDialog}
+        setOpen={setOpenTrainDialog}
+        title={'train-title'}
+        text={trainText}
+        buttons={[
+          { text: t('cancel'), handleClick: () => handleCancelTraining() },
+        ]}
+        progress={trainProgress}
+      />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="h5">{id}</Typography>
         {lossData && <Button variant="contrast">{t('use-model')}</Button>}
