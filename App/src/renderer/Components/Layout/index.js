@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react';
 import logo from '../../../../assets/logo.png';
 import Snack from '../Utils/Snack';
 import CustomDialog from '../Utils/CustomDialog';
+import Settings from './Settings';
 
 export default function Layout() {
   const { t } = useTranslation();
@@ -194,6 +195,8 @@ export default function Layout() {
         <Box sx={{ width: '100%', display: 'flex' }}>
           <ThemeToggle />
         </Box>
+
+        <Settings />
       </Box>
 
       <Outlet />

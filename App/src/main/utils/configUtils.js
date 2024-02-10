@@ -38,8 +38,15 @@ async function updateConfig(key, value) {
   }
 }
 
+function setConfig(config) {
+  console.log(config);
+  configFile = config;
+  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
+}
+
 module.exports = {
   initializeConfig,
   getConfig,
   updateConfig,
+  setConfig,
 };

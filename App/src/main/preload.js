@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   createTabularModel: (arg) => ipcRenderer.send('create-tabular-model', arg),
 
   selectTabularFile: (arg) => ipcRenderer.invoke('select-tabular-file', arg),
+  selectPythonExe: (arg) => ipcRenderer.invoke('select-python-exe', arg),
   selectImageFolder: (arg) => ipcRenderer.invoke('select-image-folder', arg),
   selectLabel: (arg) => ipcRenderer.invoke('select-label', arg),
   getDatasets: (arg) => ipcRenderer.invoke('get-datasets', arg),
@@ -23,6 +24,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getModelsCount: (arg) => ipcRenderer.invoke('get-models-count', arg),
   getDatasetInfo: (arg) => ipcRenderer.invoke('get-dataset-info', arg),
   getImage: (arg) => ipcRenderer.invoke('get-image', arg),
+  getConfig: (arg) => ipcRenderer.invoke('get-config', arg),
+  changeConfig: (arg) => ipcRenderer.invoke('change-config', arg),
 
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
