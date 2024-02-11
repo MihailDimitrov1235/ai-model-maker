@@ -99,7 +99,7 @@ export default function Settings() {
                 }}
               >
                 <Link
-                  to={'/learn/setup/python'}
+                  to={'/learn/setup'}
                   onClick={() => setOpenSettings(false)}
                   style={{ marginLeft: 'auto', color: '#15A4C1' }}
                 >

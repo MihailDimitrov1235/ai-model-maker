@@ -26,6 +26,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getImage: (arg) => ipcRenderer.invoke('get-image', arg),
   getConfig: (arg) => ipcRenderer.invoke('get-config', arg),
   changeConfig: (arg) => ipcRenderer.invoke('change-config', arg),
+  openUrl: (arg) => ipcRenderer.invoke('open-url', arg),
 
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),

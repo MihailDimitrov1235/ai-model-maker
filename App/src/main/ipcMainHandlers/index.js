@@ -1,4 +1,4 @@
-const { ipcMain, dialog } = require('electron');
+const { ipcMain, dialog, shell } = require('electron');
 const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 const { setupIPCDatasets } = require('./datasetHandlers');
 const { setupIPCModelHandlers } = require('./modelHandlers');
@@ -42,6 +42,10 @@ function setupIPCMain(win) {
   ipcMain.handle('change-config', async (event, arg) => {
     setConfig(arg);
     return;
+  });
+
+  ipcMain.handle('open-url', async (event, arg) => {
+    shell.openExternal(arg);
   });
 }
 
