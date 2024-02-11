@@ -23,6 +23,7 @@ import TableModel from './Pages/Models/TableModel';
 import LearnAIComponents from './Pages/Learn/LearnAIComponents';
 import LearnDatasets from './Pages/Learn/LearnDatasets';
 import LearnSetup from './Pages/Learn/LearnSetup';
+import LearnTutorial from './Pages/Learn/LearnTutorial';
 
 const routes = [
   {
@@ -148,6 +149,7 @@ const routes = [
             element: <LearnDatasets />,
           },
           { path: 'setup', element: <LearnSetup /> },
+          { path: 'tutorial', element: <LearnTutorial /> },
           { path: 'datasets', element: <LearnDatasets /> },
           { path: 'model', element: <LearnAIComponents /> },
         ],

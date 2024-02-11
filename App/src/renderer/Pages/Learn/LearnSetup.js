@@ -59,9 +59,29 @@ export default function LearnSetup() {
         display={value == 0 ? 'flex' : 'none'}
         sx={{ flexDirection: 'column', gap: 3 }}
       >
+        <Typography variant="p">
+          If you want to use your CPU you can either follow this guide which
+          uses Python to create the enviornment or the GPU guide, which uses
+          miniconda for the enviornment, and skipping step{' '}
+          <span style={{ fontWeight: 'bold' }}>6. GPU setup</span>.
+        </Typography>
+        <Box>
+          <Typography variant="h5">1. System requirements</Typography>
+          <List
+            sx={{
+              listStyleType: 'disc',
+              pl: 2,
+              '& .MuiListItem-root': {
+                display: 'list-item',
+              },
+            }}
+          >
+            <ListItem>Windows 7 or higher (64-bit)</ListItem>
+          </List>
+        </Box>
         <Box>
           <Typography variant="h5">
-            {`1. Install Python (Python 3.8 – 3.11)`}
+            {`2. Install Python (Python 3.8 – 3.11)`}
           </Typography>
           <Typography variant="p">
             If Python is not already installed on your system, download and
@@ -78,7 +98,7 @@ export default function LearnSetup() {
         </Box>
 
         <Box>
-          <Typography variant="h5">2. Open Command Prompt</Typography>
+          <Typography variant="h5">3. Open Command Prompt</Typography>
           <Typography variant="p">
             Press <span style={{ fontWeight: 'bold' }}>Win + R</span>, type{' '}
             <span style={{ fontWeight: 'bold' }}>cmd</span> and press Enter to
@@ -87,13 +107,13 @@ export default function LearnSetup() {
         </Box>
 
         <Box>
-          <Typography variant="h5">3. Create a Virtual Environment</Typography>
+          <Typography variant="h5">4. Create a Virtual Environment</Typography>
           <CodeBlock language={'bash'} code={`python -m venv tf`} />
         </Box>
 
         <Box>
           <Typography variant="h5">
-            4. Activate the Virtual Environment
+            5. Activate the Virtual Environment
           </Typography>
           <Typography variant="p">
             Activate the virtual environment by running the following command
@@ -102,7 +122,7 @@ export default function LearnSetup() {
         </Box>
 
         <Box>
-          <Typography variant="h5">5. Install TensorFlow</Typography>
+          <Typography variant="h5">6. Install TensorFlow</Typography>
           <Typography variant="p">
             Once the virtual environment is activated, install TensorFlow using
             pip
@@ -111,7 +131,7 @@ export default function LearnSetup() {
         </Box>
 
         <Box>
-          <Typography variant="h5">5. Install TensorFlow</Typography>
+          <Typography variant="h5">7. Install TensorFlow</Typography>
           <Typography variant="p">
             Once the virtual environment is activated, install TensorFlow using
             pip
@@ -119,7 +139,7 @@ export default function LearnSetup() {
           <CodeBlock language={'bash'} code={`pip install tensorflow`} />
         </Box>
 
-        <Typography variant="h5">6. Selecting the python executable</Typography>
+        <Typography variant="h5">8. Selecting the python executable</Typography>
 
         <List
           sx={{
@@ -217,12 +237,16 @@ export default function LearnSetup() {
             the screen.
           </Typography>
         </Box>
-        <Box display={'flex'} flexDirection={'column'} gap={3}>
-          <Typography variant="h5">4. Create a conda environment</Typography>
+        <Box>
+          <Typography variant="h5">4. Open Anaconda Prompt</Typography>
           <Typography variant="p">
-            Open <span style={{ fontWeight: 'bold' }}>Anaconda Prompt</span>{' '}
-            from the windows search box
+            Press <span style={{ fontWeight: 'bold' }}>Win</span>, type{' '}
+            <span style={{ fontWeight: 'bold' }}>Anaconda Prompt</span> and
+            press Enter to open the Anaconda Prompt.
           </Typography>
+        </Box>
+        <Box display={'flex'} flexDirection={'column'} gap={3}>
+          <Typography variant="h5">5. Create a conda environment</Typography>
           <Box>
             <Typography variant="p">
               Create a new conda environment named tf by running the following
@@ -251,7 +275,7 @@ conda activate tf`}
             <Typography variant="p">Download tensorflow</Typography>
             <CodeBlock language="bash" code={`pip install "tensorflow<2.11"`} />
           </Box>
-          <Typography variant="h5">5. GPU setup</Typography>
+          <Typography variant="h5">6. GPU setup</Typography>
           <Box>
             <Typography variant="p">
               Run the following command in order to setup GPU support
@@ -263,7 +287,7 @@ conda activate tf`}
           </Box>
 
           <Typography variant="h5">
-            6. Selecting the python executable
+            7. Selecting the python executable
           </Typography>
 
           <List
