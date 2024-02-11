@@ -44,7 +44,12 @@ const Datasets = function () {
       title: t('datasets'),
       id: 'datasets',
       titleType: 'h3',
-      text: t('datasets-introduction'),
+      text: (
+        <>
+          <b>{t('dataset-bold')}</b>
+          {t('datasets-introduction')}
+        </>
+      ),
     },
     {
       type: 'list',
@@ -52,7 +57,12 @@ const Datasets = function () {
       id: 'tabular',
       listItems: [
         {
-          text: t('tabular-subtext-1'),
+          text: (
+            <>
+              {' '}
+              <b>{t('tabular-bold')}</b> {t('tabular-subtext-1')}
+            </>
+          ),
         },
         {
           text: t('tabular-subtext-2'),
@@ -68,7 +78,12 @@ const Datasets = function () {
       id: 'classification',
       listItems: [
         {
-          text: t('classification-subtext-1'),
+          text: (
+            <>
+              <b>{t('classification-bold')}</b>
+              {t('classification-subtext-1')}
+            </>
+          ),
         },
         {
           text: t('classification-subtext-2'),
@@ -84,7 +99,12 @@ const Datasets = function () {
       id: 'detection',
       listItems: [
         {
-          text: t('detection-subtext-1'),
+          text: (
+            <>
+              <b>{t('detection-bold')}</b>
+              {t('detection-subtext-1')}
+            </>
+          ),
         },
         {
           text: t('detection-subtext-2'),
@@ -100,7 +120,12 @@ const Datasets = function () {
       id: 'captioning',
       listItems: [
         {
-          text: t('captioning-subtext-1'),
+          text: (
+            <>
+              <b>{t('captioning-bold')}</b>
+              {t('captioning-subtext-1')}
+            </>
+          ),
         },
         {
           text: t('captioning-subtext-2'),
