@@ -109,7 +109,29 @@
   "captioning-subtext-1": " combines computer vision and natural language processing to generate descriptive captions for images automatically. It's like teaching a computer to describe what it sees in a picture, just like a person would.",
   "captioning-subtext-2": "In image captioning datasets, each image is paired with one or more human-generated captions, providing textual descriptions of the objects, actions, and scenes depicted in the images. These datasets enable researchers and developers to train algorithms that can understand and communicate visual information effectively. Labels in image captioning datasets consist of the textual descriptions corresponding to each image, guiding the model in learning to generate accurate and meaningful captions.",
   "captioning-subtext-3": "In programming and machine learning, grasping the concept of image captioning datasets lays the groundwork for creating AI systems capable of understanding and describing visual content.",
-  "models": "Models"
+  "models": "Models",
+  "setup": "Setup",
+  "setup-introduction": "This page will teach you how to setup the python enviornment which will run all of the python code used for creating and training the models. First select weather you will use your CPU or GPU for creating and training the models. Using the CPU is simpler but is also slower. On the other hand using the GPU is much faster but is also harder to set up.",
+  "cpu-introduction": "If you want to use your CPU you can either follow this guide which uses Python to create the enviornment or the GPU guide, which uses miniconda for the enviornment, and skipping step.",
+  "gpu-setup":"GPU setup",
+  "system-requirements":"System Requirements",
+  "or-higher":"or higher",
+  "python-version":"If Python is not already installed on your system, download and install a version between Python 3.8 and Python 3.11 from the ",
+  "official-python-website": "Official Python Website",
+  "check-python-path": " Make sure to check the option to add Python to your system PATH during installation.",
+  "open-command-prompt": "Open Command Prompt",
+  "press":"Press ",
+  "type-cmd": " type ",
+  "press-enter": "and press Enter to open the Command Prompt.",
+  "create-virtual-env": "Create a Virtual Environment",
+  "activate-virtual-env": "Activate the Virtual Environment",
+  "active-virtual-env": "Activate the virtual environment by running the following command",
+  "install-necessary-libraries": "Install necessary libraries",
+  "once-activated-env":"Once the virtual environment is activated, install the necessary libraries using pip",
+  "select-python-executable": "Selecting the python executable"
+
+
+
   
 
   

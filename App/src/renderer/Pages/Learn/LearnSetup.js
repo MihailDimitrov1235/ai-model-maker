@@ -40,14 +40,8 @@ export default function LearnSetup() {
         pb: 0,
       }}
     >
-      <Typography variant="h4">Setup</Typography>
-      <Typography variant="p">
-        This page will teach you how to setup the python enviornment which will
-        run all of the python code used for creating and training the models.
-        First select weather you will use your CPU or GPU for creating and
-        training the models. Using the CPU is simpler but is also slower. On the
-        other hand using the GPU is much faster but is also harder to set up.
-      </Typography>
+      <Typography variant="h4">{t('setup')}</Typography>
+      <Typography variant="p">{t('setup-introduction')}</Typography>
       <Tabs
         sx={{ borderBottom: 1, borderColor: 'border.main' }}
         value={value}
@@ -61,13 +55,11 @@ export default function LearnSetup() {
         sx={{ flexDirection: 'column', gap: 3 }}
       >
         <Typography variant="p">
-          If you want to use your CPU you can either follow this guide which
-          uses Python to create the enviornment or the GPU guide, which uses
-          miniconda for the enviornment, and skipping step{' '}
-          <span style={{ fontWeight: 'bold' }}>6. GPU setup</span>.
+          {t('cpu-introduction')}{' '}
+          <span style={{ fontWeight: 'bold' }}>6.{t('gpu-setup')}</span>.
         </Typography>
         <Box>
-          <Typography variant="h5">1. System requirements</Typography>
+          <Typography variant="h5">1. {t('system-requirements')}</Typography>
           <List
             sx={{
               listStyleType: 'disc',
@@ -77,7 +69,7 @@ export default function LearnSetup() {
               },
             }}
           >
-            <ListItem>Windows 7 or higher (64-bit)</ListItem>
+            <ListItem>Windows 7 {t('or-higher')} (64-bit)</ListItem>
           </List>
         </Box>
         <Box>
@@ -85,53 +77,46 @@ export default function LearnSetup() {
             {`2. Install Python (Python 3.8 – 3.11)`}
           </Typography>
           <Typography variant="p">
-            If Python is not already installed on your system, download and
-            install a version between Python 3.8 and Python 3.11 from the{' '}
+            {t('python-version')}
             <Link
               sx={{ cursor: 'pointer' }}
               onClick={() => handleOpenUrl('https://www.python.org/downloads/')}
             >
-              official Python website
+              {t('official-python-website')}.
             </Link>
-            . Make sure to check the option to add Python to your system PATH
-            during installation.
+            {t('check-python-path')}
           </Typography>
         </Box>
 
         <Box>
-          <Typography variant="h5">3. Open Command Prompt</Typography>
+          <Typography variant="h5">3. {t('open-command-prompt')}</Typography>
           <Typography variant="p">
-            Press <span style={{ fontWeight: 'bold' }}>Win + R</span>, type{' '}
-            <span style={{ fontWeight: 'bold' }}>cmd</span> and press Enter to
-            open the Command Prompt.
+            {t('press')} <span style={{ fontWeight: 'bold' }}>Win + R</span>,
+            {t('type-cmd')} <span style={{ fontWeight: 'bold' }}>cmd</span>{' '}
+            {t('press-enter')}
           </Typography>
         </Box>
 
         <Box>
-          <Typography variant="h5">4. Create a Virtual Environment</Typography>
+          <Typography variant="h5">4. {t('create-virtual-env')}</Typography>
           <CodeBlock language={'bash'} code={`python -m venv tf`} />
         </Box>
 
         <Box>
-          <Typography variant="h5">
-            5. Activate the Virtual Environment
-          </Typography>
-          <Typography variant="p">
-            Activate the virtual environment by running the following command
-          </Typography>
+          <Typography variant="h5">5. {t('activate-virtual-env')}</Typography>
+          <Typography variant="p">{t('active-virtual-env')}</Typography>
           <CodeBlock language={'bash'} code={`tf\\Scripts\\activate`} />
         </Box>
 
         <Box>
-          <Typography variant="h5">6. Install necessary libraries</Typography>
-          <Typography variant="p">
-            Once the virtual environment is activated, install the necessary
-            libraries using pip
+          <Typography variant="h5">
+            6. {t('install-necessary-libraries')}
           </Typography>
+          <Typography variant="p">{t('once-activated-env')}</Typography>
           <CodeBlock language={'bash'} code={pipInstallCommand} />
         </Box>
 
-        <Typography variant="h5">7. Selecting the python executable</Typography>
+        <Typography variant="h5">7. {t('select-python-executable')}</Typography>
 
         <List
           sx={{
