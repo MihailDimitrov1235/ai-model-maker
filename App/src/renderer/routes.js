@@ -24,6 +24,7 @@ import LearnAIComponents from './Pages/Learn/LearnAIComponents';
 import LearnDatasets from './Pages/Learn/LearnDatasets';
 import LearnSetup from './Pages/Learn/LearnSetup';
 import LearnTutorial from './Pages/Learn/LearnTutorial';
+import Use from './Pages/Use';
 
 const routes = [
   {
@@ -134,11 +135,7 @@ const routes = [
       {
         path: '/use',
         element: <InnerLayout type={'use'} />,
-        children: [
-          { path: '', element: <Landing /> },
-          { path: 'data1', element: <Landing /> },
-          { path: 'data2', element: <Landing /> },
-        ],
+        children: [{ path: '', element: <Use /> }],
       },
       {
         path: '/learn',
