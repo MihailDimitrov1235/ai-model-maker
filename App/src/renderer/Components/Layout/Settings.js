@@ -69,7 +69,7 @@ export default function Settings() {
             color: 'text.main',
           }}
         >
-          {config && config.python_exe_path && (
+          {config && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Typography>{t('python_exe_path')}</Typography>

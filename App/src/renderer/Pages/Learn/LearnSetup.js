@@ -15,6 +15,7 @@ import CodeBlock from '../../Components/CodeBlock';
 import { useNavigate } from 'react-router-dom';
 
 export default function LearnSetup() {
+  const pipInstallCommand = `pip install "tensorflow<2.11" numpy pandas`;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -122,24 +123,15 @@ export default function LearnSetup() {
         </Box>
 
         <Box>
-          <Typography variant="h5">6. Install TensorFlow</Typography>
+          <Typography variant="h5">6. Install necessary libraries</Typography>
           <Typography variant="p">
-            Once the virtual environment is activated, install TensorFlow using
-            pip
+            Once the virtual environment is activated, install the necessary
+            libraries using pip
           </Typography>
-          <CodeBlock language={'bash'} code={`pip install tensorflow`} />
+          <CodeBlock language={'bash'} code={pipInstallCommand} />
         </Box>
 
-        <Box>
-          <Typography variant="h5">7. Install TensorFlow</Typography>
-          <Typography variant="p">
-            Once the virtual environment is activated, install TensorFlow using
-            pip
-          </Typography>
-          <CodeBlock language={'bash'} code={`pip install tensorflow`} />
-        </Box>
-
-        <Typography variant="h5">8. Selecting the python executable</Typography>
+        <Typography variant="h5">7. Selecting the python executable</Typography>
 
         <List
           sx={{
@@ -273,7 +265,7 @@ conda activate tf`}
           </Box>
           <Box>
             <Typography variant="p">Download tensorflow</Typography>
-            <CodeBlock language="bash" code={`pip install "tensorflow<2.11"`} />
+            <CodeBlock language="bash" code={pipInstallCommand} />
           </Box>
           <Typography variant="h5">6. GPU setup</Typography>
           <Box>

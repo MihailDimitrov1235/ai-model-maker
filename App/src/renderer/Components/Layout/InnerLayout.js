@@ -59,7 +59,7 @@ const learnItems = [
     href: '/learn',
     items: [
       { type: 'item', name: 'setup', href: '/learn/setup' },
-      { type: 'item', name: 'tutorail', href: '/learn/tutorial' },
+      { type: 'item', name: 'tutorial', href: '/learn/tutorial' },
     ],
   },
   {
