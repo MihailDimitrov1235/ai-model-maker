@@ -128,8 +128,30 @@
   "active-virtual-env": "Activate the virtual environment by running the following command",
   "install-necessary-libraries": "Install necessary libraries",
   "once-activated-env":"Once the virtual environment is activated, install the necessary libraries using pip",
-  "select-python-executable": "Selecting the python executable"
-
+  "select-python-executable": "Selecting the python executable",
+  "select-python-executable-subinfo-1":"Go to the settings on the bottom left",
+  "select-python-executable-subinfo-2": "Select the path to the python executable of the environment you just created",
+  "do-not-run-python-env": "If you dont know what the path to the environment is you can run this",
+  "default-path-text": "By default the path should be",
+  "instructions-conclusion": "If followed the instructions to this point the enviornment should be set up and you should have the ability to train your own models. You can close everything you had to open and can proceed with the",
+  "tutorial": "Tutorial",
+  "instructions-conclusion-rest-part": "which will guide you on how to create and use your own models . In case you faced any issues you can check the full",
+  "installation-guide": "installation guide",
+  "install-microsoft-visual-redistributable": "Install Microsoft Visual C++ Redistributable",
+  "go-to": "Go to the",
+  "install-VS-subinstruction-1": "Scroll down the page to the Visual Studio 2015, 2017 and 2019 section.",
+  "install-VS-subinstruction-2": "Download and install the Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019 for your platform.",
+  "install": "Install",
+  "download": "Download the",
+  "double-click-instruction": "Double-click the downloaded file and follow the instructions on the screen.",
+  "open": "Open",
+  "press-enter-gpu": "and press Enter to open the",
+  "create-conda-env": "Create a conda environment",
+  "create-conda-env-instruction-1": "Create a new conda environment named tf by running the following command",
+  "activate-env": "Activate the environment",
+  "update": "Update",
+  "run-following-command-gpu": "Run the following command in order to setup GPU support",
+  "getting-started": "Getting started"
 
 
   

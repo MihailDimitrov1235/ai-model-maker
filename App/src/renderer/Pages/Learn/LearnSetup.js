@@ -127,20 +127,15 @@ export default function LearnSetup() {
             },
           }}
         >
-          <ListItem>Go to the settings on the bottom left</ListItem>
-          <ListItem>
-            Select the path to the python executable of the environment you just
-            created
-          </ListItem>
+          <ListItem>{t('select-python-executable-subinfo-1')}</ListItem>
+          <ListItem>{t('select-python-executable-subinfo-2')}</ListItem>
         </List>
         <Box>
-          <Typography variant="p">
-            If you dont know what the path to the environment is you can run
-          </Typography>
+          <Typography variant="p">{t('do-not-run-python-env')}</Typography>
           <CodeBlock language={'bash'} code={`where python`} />
         </Box>
         <Alert variant="filled" severity="info" sx={{ color: 'text.contrast' }}>
-          By default the path should be:
+          {t('default-path-text')}
           C:\Users\name-of-your-user\tf\Scripts\python.exe
         </Alert>
       </Box>
@@ -149,7 +144,7 @@ export default function LearnSetup() {
         sx={{ flexDirection: 'column', gap: 3 }}
       >
         <Box>
-          <Typography variant="h5">1. System requirements</Typography>
+          <Typography variant="h5">1. {t('system-requirements')}</Typography>
           <List
             sx={{
               listStyleType: 'disc',
@@ -159,12 +154,12 @@ export default function LearnSetup() {
               },
             }}
           >
-            <ListItem>Windows 7 or higher (64-bit)</ListItem>
+            <ListItem>Windows 7 {t('or-higher')} (64-bit)</ListItem>
           </List>
         </Box>
         <Box>
           <Typography variant="h5">
-            2. Install Microsoft Visual C++ Redistributable
+            2. {t('install-microsoft-visual-redistributable')}
           </Typography>
           <List
             sx={{
@@ -176,7 +171,7 @@ export default function LearnSetup() {
             }}
           >
             <ListItem>
-              {'Go to the '}
+              {t('go-to')}
               <Link
                 sx={{ cursor: 'pointer' }}
                 onClick={() =>
@@ -187,22 +182,15 @@ export default function LearnSetup() {
               >
                 {'Microsoft Visual C++ downloads'}
               </Link>
-              {/* <Button onClick={handleOpenUrl}>button</Button> */}
             </ListItem>
-            <ListItem>
-              Scroll down the page to the Visual Studio 2015, 2017 and 2019
-              section.
-            </ListItem>
-            <ListItem>
-              Download and install the Microsoft Visual C++ Redistributable for
-              Visual Studio 2015, 2017 and 2019 for your platform.
-            </ListItem>
+            <ListItem>{t('install-VS-subinstruction-1')}</ListItem>
+            <ListItem>{t('install-VS-subinstruction-2')}</ListItem>
           </List>
         </Box>
         <Box>
-          <Typography variant="h5">3. Install Miniconda</Typography>
+          <Typography variant="h5">3. {t('install')} Miniconda</Typography>
           <Typography variant="p">
-            Download the{' '}
+            {t('download')}
             <Link
               href={
                 'https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe'
@@ -210,24 +198,24 @@ export default function LearnSetup() {
             >
               Miniconda Windows Installer
             </Link>
-            . Double-click the downloaded file and follow the instructions on
-            the screen.
+            . {t('double-click-instruction')}
           </Typography>
         </Box>
         <Box>
-          <Typography variant="h5">4. Open Anaconda Prompt</Typography>
+          <Typography variant="h5">4. {t('open')} Anaconda Prompt</Typography>
           <Typography variant="p">
-            Press <span style={{ fontWeight: 'bold' }}>Win</span>, type{' '}
-            <span style={{ fontWeight: 'bold' }}>Anaconda Prompt</span> and
-            press Enter to open the Anaconda Prompt.
+            {t('press')} <span style={{ fontWeight: 'bold' }}>Win</span>,
+            {t('type-cmd')}
+            <span style={{ fontWeight: 'bold' }}>Anaconda Prompt</span>{' '}
+            {t('press-enter-gpu')}
+            Anaconda Prompt.
           </Typography>
         </Box>
         <Box display={'flex'} flexDirection={'column'} gap={3}>
-          <Typography variant="h5">5. Create a conda environment</Typography>
+          <Typography variant="h5">5.{t('create-conda-env')}</Typography>
           <Box>
             <Typography variant="p">
-              Create a new conda environment named tf by running the following
-              command
+              {t('create-conda-env-instruction-1')}
             </Typography>
             <CodeBlock
               language="bash"
@@ -236,7 +224,7 @@ export default function LearnSetup() {
           </Box>
 
           <Box>
-            <Typography variant="p">Activate the environment</Typography>
+            <Typography variant="p">{t('activate-env')}</Typography>
             <CodeBlock
               language="bash"
               code={`conda deactivate
@@ -245,17 +233,17 @@ conda activate tf`}
           </Box>
 
           <Box>
-            <Typography variant="p">Update pip</Typography>
+            <Typography variant="p">{t('update')} pip</Typography>
             <CodeBlock language="bash" code={`pip install --upgrade pip`} />
           </Box>
           <Box>
-            <Typography variant="p">Download tensorflow</Typography>
+            <Typography variant="p">{t('download')} tensorflow</Typography>
             <CodeBlock language="bash" code={pipInstallCommand} />
           </Box>
-          <Typography variant="h5">6. GPU setup</Typography>
+          <Typography variant="h5">6. GPU {t('setup')}</Typography>
           <Box>
             <Typography variant="p">
-              Run the following command in order to setup GPU support
+              {t('run-following-command-gpu')}
             </Typography>
             <CodeBlock
               language="bash"
@@ -264,7 +252,7 @@ conda activate tf`}
           </Box>
 
           <Typography variant="h5">
-            7. Selecting the python executable
+            7. {t('select-python-executable')}
           </Typography>
 
           <List
@@ -276,16 +264,11 @@ conda activate tf`}
               },
             }}
           >
-            <ListItem>Go to the settings on the bottom left</ListItem>
-            <ListItem>
-              Select the path to the python executable of the environment you
-              just created
-            </ListItem>
+            <ListItem>{t('select-python-executable-subinfo-1')}</ListItem>
+            <ListItem>{t('select-python-executable-subinfo-2')}</ListItem>
           </List>
           <Box>
-            <Typography variant="p">
-              If you dont know what the path to the environment is you can run
-            </Typography>
+            <Typography variant="p">{t('do-not-run-python-env')}</Typography>
             <CodeBlock language={'bash'} code={`conda info --envs`} />
           </Box>
 
@@ -294,29 +277,26 @@ conda activate tf`}
             severity="info"
             sx={{ color: 'text.contrast' }}
           >
-            By default the path should be:
+            {t('default-path-text')}
             C:\Users\name-of-your-user\miniconda3\envs\tf\python.exe
           </Alert>
         </Box>
       </Box>
       <Box width={'100%'} mb={3}>
         <Typography variant="p">
-          If followed the instructions to this point the enviornment should be
-          set up and you should have the ability to train your own models. You
-          can close everything you had to open and can proceed with the{' '}
+          {t('instructions-conclusion')}
           <Link
             sx={{ cursor: 'pointer' }}
             onClick={() => navigate('/learn/tutorial')}
           >
-            Tutorial
-          </Link>{' '}
-          which will guide you on how to create and use your own models . In
-          case you faced any issues you can check the full{' '}
+            {t('tutorial')}
+          </Link>
+          {t('instructions-conclusion-rest-part')}{' '}
           <Link
             sx={{ cursor: 'pointer' }}
             onClick={() => handleOpenUrl('https://www.tensorflow.org/install')}
           >
-            Tensorflow installation guide
+            Tensorflow{t('installation-guide')}
           </Link>
         </Typography>
       </Box>

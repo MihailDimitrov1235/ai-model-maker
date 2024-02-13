@@ -122,13 +122,38 @@
   "open-command-prompt": "Отваряне на командния прозорец",
   "press":"Натиснете ",
   "type-cmd": "напишете ",
-  "press-enter":"и натиснете Enter, за да отворите командната прозореца.",
+  "press-enter":"и натиснете Enter, за да отворите cmd.",
   "create-virtual-env": "Създаване на виртуална среда",
   "activate-virtual-env": "Активиране на виртуалната среда",
   "active-virtual-env": "Активирайте виртуалната среда, като изпълните следната команда",
   "install-necessary-libraries": "Инсталирайте необходимите билбиотеки",
   "once-activated-env": "След като виртуалната среда е активирана, инсталирайте необходимите библиотеки, като използвате pip",
-  "select-python-executable": "Избор на изпълнимия файл на Python"
+  "select-python-executable": "Избор на изпълнимия файл на Python",
+  "select-python-executable-subinfo-1":"Отидете в настройките в долния ляв ъгъл",
+  "select-python-executable-subinfo-2": "Изберете пътя до изпълнимия файл на Python в средата, която току-що създадохте",
+  "do-not-run-python-env": "Ако не знаете какъв е пътят до средата, можете да изпълните следното",
+  "default-path-text": "По подразбиране пътят трябва да бъде",
+  "instructions-conclusion": "Ако сте спазили инструкциите до този момент, средата трябва да е създадена и да можете да обучавате собствените си модели. Можете да затворите всичко, което е трябвало да отворите, и да продължите с ",
+  "tutorial": "Урока ",
+  "instructions-conclusion-rest-part": ", който ще ви насочи как да създавате и използвате собствени модели. В в случай че сте се сблъскали с някакви проблеми, можете да проверите пълното",
+  "installation-guide": " ръководство за инсталиране",
+  "install-microsoft-visual-redistributable": "Инсталирайте Microsoft Visual C++ Redistributable",
+  "go-to": "Отидете в ",
+  "install-VS-subinstruction-1": "Отидете надолу на страницата до раздела Visual Studio 2015, 2017 и 2019.",
+  "install-VS-subinstruction-2": "Изтеглете и инсталирайте Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 и 2019 за вашата платформа.",
+  "install": "Инсталирайте",
+  "download": "Свалете ",
+  "double-click-instruction": "Щракнете два пъти върху изтегления файл и следвайте инструкциите на екрана.",
+  "open": "Отворете ",
+  "press-enter-gpu": "и натиснете Enter, за да отворите",
+  "create-conda-env": "Създаване на среда на conda",
+  "create-conda-env-instruction-1": "Създайте нова среда на conda с име tf, като изпълните следната команда",
+  "activate-env": "Активиране na средата",
+  "update": "Обновяване на ",
+  "run-following-command-gpu": "Изпълнете следната команда, за да настроите поддръжката на GPU",
+  "getting-started": "Първи стъпки"
+
+
 
 
 
