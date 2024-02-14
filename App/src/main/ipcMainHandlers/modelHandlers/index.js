@@ -222,28 +222,14 @@ export function setupIPCModelHandlers(win) {
     const config = getConfig();
 
     if (type == 'table') {
-      const data = fs.readFileSync(
-        getAssetPath(`models/table/${model}/info.json`),
-      );
-      // let options = {
-      //   mode: 'text',
-      //   pythonPath: config.python_exe_path,
-      //   pythonOptions: ['-u'],
-      //   scriptPath: getAssetPath('/python-scripts/tabularData'),
-      //   args: [getAssetPath(`/models/table/${model}/model.keras`)],
-      // };
-
-      // pyShell = new PythonShell('get_model_summary.py', options);
-
-      // pyShell.stdout.on('data', function (message) {
-      //   console.log(message);
-      // });
-
-      // pyShell.stderr.on('data', function (err) {
-      //   console.log(err);
-      // });
-
-      return JSON.parse(data);
+      try {
+        const data = fs.readFileSync(
+          getAssetPath(`models/table/${model}/info.json`),
+        );
+        return JSON.parse(data);
+      } catch (err) {
+        return { failed: true };
+      }
     }
   });
 

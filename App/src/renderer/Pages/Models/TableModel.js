@@ -144,6 +144,9 @@ export default function TableModel() {
       model: id,
       type: 'table',
     });
+    if (response.failed) {
+      return;
+    }
     setModelData(response);
     setLearningRate(0.001);
     setEpochs(10);
@@ -222,13 +225,15 @@ export default function TableModel() {
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="h5">{id}</Typography>
-        {modelData && modelData.epochs.length > 0 && (
-          <Button variant="contrast">{t('use-model')}</Button>
-        )}
+        {modelData != undefined &&
+          modelData.epochs &&
+          modelData.epochs.length > 0 && (
+            <Button variant="contrast">{t('use-model')}</Button>
+          )}
       </Box>
-      {modelData ? (
+      {modelData != undefined ? (
         <>
-          {modelData.epochs.length > 0 && (
+          {modelData.epochs && modelData.epochs.length > 0 && (
             <Box sx={{ display: 'flex', gap: 3 }}>
               <Box sx={{ flex: 1 }}>
                 <Line
@@ -303,7 +308,7 @@ export default function TableModel() {
               </Box>
             </Box>
           )}
-          {modelData.epochs.length > 0 && (
+          {modelData.epochs && modelData.epochs?.length > 0 && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               <Typography variant="p">{t('records-per-graph')}</Typography>
               <Slider
@@ -317,17 +322,19 @@ export default function TableModel() {
               />
             </Box>
           )}
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="p">
-              {t('model-trained-for')}: {modelData.epochs.length} {t('epochs')}
-            </Typography>
-            <Box sx={{ display: 'flex' }}>
-              <Button onClick={handleTrain} variant="contrast">
-                {t('train-model')}
-              </Button>
+          {modelData && modelData.epochs && (
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="p">
+                {t('model-trained-for')}: {modelData.epochs.length}{' '}
+                {t('epochs')}
+              </Typography>
+              <Box sx={{ display: 'flex' }}>
+                <Button onClick={handleTrain} variant="contrast">
+                  {t('train-model')}
+                </Button>
+              </Box>
             </Box>
-          </Box>
+          )}
 
           <Box display={'flex'} flexDirection={'column'} flex={1} gap={3}>
             <Box display={'flex'} gap={3} alignItems={'center'}>

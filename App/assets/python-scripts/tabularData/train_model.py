@@ -71,7 +71,7 @@ validation_split = args.validation_split
 test_split = args.test_split
 train_split = 1 - validation_split - test_split
 
-model = tf.keras.models.load_model(model_path)
+model = tf.keras.models.load_model(model_path, safe_mode=False)
 model.optimizer.learning_rate = learning_rate
 
 info = json.load(open(folder_path + "/info.json"))

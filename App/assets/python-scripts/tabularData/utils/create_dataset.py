@@ -4,7 +4,7 @@ from keras import layers
 import numpy as np
 
 
-def prepare_data(categorical_cols, numeric_cols, train_ds):
+def prepare_data(categorical_cols, numeric_cols, binary_cols, train_ds):
     all_inputs = []
     encoded_features = []
 
@@ -29,18 +29,45 @@ def prepare_data(categorical_cols, numeric_cols, train_ds):
         all_inputs.append(categorical_col)
         encoded_features.append(encoded_categorical_col)
 
+    for i in binary_cols:
+        header = i["name"]
+        if i["zero"] == "False" or i["zero"] == "True":
+            binary_col = tf.keras.Input(shape=(1,), name=header, dtype="bool")
+
+            def data_to_01(x):
+                return tf.where(tf.equal(x, False), 0.0, 1.0)
+
+            encoded_binary_col = layers.Lambda(data_to_01)(binary_col)
+
+            all_inputs.append(binary_col)
+            encoded_features.append(encoded_binary_col)
+        else:
+            dtype = "string"
+            if i["numeric"]:
+                dtype = "int64"
+            binary_col = tf.keras.Input(shape=(1,), name=header, dtype=dtype)
+
+            def data_to_01(x):
+                return tf.where(tf.equal(x, i["zero"]), 0.0, 1.0)
+
+            encoded_binary_col = layers.Lambda(data_to_01)(binary_col)
+
+            all_inputs.append(binary_col)
+            encoded_features.append(encoded_binary_col)
+
     return all_inputs, encoded_features
 
 
-def get_categorical_and_numeric_cols(info, target):
+def get_categorical_binary_and_numeric_cols(info, target):
     categorical_cols = []
     numeric_cols = []
+    binary_cols = []
 
     for column_name in info["header"]:
         if column_name == target:
             continue
         column = info["selectedTypes"][column_name]
-        if column["type"] == "categorical" or column["type"] == "binary":
+        if column["type"] == "categorical":
             categorical_cols.append({"name": column_name, "numeric": column["numeric"]})
         elif column["type"] == "numeric":
             numeric_cols.append(
@@ -51,9 +78,17 @@ def get_categorical_and_numeric_cols(info, target):
                     "max": column["max"],
                 }
             )
+        elif column["type"] == "binary":
+            binary_cols.append(
+                {
+                    "name": column_name,
+                    "zero": info["selectedTypes"][column_name]["values"][0],
+                    "numeric": column["numeric"],
+                }
+            )
         # else:
         #     del data[column_name]
-    return categorical_cols, numeric_cols
+    return categorical_cols, numeric_cols, binary_cols
 
 
 def create_train_val_test(dataframe, batch_size, target, info, train_split, val_split):

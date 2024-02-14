@@ -8,7 +8,7 @@ import os
 
 from utils.create_dataset import prepare_data
 from utils.create_dataset import create_train_val_test
-from utils.create_dataset import get_categorical_and_numeric_cols
+from utils.create_dataset import get_categorical_binary_and_numeric_cols
 
 from utils.create_model import create_model
 
@@ -40,6 +40,9 @@ validation_split = args.validation_split
 epochs = args.epochs
 batch_size = args.batch_size
 target = args.target
+validation_split = args.validation_split
+test_split = args.test_split
+train_split = 1 - validation_split - test_split
 layers = args.layers
 
 # sample = {
@@ -57,11 +60,17 @@ layers = args.layers
 info = json.load(open(folder_path + "/info.json"))
 dataframe = pd.read_csv(folder_path + "/data.csv")
 
-train_ds, val_ds, test_ds = create_train_val_test(dataframe, batch_size, target, info)
+train_ds, val_ds, test_ds = create_train_val_test(
+    dataframe, batch_size, target, info, train_split, validation_split
+)
 
-categorical_cols, numeric_cols = get_categorical_and_numeric_cols(info, target)
+categorical_cols, numeric_cols, binary_cols = get_categorical_binary_and_numeric_cols(
+    info, target
+)
 
-all_inputs, encoded_features = prepare_data(categorical_cols, numeric_cols, train_ds)
+all_inputs, encoded_features = prepare_data(
+    categorical_cols, numeric_cols, binary_cols, train_ds
+)
 
 model = create_model(all_inputs, encoded_features, layers, info, target, learning_rate)
 
