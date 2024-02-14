@@ -40,6 +40,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('change-training-text', callback),
   handleChangeTrainingProgress: (callback) =>
     ipcRenderer.on('change-training-progress', callback),
+  handleCloseCreatingModelDialog: (callback) =>
+    ipcRenderer.on('close-creating-model-dialog', callback),
   removeListener: (callback) => {
     ipcRenderer.removeAllListeners(callback);
   },

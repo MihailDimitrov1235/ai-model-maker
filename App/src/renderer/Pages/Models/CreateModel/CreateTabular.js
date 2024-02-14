@@ -5,21 +5,24 @@ import {
   Box,
   Typography,
   Slider,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
   Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import LayersDisplay from './LayersDisplay';
+import { useNavigate } from 'react-router-dom';
+import CustomDialog from '../../../Components/Utils/CustomDialog';
 
 export default function CreateTabular() {
   const { t } = useTranslation();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [info, setInfo] = useState({});
 
   const nameRef = useRef();
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const [learningRate, setLearningRate] = useState(0.001);
   const [epochs, setEpochs] = useState(10);
@@ -69,6 +72,14 @@ export default function CreateTabular() {
 
   useEffect(() => {
     fetchInfo();
+    window.electronAPI.handleCloseCreatingModelDialog((data) => {
+      setOpenDialog(false);
+      navigate(`/models/table/${nameRef.current.value}`);
+    });
+
+    return () => {
+      window.electronAPI.removeListener('close-creating-model-dialog');
+    };
   }, [id]);
   const [train, setTrain] = useState(85);
   const [val, setVal] = useState(10);
@@ -179,6 +190,7 @@ export default function CreateTabular() {
       setLayersError('');
     }
 
+    setOpenDialog(true);
     window.electronAPI.createTabularModel({
       dataset: id,
       name: nameRef.current.value,
@@ -193,6 +205,12 @@ export default function CreateTabular() {
 
   return (
     <Box width={'100%'} display={'flex'} flexDirection={'column'} gap={6}>
+      <CustomDialog
+        open={openDialog}
+        title={t('creating-model-title')}
+        text={t('creating-model-text')}
+        buttons={[]}
+      />
       <TextField
         error={nameError ? true : false}
         helperText={nameError}

@@ -80,9 +80,6 @@ export function setupIPCModelHandlers(win) {
       pyShell.kill('SIGINT');
     }
     const save_model_path = getAssetPath('models/table/' + arg.name);
-    if (!fs.existsSync(save_model_path)) {
-      fs.mkdirSync(save_model_path, { recursive: true });
-    }
     const argsObject = {
       folder_path: getAssetPath('datasets/table/' + arg.dataset),
       save_model_path: save_model_path + '/model.keras',
@@ -107,7 +104,6 @@ export function setupIPCModelHandlers(win) {
       epochs: [],
     };
     const jsonFilePath = save_model_path + '/info.json';
-    fs.writeFileSync(jsonFilePath, JSON.stringify(infoData, null, 2), 'utf-8');
 
     let argsArray = [];
     for (let key in argsObject) {
@@ -119,6 +115,9 @@ export function setupIPCModelHandlers(win) {
     });
 
     const config = getConfig();
+    if (!config.python_exe_path) {
+      return false;
+    }
     let options = {
       mode: 'text',
       pythonPath: config.python_exe_path,
@@ -135,6 +134,22 @@ export function setupIPCModelHandlers(win) {
 
     pyShell.stderr.on('data', function (err) {
       console.log(err);
+    });
+
+    pyShell.on('close', (code, signal) => {
+      if (!fs.existsSync(save_model_path)) {
+        fs.mkdirSync(save_model_path, { recursive: true });
+      }
+      try {
+        fs.writeFileSync(
+          jsonFilePath,
+          JSON.stringify(infoData, null, 2),
+          'utf-8',
+        );
+      } catch (err) {
+        return false;
+      }
+      win.webContents.send('close-creating-model-dialog');
     });
   });
 
