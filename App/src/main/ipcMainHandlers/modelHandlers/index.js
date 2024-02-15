@@ -17,6 +17,13 @@ export function setupIPCModelHandlers(win) {
     getAssetPath(`datasets/image/captioning`),
   ];
 
+  const tabularModelsFolder = getAssetPath(`models/table`);
+  const imageModelsFolders = [
+    getAssetPath(`models/image/classification`),
+    getAssetPath(`models/image/detection`),
+    getAssetPath(`models/image/captioning`),
+  ];
+
   const modelFolders = [
     {
       path: getAssetPath(`models/table`),
@@ -339,5 +346,35 @@ export function setupIPCModelHandlers(win) {
         win.webContents.send('close-training-dialog');
       });
     }
+  });
+
+  ipcMain.handle('get-tabular-models', async (event, data) => {
+    if (fs.existsSync(tabularModelsFolder)) {
+      const folders = fs.readdirSync(tabularModelsFolder);
+      return folders;
+    } else {
+      return [];
+    }
+  });
+
+  ipcMain.handle('get-image-models', async (event, arg) => {
+    let result = [];
+    imageModelsFolders.forEach((folder, idx) => {
+      if (fs.existsSync(folder)) {
+        let type = '';
+        if (idx == 0) {
+          type = 'classification';
+        } else if (idx == 1) {
+          type = 'detection';
+        } else if (idx == 2) {
+          type = 'captioning';
+        }
+        const folders = fs.readdirSync(folder);
+        folders.forEach((folder) => {
+          result.push({ label: folder, type: type });
+        });
+      }
+    });
+    return result;
   });
 }

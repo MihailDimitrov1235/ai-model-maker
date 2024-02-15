@@ -19,6 +19,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getImageDatasets: (arg) => ipcRenderer.invoke('get-image-datasets', arg),
   getModels: (arg) => ipcRenderer.invoke('get-models', arg),
   getModel: (arg) => ipcRenderer.invoke('get-model', arg),
+  getTabularModels: (arg) => ipcRenderer.invoke('get-tabular-models', arg),
+  getImageModels: (arg) => ipcRenderer.invoke('get-image-models', arg),
   trainModel: (arg) => ipcRenderer.invoke('train-model', arg),
   cancelTraining: (arg) => ipcRenderer.invoke('cancel-train-model', arg),
   getModelsCount: (arg) => ipcRenderer.invoke('get-models-count', arg),
