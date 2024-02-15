@@ -16,21 +16,24 @@ import { ShowDiagrams } from '../Components/Charts/BarChart_GoogleLib';
 import CardElement from '../Components/Cards/DatasetCard';
 import { useNavigate } from 'react-router-dom';
 import image1 from '../../../assets/images/img1.png';
-//import createDataset from '/assets/images/createDatasets.PNG.png';
+import createDataset from '../../../assets/images/createDataset.PNG';
+import createModelImage from '../../../assets/images/createModel.PNG';
+import trainModel from '../../../assets/images/trainModel.PNG';
+
 //import enIcon from '../../../../assets/images/createDatasets.PNG';
- 
+
 // import python from 'python-shell';
 // import path from "path";
- 
+
 // var options = {
 //     scriptPath : path.join(__dirname, '/../Backend/'),
 //     args : [],
 // };
- 
+
 const Landing = function () {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
- 
+
   const datasets = [
     { title: 'Road Sign', Miho: 'waka waka eee', Alvin: 'Chiponoskovci' },
     { title: 'Road Sign' },
@@ -38,10 +41,10 @@ const Landing = function () {
     { Miho: 'waka waka eee' },
     { Alvin: 'Chiponoskovci' },
   ];
-  const navigateCreatDataset = () => {
+  const navigateToCreatDataset = () => {
     navigate(`/data/import`);
   };
- 
+
   return (
     <>
       <Box
@@ -56,104 +59,109 @@ const Landing = function () {
           }}
         >
           <h2>{t('homepage')}</h2>
+          <Box>
+            <Button variant="contrast">Go to SetUp</Button>
+          </Box>
         </Box>
- 
+
         <Box
           sx={{
             margin: '50px',
           }}
         >
           <Typography>
-            Добре дошли в нашето приложение, в което всеки, който е запознат с
-            програмирането или по-точно с изкуствения интелект може се възползва
-            от функциите на програмата ни. Тук можете да създавате и тренирате
-            модели, които можете да използвате в направата на приложения или
-            програми, които правите. Тук можете да вкарвате и тренирате
-            информация под формата на таблици или снимков материал. Можете
-            бързо, лесно и ефетктивно да правите модели с помощта на machine
-            learning(ML).
+            <b>Добре дошли</b> в нашето приложение, в което всеки, който е
+            запознат с програмирането или по-точно с изкуствения интелект може
+            се възползва от функциите на програмата ни. Тук можете да създавате
+            и тренирате модели, които можете да използвате в направата на
+            приложения или програми, които правите. Тук можете да вкарвате и
+            тренирате информация под формата на таблици или снимков материал.
+            Можете бързо, лесно и ефетктивно да правите модели с помощта на
+            machine learning(ML).
           </Typography>
           <Typography mt={3} variant="h4">
-            Започнете с няколко лесни стъпки
+            <b>Започнете с няколко лесни стъпки</b>
           </Typography>
           <Grid container spacing={4} mt={2}>
             <Grid item xs={3} sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Card>
+              <Card raised>
                 <CardMedia
                   component="img"
-                  height="140"
-                  //image={createDataset} // Adjust the path to your image file
+                  height="250"
+                  image={createDataset} // Adjust the path to your image file
                   alt="Example"
+                  sx={{ objectFit: 'contain' }}
                 />
-                <Typography variant="h5">My Electron App</Typography>
               </Card>
               <Typography variant="h6" mt={2}>
-                Create Dataset
+                <b>Create Dataset</b>
               </Typography>
               <Typography mb={2}>
-                Първата стъпка, която трябва да поемета е да си вкарате някакъв
-                вид dataset под формата на таблица или снимки
+                <b>Първата стъпка</b>, която трябва да поемета е да си вкарате
+                някакъв вид dataset под формата на таблица или снимки, като
+                отидете 'Данни' и изберете 'Импорт'
               </Typography>
-              <Button variant="contrast" onClick={navigateCreatDataset}>
+              <Button variant="contrast" onClick={navigateToCreatDataset}>
                 Create Dataset
               </Button>
             </Grid>
             <Grid item xs={3} sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Card>
+              <Card raised>
                 <CardMedia
                   component="img"
-                  height="150"
-                  image={image1} // Adjust the path to your image file
+                  height="250"
+                  image={createModelImage} // Adjust the path to your image file
                   alt="Example"
+                  sx={{ objectFit: 'contain' }}
                 />
-
               </Card>
- 
+
               <Typography variant="h6" mt={2}>
-                Create Model
+                <b>Create Model</b>
               </Typography>
               <Typography mb={2}>
-                Втора стъпка е да си направите модел на база някой dataset,
-                който сте направили преди това, като на самия модел му се
-                зададат стойности на различните характеристики, чрез които ще
-                бъде трениран.
+                <b>Втора стъпка</b> е да си направите модел на база някой
+                dataset, който сте направили преди това, като отидете на
+                'Модели' и след това на 'Създаване'.
               </Typography>
               <Button variant="contrast">Create Model</Button>
             </Grid>
             <Grid item xs={3} sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Card>
+              <Card raised>
                 <CardMedia
                   component="img"
-                  height="140"
-                  //image={createDataset} // Adjust the path to your image file
+                  height="250"
+                  image={trainModel} // Adjust the path to your image file
                   alt="Example"
+                  sx={{ objectFit: 'contain' }}
                 />
-                <Typography variant="h5">My Electron App</Typography>
               </Card>
               <Typography variant="h6" mt={2}>
-                Train Model
+                <b>Train Model</b>
               </Typography>
               <Typography mb={2}>
-                Трета стъпка е да изберете кой модел искате да го тренирате
+                <b>Трета стъпка</b> е да изберете кой модел искате да го
+                тренирате, като изберете бутона 'Тренирай Модел'.
               </Typography>
               <Button variant="contrast">Train Model</Button>
             </Grid>
             <Grid item xs={3} sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Card>
+              <Card raised>
                 <CardMedia
                   component="img"
-                  height="140"
-                  //image={createDataset} // Adjust the path to your image file
+                  height="250"
+                  image={image1} // Adjust the path to your image file
                   alt="Example"
+                  sx={{ objectFit: 'contain' }}
                 />
-                <Typography variant="h5">My Electron App</Typography>
               </Card>
               <Typography variant="h6" mt={2}>
-                Test your Model
+                <b>Test your Model</b>
               </Typography>
               <Typography mb={2}>
-                Последната стъпка е вече като сте готови с тренирането да го
-                тествате и да видите какви резултати вади
+                <b>Последната стъпка</b> е вече като сте готови с тренирането да
+                го тествате и да видите какви резултати вади, като отидете на
+                'Използвай'.
               </Typography>
               <Button variant="contrast">Test Model</Button>
             </Grid>
@@ -171,6 +179,5 @@ const Landing = function () {
     </>
   );
 };
- 
+
 export default Landing;
- 

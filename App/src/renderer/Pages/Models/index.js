@@ -83,18 +83,6 @@ const Models = function () {
               gap: 3,
             }}
           >
-            <TextField
-              variant="outlined"
-              placeholder="Search"
-              InputProps={{
-                startAdornment: <SearchIcon />,
-              }}
-              sx={{
-                input: {
-                  padding: '8px',
-                },
-              }}
-            />
             <Button variant="contrast" onClick={handleClick}>
               {t('new-model')}
             </Button>
