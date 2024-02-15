@@ -67,7 +67,7 @@ export default function Use() {
   };
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, m: 3 }}>
-      <Typography variant="h5">{t('create-model')}</Typography>
+      <Typography variant="h5">{t('use-model')}</Typography>
       <Box sx={{ display: 'flex', gap: 3 }}>
         <FormControl sx={{ flex: 1 }}>
           <InputLabel>{t('model-type')}</InputLabel>
