@@ -26,9 +26,7 @@ const Datasets = function () {
 
   useEffect(() => {
     let id = queryParameters.get('id') != null ? queryParameters.get('id') : '';
-    console.log('element');
-    console.log(id);
-    const element = document.getElementById(queryParameters.get('id'));
+    const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
@@ -147,8 +145,9 @@ const Datasets = function () {
         minHeight: '100%',
       }}
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <Box
+          key={index}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -175,8 +174,8 @@ const Datasets = function () {
                   },
                 }}
               >
-                {item.listItems.map((listItem) => (
-                  <ListItem>{listItem.text}</ListItem>
+                {item.listItems.map((listItem, idx) => (
+                  <ListItem key={idx}>{listItem.text}</ListItem>
                 ))}
               </List>
             </>

@@ -28,9 +28,9 @@ export default function Train() {
 
   const handleDatasetTypeChange = async (type) => {
     if (type != datasetType) {
+      setDataset(null);
       if (!location.pathname.startsWith(`/models/create/${type}`)) {
         navigate(`/models/create/${type}`);
-        setDataset(null);
       }
       setDatasetType(type);
       if (type == 'tabular') {

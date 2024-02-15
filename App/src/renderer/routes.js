@@ -25,6 +25,7 @@ import LearnDatasets from './Pages/Learn/LearnDatasets';
 import LearnSetup from './Pages/Learn/LearnSetup';
 import LearnTutorial from './Pages/Learn/LearnTutorial';
 import Use from './Pages/Use';
+import UseTable from './Pages/Use/UseTable';
 
 const routes = [
   {
@@ -135,7 +136,22 @@ const routes = [
       {
         path: '/use',
         element: <InnerLayout type={'use'} />,
-        children: [{ path: '', element: <Use /> }],
+        children: [
+          {
+            path: '',
+            element: <Use />,
+            children: [
+              {
+                path: 'tabular',
+                children: [{ path: ':id', element: <UseTable /> }],
+              },
+              {
+                path: 'image',
+                children: [{ path: ':id', element: <UseTable /> }],
+              },
+            ],
+          },
+        ],
       },
       {
         path: '/learn',
