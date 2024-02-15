@@ -38,20 +38,20 @@ const Datasets = function () {
       type: 'text',
       title: t('learn-ai'),
       titleType: 'h3',
-      text: <>{t('ml-introduction')}</>,
+      text: <><b>{t('welcome')}</b>{t('ml-introduction')}</>,
     },
     {
       type: 'text',
       title: t('neural-network'),
       titleType: 'h4',
-      text: t('neural-network-text'),
+      text: <><b>{t('neural-network')}</b>{t('neural-network-text')}</>,
     },
 
     {
       type: 'text',
       title: t('neurons'),
       id: 'neurons',
-      text: t('neurons-text'),
+      text: <><b>{t('neurons')}</b>{t('neurons-text')}</>,
     },
 
     {
@@ -60,19 +60,24 @@ const Datasets = function () {
       id: 'layers',
       listItems: [
         {
-          text: t('dense-text'),
+          text: <><b>{t('dense')}</b>{t('dense-text')}</>,
           subId: 'dense',
         },
         {
-          text: t('dropout-text'),
+          text: <><b>{t('dropout')}</b>{t('dropout-text')}</>,
           subId: 'dropout',
         },
         {
-          text: t('conv2D-text'),
+          text: <>
+            <b>{t('conv2D')}</b>{t('conv2D-text')}
+          </>,
           subId: 'conv-2D',
         },
         {
-          text: t('max-poling2D-text'),
+          text: <>
+           <b>{t('max-poling2D')}</b>
+           {t('max-poling2D-text')}
+          </>,
           subId: 'max-pooling-2D',
         },
       ],
@@ -81,7 +86,9 @@ const Datasets = function () {
       type: 'text',
       title: t('batch-size'),
       id: 'batch-size',
-      text: t('batch-size-text'),
+      text: <>
+      <b>{t('batch-size')}</b>{t('batch-size-text')}
+    </>,
     },
     {
       type: 'list',
@@ -89,15 +96,21 @@ const Datasets = function () {
       id: 'dataset-split',
       listItems: [
         {
-          text: t('training-text'),
+          text:  <>
+          <b>{t('training')}</b>{t('training-text')}
+        </>,
           subId: 'training',
         },
         {
-          text: t('validation-text'),
+          text: <>
+          <b>{t('validation')}</b>{t('validation-text')}
+        </>,
           subId: 'validation',
         },
         {
-          text: t('testing-text'),
+          text: <>
+          <b>{t('testing')}</b>{t('testing-text')}
+        </>,
           subId: 'testing',
         },
       ],
@@ -106,25 +119,33 @@ const Datasets = function () {
       type: 'text',
       title: t('weights-bias'),
       id: 'weight-bias',
-      text: t('weights-bias-text'),
+      text: <>
+      <b>{t('weights-bias-start')}</b>{t('weights-bias-text')}
+    </>,
     },
     {
       type: 'text',
       title: t('target'),
       id: 'target',
-      text: t('target-text'),
+      text:<>
+      <b>{t('target-start')}</b>{t('target-text')}
+    </> ,
     },
     {
       type: 'text',
       title: t('learning-rate'),
       id: 'learning-rate',
-      text: t('learning-rate-text'),
+      text: <>
+      <b>{t('learning-rate-start')}</b>{t('learning-rate-text')}
+    </>,
     },
     {
       type: 'text',
       title: t('epoch'),
       id: 'epoch',
-      text: t('epoch-text'),
+      text:<>
+      <b>{t('epoch')}</b>{t('epoch-text')}
+    </> ,
     },
   ];
 
