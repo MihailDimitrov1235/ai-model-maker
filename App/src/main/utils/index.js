@@ -25,15 +25,15 @@ export function resolveHtmlPath(htmlFileName) {
 export function envExists(envPath) {
   const config = getConfig();
   if (!config.python_exe_path || !fs.existsSync(config.python_exe_path)) {
-    // if (fs.existsSync(path.join(envPath, 'python.exe'))) {
-    //   updateConfig('python_exe_path', path.join(envPath, 'python.exe'));
-    //   return path.join(envPath, 'python.exe');
-    // } else {
-    //   if (!fs.existsSync(config.python_exe_path)) {
-    //     updateConfig('python_exe_path', '');
-    //   }
-    //   return false;
-    // }
+    if (fs.existsSync(path.join(envPath, 'python.exe'))) {
+      updateConfig('python_exe_path', path.join(envPath, 'python.exe'));
+      return path.join(envPath, 'python.exe');
+    } else {
+      if (!fs.existsSync(config.python_exe_path)) {
+        updateConfig('python_exe_path', '');
+      }
+      return false;
+    }
   }
   return config.python_exe_path;
 }

@@ -72,9 +72,11 @@ export default function CreateTabular() {
 
   useEffect(() => {
     fetchInfo();
-    window.electronAPI.handleCloseCreatingModelDialog((data) => {
+    window.electronAPI.handleCloseCreatingModelDialog((event, value) => {
       setOpenDialog(false);
-      navigate(`/models/table/${nameRef.current.value}`);
+      if (!value.error) {
+        navigate(`/models/table/${nameRef.current.value}`);
+      }
     });
 
     return () => {

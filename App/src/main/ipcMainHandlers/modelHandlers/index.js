@@ -86,6 +86,7 @@ export function setupIPCModelHandlers(win) {
     if (pyShell) {
       pyShell.kill('SIGINT');
     }
+    let error = false;
     const save_model_path = getAssetPath('models/table/' + arg.name);
     const argsObject = {
       folder_path: getAssetPath('datasets/table/' + arg.dataset),
@@ -123,7 +124,15 @@ export function setupIPCModelHandlers(win) {
 
     const config = getConfig();
     if (!config.python_exe_path) {
-      console.log('no python!!!');
+      win.webContents.send('create-snackbar', {
+        message: 'no-python-message',
+        title: 'no-python-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+        // persist: true,
+        buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+      });
+      win.webContents.send('close-creating-model-dialog', { error: true });
       return false;
     }
     let options = {
@@ -141,26 +150,53 @@ export function setupIPCModelHandlers(win) {
     });
 
     pyShell.stderr.on('data', function (err) {
-      console.log('Error!!!!');
+      console.log('Python error:');
       console.log(err);
+      if (err.includes('Error')) {
+        error = true;
+        win.webContents.send('create-snackbar', {
+          message: 'python-error-message',
+          title: 'python-error-title',
+          alertVariant: 'error',
+          autoHideDuration: 3000,
+          // persist: true,
+          buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+        });
+      }
     });
 
     pyShell.on('close', (code, signal) => {
-      console.log(code);
-      console.log(signal);
-      if (!fs.existsSync(save_model_path)) {
-        fs.mkdirSync(save_model_path, { recursive: true });
+      if (!error) {
+        if (!fs.existsSync(save_model_path)) {
+          fs.mkdirSync(save_model_path, { recursive: true });
+        }
+        try {
+          fs.writeFileSync(
+            jsonFilePath,
+            JSON.stringify(infoData, null, 2),
+            'utf-8',
+          );
+        } catch (err) {
+          win.webContents.send('create-snackbar', {
+            message: 'create-file-error-message',
+            title: 'create-file-error-title',
+            alertVariant: 'error',
+            autoHideDuration: 3000,
+            // persist: true,
+            // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+          });
+        }
+        win.webContents.send('create-snackbar', {
+          message: 'model-created-message',
+          title: 'model-created-title',
+          alertVariant: 'success',
+          autoHideDuration: 3000,
+          // persist: true,
+          // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+        });
       }
-      try {
-        fs.writeFileSync(
-          jsonFilePath,
-          JSON.stringify(infoData, null, 2),
-          'utf-8',
-        );
-      } catch (err) {
-        return false;
-      }
-      win.webContents.send('close-creating-model-dialog');
+
+      win.webContents.send('close-creating-model-dialog', { error: error });
     });
   });
 
