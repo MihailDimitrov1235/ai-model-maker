@@ -5,6 +5,7 @@ const { exec } = require('child_process');
 const path = require('path');
 
 let createEnvProcess = null;
+let snack = false;
 
 const envPath = path.join(__dirname, '../../../../assets/python-scripts/env');
 const appDataPath =
@@ -16,11 +17,21 @@ const appDataPath =
 function setupIPCMainPyEnv(win) {
   ipcMain.on('check-env', (event, arg) => {
     if (!envExists(envPath)) {
-      if (condaExists) {
-        win.webContents.send('no-env');
-      } else {
-        win.webContents.send('no-conda');
+      if (!snack) {
+        snack = true;
+        win.webContents.send('create-snackbar', {
+          message: 'no-python-message',
+          title: 'no-python-title',
+          alertVariant: 'warning',
+          autoHideDuration: null,
+          persist: true,
+        });
       }
+      // if (condaExists) {
+      //   win.webContents.send('no-env');
+      // } else {
+      //   win.webContents.send('no-conda');
+      // }
     }
   });
 
@@ -30,7 +41,6 @@ function setupIPCMainPyEnv(win) {
     }
     if (envExists(envPath)) {
       win.webContents.send('close-create-env');
-      console.log('already exists');
       return;
     }
     const anacondaShortcutPath = condaExists(appDataPath);

@@ -85,14 +85,9 @@ export default function Settings() {
                     color: 'error',
                   }}
                   helperText={
-                    <Typography
-                      variant="h6"
-                      fontSize={'13px'}
-                      fontWeight={400}
-                      color={'error'}
-                    >
+                    <Box fontSize={'13px'} sx={{ color: 'red' }}>
                       {pythonExeError}
-                    </Typography>
+                    </Box>
                   }
                 />
               </Box>

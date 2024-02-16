@@ -19,11 +19,13 @@ import { useTranslation } from 'react-i18next';
 import LanguageChanger from './LanguageChanger';
 import { useEffect, useState } from 'react';
 import logo from '../../../../assets/logo.png';
-import Snack from '../Utils/Snack';
+// import Snack from '../Utils/Snack';
 import CustomDialog from '../Utils/CustomDialog';
 import Settings from './Settings';
+import { useSnackbar } from 'notistack';
 
 export default function Layout() {
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const [openNoPython, setOpenNoPython] = useState(false);
   const [openNoConda, setOpenNoConda] = useState(false);
@@ -48,27 +50,37 @@ export default function Layout() {
       setOpenCreateEnv(false);
     });
 
+    window.electronAPI.handleCreateSnackbar((event, value) => {
+      const key = enqueueSnackbar({
+        variant: 'custom',
+        persist: value.persist || false,
+        autoHideDuration: value.autoHideDuration || 5000,
+        ...value,
+      });
+    });
+
     return () => {
       window.electronAPI.removeListener('no-env');
       window.electronAPI.removeListener('no-conda');
       window.electronAPI.removeListener('change-create-env-text');
       window.electronAPI.removeListener('close-create-env');
+      window.electronAPI.removeListener('create-snackbar');
     };
   }, []);
 
-  const handleCloseNoPython = () => {
-    setOpenNoPython(false);
-  };
+  // const handleCloseNoPython = () => {
+  //   setOpenNoPython(false);
+  // };
 
-  const handleCloseNoConda = () => {
-    setOpenNoPython(false);
-  };
+  // const handleCloseNoConda = () => {
+  //   setOpenNoPython(false);
+  // };
 
-  const handleCreateEnv = () => {
-    window.electronAPI.createEnv();
-    handleCloseNoPython();
-    setOpenCreateEnv(true);
-  };
+  // const handleCreateEnv = () => {
+  //   window.electronAPI.createEnv();
+  //   handleCloseNoPython();
+  //   setOpenCreateEnv(true);
+  // };
 
   const handleCancelCreateEnv = () => {
     window.electronAPI.cancelCreateEnv();
@@ -91,7 +103,7 @@ export default function Layout() {
         bgcolor: 'background.main',
       }}
     >
-      <Snack
+      {/* <Snack
         open={openNoPython}
         setOpen={setOpenNoPython}
         message={t('no-py-env')}
@@ -123,7 +135,7 @@ export default function Layout() {
             handleClick: () => handleCloseNoConda(),
           },
         ]}
-      />
+      /> */}
 
       <CustomDialog
         open={openCreateEnv}

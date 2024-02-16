@@ -30,6 +30,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   changeConfig: (arg) => ipcRenderer.invoke('change-config', arg),
   openUrl: (arg) => ipcRenderer.invoke('open-url', arg),
 
+  handleCreateSnackbar: (callback) =>
+    ipcRenderer.on('create-snackbar', callback),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
   handleMissingConda: (callback) => ipcRenderer.on('no-conda', callback),
   handleChangeCreateEnvText: (callback) =>

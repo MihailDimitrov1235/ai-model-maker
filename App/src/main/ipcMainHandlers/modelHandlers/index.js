@@ -123,6 +123,7 @@ export function setupIPCModelHandlers(win) {
 
     const config = getConfig();
     if (!config.python_exe_path) {
+      console.log('no python!!!');
       return false;
     }
     let options = {
@@ -140,10 +141,13 @@ export function setupIPCModelHandlers(win) {
     });
 
     pyShell.stderr.on('data', function (err) {
+      console.log('Error!!!!');
       console.log(err);
     });
 
     pyShell.on('close', (code, signal) => {
+      console.log(code);
+      console.log(signal);
       if (!fs.existsSync(save_model_path)) {
         fs.mkdirSync(save_model_path, { recursive: true });
       }

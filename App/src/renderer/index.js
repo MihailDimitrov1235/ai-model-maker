@@ -1,12 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { RouterProvider, useRoutes, useLocation, createHashRouter } from "react-router-dom";
-import { ThemeProvider, CssBaseline, GlobalStyles } from "@mui/material";
-import { lightTheme, darkTheme } from "./theme";
-import routes from "./routes";
-import {useMediaQuery} from "@mui/material";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  RouterProvider,
+  useRoutes,
+  useLocation,
+  createHashRouter,
+} from 'react-router-dom';
+import { ThemeProvider, CssBaseline, GlobalStyles } from '@mui/material';
+import { lightTheme, darkTheme } from './theme';
+import routes from './routes';
+import { useMediaQuery } from '@mui/material';
 import './i18n';
 import { SnackbarProvider } from 'notistack';
+import CustomSnackbar from './Components/Utils/Snack';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -14,19 +20,19 @@ export const ColorModeContext = React.createContext({
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [mode, setMode] = React.useState(prefersDarkMode? "dark" : "light");
+  const [mode, setMode] = React.useState(prefersDarkMode ? 'dark' : 'light');
 
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
-    []
+    [],
   );
   const theme = React.useMemo(
-    () => (mode == "light" ? lightTheme : darkTheme),
-    [mode]
+    () => (mode == 'light' ? lightTheme : darkTheme),
+    [mode],
   );
   const router = createHashRouter(routes);
 
@@ -37,7 +43,7 @@ function App() {
         <GlobalStyles
           styles={{
             '*::-webkit-scrollbar': {
-              margin:'1px',
+              margin: '1px',
               width: '0.4em',
             },
             '*::-webkit-scrollbar-thumb': {
@@ -47,28 +53,32 @@ function App() {
             '*::-webkit-scrollbar-thumb:hover': {
               backgroundColor: 'rgba(127,127,127,.2)',
             },
-            "*": {
-              boxSizing: "border-box",
+            '*': {
+              boxSizing: 'border-box',
               margin: 0,
               padding: 0,
-              fontFamily: 'Noto Sans Display, sans-serif'
+              fontFamily: 'Noto Sans Display, sans-serif',
             },
             html: {
-              height: "100%",
-              width: "100%",
+              height: '100%',
+              width: '100%',
             },
             body: {
-              height: "100%",
-              width: "100%",
+              height: '100%',
+              width: '100%',
             },
             a: {
-              textDecoration: "none",
+              textDecoration: 'none',
             },
           }}
         />
-        <SnackbarProvider maxSnack={3}>
-          <div style={{ height:'100vh', width:'100vw', overflowX:'hidden'}}>
-            <RouterProvider router={router}/>
+        <SnackbarProvider
+          maxSnack={10}
+          Components={{ custom: CustomSnackbar }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        >
+          <div style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
+            <RouterProvider router={router} />
           </div>
         </SnackbarProvider>
       </ThemeProvider>
@@ -76,9 +86,9 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <App />
-  </React.StrictMode>
+    <App />
+  </React.StrictMode>,
 );

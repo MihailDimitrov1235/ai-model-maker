@@ -28,8 +28,6 @@ export default function Use() {
   }, [location]);
 
   const handleModelTypeChange = async (type) => {
-    console.log(type);
-    console.log(modelType);
     if (type != modelType) {
       if (!location.pathname.startsWith(`/use/${type}`)) {
         console.log(`/use/${type}`);
