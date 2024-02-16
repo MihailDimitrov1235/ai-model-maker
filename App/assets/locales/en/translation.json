@@ -156,7 +156,9 @@
   "weights-bias-start":"Each connection between neurons",
   "target-start":"In machine learning (ML), the target,",
   "epoch-start": "In machine learning, an epoch",
-  "learning-rate-start":"Learning rate"
+  "learning-rate-start":"Learning rate",
+  "no-python-title": "No Python",
+  "no-python-message": "You haven't setup python. You can see how to do that by going to the setup section."
 
 
   

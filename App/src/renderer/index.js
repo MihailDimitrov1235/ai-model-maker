@@ -11,8 +11,6 @@ import { lightTheme, darkTheme } from './theme';
 import routes from './routes';
 import { useMediaQuery } from '@mui/material';
 import './i18n';
-import { SnackbarProvider } from 'notistack';
-import CustomSnackbar from './Components/Utils/Snack';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -72,15 +70,10 @@ function App() {
             },
           }}
         />
-        <SnackbarProvider
-          maxSnack={10}
-          Components={{ custom: CustomSnackbar }}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        >
-          <div style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
-            <RouterProvider router={router} />
-          </div>
-        </SnackbarProvider>
+
+        <div style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
+          <RouterProvider router={router} />
+        </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

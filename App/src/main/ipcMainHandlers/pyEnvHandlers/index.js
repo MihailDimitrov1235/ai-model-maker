@@ -25,6 +25,7 @@ function setupIPCMainPyEnv(win) {
           alertVariant: 'warning',
           autoHideDuration: null,
           persist: true,
+          buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
         });
       }
       // if (condaExists) {

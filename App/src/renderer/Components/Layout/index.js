@@ -51,7 +51,7 @@ export default function Layout() {
     });
 
     window.electronAPI.handleCreateSnackbar((event, value) => {
-      const key = enqueueSnackbar({
+      enqueueSnackbar(value.message, {
         variant: 'custom',
         persist: value.persist || false,
         autoHideDuration: value.autoHideDuration || 5000,

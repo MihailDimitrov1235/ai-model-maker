@@ -27,10 +27,22 @@ import LearnTutorial from './Pages/Learn/LearnTutorial';
 import Use from './Pages/Use';
 import UseTable from './Pages/Use/UseTable';
 
+import { SnackbarProvider } from 'notistack';
+import CustomSnackbar from './Components/Utils/Snack';
+
 const routes = [
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <SnackbarProvider
+        maxSnack={10}
+        Components={{ custom: CustomSnackbar }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        preventDuplicate
+      >
+        <Layout />
+      </SnackbarProvider>
+    ),
     children: [
       {
         path: '/',
