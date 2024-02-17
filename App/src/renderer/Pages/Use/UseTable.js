@@ -27,8 +27,16 @@ export default function UseTable() {
 
   const handleTest = () => {
     console.log(refs.current);
-    const formData = refs.current.map((ref) => ref.current.value);
+    let formData = {};
+    dataset.header
+      .filter((input) => input != model.target)
+      .forEach((input, idx) => {
+        console.log(input);
+        console.log(refs.current[idx].current.value);
+        formData[input] = refs.current[idx].current.value;
+      });
     console.log('Form Data:', formData);
+    window.electronAPI.testTableModel(formData);
   };
 
   const fetchData = async () => {
@@ -41,6 +49,7 @@ export default function UseTable() {
   };
 
   useEffect(() => {
+    window.electronAPI.prepareTableModelForUse(id);
     fetchData();
   }, [id]);
 
@@ -60,69 +69,87 @@ export default function UseTable() {
             display={tab == 'test' ? 'flex' : 'none'}
             sx={{ flexDirection: 'column', width: '100%', gap: 3, mt: 3 }}
           >
-            {dataset.header.map((input, colIndex) => {
-              if (input == model.target) {
-                return;
-              }
-              const type = dataset.selectedTypes[input];
-              refs.current[colIndex] = refs.current[colIndex] || createRef();
-              return (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                  <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                    {input}
-                  </Typography>
-                  {type.type == 'categorical' && (
-                    <Autocomplete
-                      sx={{ flex: 5 }}
-                      options={type.values}
-                      getOptionLabel={(option) => option.toString()}
-                      isOptionEqualToValue={(option, value) =>
-                        option.toString() === value.toString()
-                      }
-                      renderInput={(params) => (
-                        <TextField
-                          inputRef={refs.current[colIndex]}
-                          {...params}
-                          label={input}
-                        />
-                      )}
-                    />
-                  )}
-                  {type.type == 'binary' && (
-                    <Autocomplete
-                      sx={{ flex: 5 }}
-                      options={type.values}
-                      getOptionLabel={(option) => option.toString()}
-                      isOptionEqualToValue={(option, value) =>
-                        option.toString() === value.toString()
-                      }
-                      renderInput={(params) => (
-                        <TextField
-                          inputRef={refs.current[colIndex]}
-                          {...params}
-                          label={input}
-                        />
-                      )}
-                    />
-                  )}
-                  {type.type == 'numeric' && (
-                    <TextField
-                      inputRef={refs.current[colIndex]}
-                      sx={{ flex: 5 }}
-                      type="number"
-                      inputProps={{
-                        min: type.min >= 0 ? 0 : null,
-                        step: 1,
-                      }}
-                    />
-                  )}
-                </Box>
-              );
-            })}
+            {dataset.header
+              .filter((input) => input != model.target)
+              .map((input, colIndex) => {
+                if (input == model.target) {
+                  return;
+                }
+                const type = dataset.selectedTypes[input];
+                refs.current[colIndex] = refs.current[colIndex] || createRef();
+                return (
+                  <Box
+                    key={colIndex}
+                    sx={{ display: 'flex', alignItems: 'center', gap: 3 }}
+                  >
+                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                      {input}
+                    </Typography>
+                    {type.type == 'categorical' && (
+                      <Autocomplete
+                        sx={{ flex: 5 }}
+                        options={type.values}
+                        getOptionLabel={(option) => option.toString()}
+                        isOptionEqualToValue={(option, value) =>
+                          option.toString() === value.toString()
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            inputRef={refs.current[colIndex]}
+                            {...params}
+                            label={input}
+                          />
+                        )}
+                      />
+                    )}
+                    {type.type == 'binary' && (
+                      <Autocomplete
+                        sx={{ flex: 5 }}
+                        options={type.values}
+                        getOptionLabel={(option) => option.toString()}
+                        isOptionEqualToValue={(option, value) =>
+                          option.toString() === value.toString()
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            inputRef={refs.current[colIndex]}
+                            {...params}
+                            label={input}
+                          />
+                        )}
+                      />
+                    )}
+                    {type.type == 'numeric' && (
+                      <TextField
+                        inputRef={refs.current[colIndex]}
+                        sx={{ flex: 5 }}
+                        type="number"
+                        inputProps={{
+                          min: type.min >= 0 ? 0 : null,
+                          step: 1,
+                        }}
+                      />
+                    )}
+                  </Box>
+                );
+              })}
             <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
               <Button variant={'contrast'} onClick={handleTest}>
                 {t('test')}
               </Button>
+            </Box>
+            <Box
+              sx={{
+                width: '100%',
+                display: 'flex',
+                gap: 3,
+                alignItems: 'center',
+              }}
+            >
+              <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                {t('result')}
+              </Typography>
+              <TextField disabled>{t('test')}</TextField>
             </Box>
           </Box>
           <Box display={tab == 'integrate' ? 'flex' : 'none'}>integrate</Box>

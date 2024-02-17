@@ -30,7 +30,9 @@ const createWindow = async () => {
   });
 
   Menu.setApplicationMenu(null);
-  mainWindow.webContents.openDevTools();
+  if (isDebug) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 

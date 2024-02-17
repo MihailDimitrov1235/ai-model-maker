@@ -29,6 +29,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getConfig: (arg) => ipcRenderer.invoke('get-config', arg),
   changeConfig: (arg) => ipcRenderer.invoke('change-config', arg),
   openUrl: (arg) => ipcRenderer.invoke('open-url', arg),
+  prepareTableModelForUse: (arg) =>
+    ipcRenderer.invoke('prepare-table-model-for-use', arg),
+  testTableModel: (arg) => ipcRenderer.invoke('test-table-model', arg),
 
   handleCreateSnackbar: (callback) =>
     ipcRenderer.on('create-snackbar', callback),

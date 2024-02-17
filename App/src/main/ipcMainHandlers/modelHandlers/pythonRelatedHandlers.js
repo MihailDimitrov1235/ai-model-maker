@@ -192,7 +192,6 @@ export function pythonRelatedHandlers(win) {
           acc = Math.max(jsonData.val_accuracy, acc);
           pyShell.stdin.write(cancelTraining + '\n');
         } catch (e) {
-          console.log(message);
           const wordArr = message.split(' ');
           if (wordArr[0] == 'Epoch') {
             win.webContents.send('change-training-text', wordArr[1]);

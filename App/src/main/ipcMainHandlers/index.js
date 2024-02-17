@@ -3,12 +3,14 @@ const { setupIPCMainPyEnv } = require('./pyEnvHandlers');
 const { setupIPCDatasets } = require('./datasetHandlers');
 const { setupIPCModelHandlers } = require('./modelHandlers');
 const { getConfig, setConfig } = require('../utils/configUtils');
+const { default: setupIPCUseHandlers } = require('./useHandlers');
 
 function setupIPCMain(win) {
   ipcMain.setMaxListeners(20);
   setupIPCMainPyEnv(win);
   setupIPCDatasets(win);
   setupIPCModelHandlers(win);
+  setupIPCUseHandlers(win);
 
   ipcMain.on('run-python', (event, arg) => {
     // const dial = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
