@@ -57,7 +57,9 @@ layers = args.layers
 # }
 
 
-info = json.load(open(folder_path + "/info.json"))
+#info = json.load(open(folder_path + "/info.json"))
+info = json.load(open(folder_path + "/info.json", encoding='utf-8'))
+
 dataframe = pd.read_csv(folder_path + "/data.csv")
 
 train_ds, val_ds, test_ds = create_train_val_test(
