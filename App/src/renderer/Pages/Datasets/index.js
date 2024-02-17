@@ -116,21 +116,7 @@ const Datasets = function () {
                 <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
               </Select>
             </FormControl>
-            <TextField
-              variant="outlined"
-              placeholder="Search"
-              onChange={handleSearchChange}
-              InputProps={{
-                startAdornment: <SearchIcon />,
-              }}
-              sx={{
-                width: '200px',
-                input: {
-                  height: '56px',
-                  padding: '0',
-                },
-              }}
-            />
+
             <Button
               sx={{ height: '56px' }}
               variant="contrast"
