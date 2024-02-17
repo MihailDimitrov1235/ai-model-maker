@@ -48,7 +48,7 @@ layers = args.layers
 # sample = {
 #     "Survived": 1,
 #     "Pclass": 3,
-#     # "Sex": "male",
+#     "Sex": "male",
 #     "Age": 22,
 #     "SibSp": 1,
 #     "Parch": 0,
@@ -57,8 +57,8 @@ layers = args.layers
 # }
 
 
-#info = json.load(open(folder_path + "/info.json"))
-info = json.load(open(folder_path + "/info.json", encoding='utf-8'))
+# info = json.load(open(folder_path + "/info.json"))
+info = json.load(open(folder_path + "/info.json", encoding="utf-8"))
 
 dataframe = pd.read_csv(folder_path + "/data.csv")
 

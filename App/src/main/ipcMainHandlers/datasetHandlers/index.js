@@ -121,7 +121,7 @@ function setupIPCDatasets(win) {
     const jsonFilePath = path.join(dir, 'info.json');
     fs.writeFileSync(csvFilePath, csvData.join('\n'), 'utf-8');
     delete arg.bodyData;
-    fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
+    fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf-8');
   });
 
   ipcMain.on('create-dataset-labels', (event, arg) => {
@@ -131,11 +131,11 @@ function setupIPCDatasets(win) {
     } else {
       console.log('already exists');
     }
-    const csvFilePath = path.join(dir, 'labels .csv');
+    const csvFilePath = path.join(dir, 'labels.csv');
     const jsonFilePath = path.join(dir, 'info.json');
     fs.writeFileSync(csvFilePath, arg.labels.join(','), 'utf-8');
     delete arg.labels;
-    fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf8');
+    fs.writeFileSync(jsonFilePath, JSON.stringify(arg, null, 2), 'utf-8');
   });
 
   ipcMain.handle('get-image', async (event, data) => {
