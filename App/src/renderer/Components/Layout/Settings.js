@@ -71,10 +71,19 @@ export default function Settings() {
         >
           {config && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                }}
+              >
                 <Typography>{t('python_exe_path')}</Typography>
                 <TextField
-                  sx={{ input: { cursor: 'pointer' }, flex: 1 }}
+                  sx={{
+                    input: { cursor: 'pointer' },
+                    flex: 1,
+                  }}
                   variant="outlined"
                   value={config.python_exe_path}
                   onClick={handleSelectPythonExe}
@@ -85,9 +94,7 @@ export default function Settings() {
                     color: 'error',
                   }}
                   helperText={
-                    <Box fontSize={'13px'} sx={{ color: 'red' }}>
-                      {pythonExeError}
-                    </Box>
+                    <span style={{ color: 'red' }}>{pythonExeError}</span>
                   }
                 />
               </Box>
