@@ -158,7 +158,9 @@
   "epoch-start": "In machine learning, an epoch",
   "learning-rate-start":"Learning rate",
   "no-python-title": "No Python",
-  "no-python-message": "You haven't setup python. You can see how to do that by going to the setup section."
+  "no-python-message": "You haven't setup python. You can see how to do that by going to the setup section.",
+  "no-models-found": "No models were found",
+  "new-model": "New model"
 
 
   
