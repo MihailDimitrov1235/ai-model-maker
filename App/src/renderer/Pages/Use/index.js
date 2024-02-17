@@ -22,9 +22,8 @@ export default function Use() {
   const [model, setModel] = useState(null);
 
   useEffect(() => {
-    // handleDatasetTypeChange(location.pathname.split('/')[0] || '');
-    // setModel(location.pathname.split('/')[2] || null);
-    console.log(location);
+    handleModelTypeChange(location.pathname.split('/')[2] || '');
+    setModel(location.pathname.split('/')[3] || null);
   }, [location]);
 
   const handleModelTypeChange = async (type) => {
@@ -48,7 +47,7 @@ export default function Use() {
   const handleChangeModel = (event, newValue) => {
     setModel(newValue);
     if (newValue == null) {
-      navigate(`/use`);
+      navigate(`/use/${modelType}`);
       return;
     }
     if (modelType == 'tabular') {
@@ -85,6 +84,9 @@ export default function Use() {
           sx={{ flex: 1 }}
           disabled={models == ''}
           options={models}
+          isOptionEqualToValue={(option, value) =>
+            option.toString() === decodeURIComponent(value).toString()
+          }
           renderInput={(params) => <TextField {...params} label={t('model')} />}
         />
       </Box>
