@@ -61,6 +61,9 @@ export default function UseTable() {
             sx={{ flexDirection: 'column', width: '100%', gap: 3, mt: 3 }}
           >
             {dataset.header.map((input, colIndex) => {
+              if (input == model.target) {
+                return;
+              }
               const type = dataset.selectedTypes[input];
               refs.current[colIndex] = refs.current[colIndex] || createRef();
               return (
@@ -116,8 +119,10 @@ export default function UseTable() {
                 </Box>
               );
             })}
-            <Box sx={{ width: '100%' }}>
-              <Button onClick={handleTest}>{t('test')}</Button>
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+              <Button variant={'contrast'} onClick={handleTest}>
+                {t('test')}
+              </Button>
             </Box>
           </Box>
           <Box display={tab == 'integrate' ? 'flex' : 'none'}>integrate</Box>
