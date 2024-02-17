@@ -18,7 +18,7 @@ import ThemeToggle from './ThemeToggle';
 import { useTranslation } from 'react-i18next';
 import LanguageChanger from './LanguageChanger';
 import { useEffect, useState } from 'react';
-import logo from '../../../../assets/logo.png';
+import logo from '../../../../assets/logo.svg';
 // import Snack from '../Utils/Snack';
 import CustomDialog from '../Utils/CustomDialog';
 import Settings from './Settings';

@@ -2,7 +2,7 @@
   "description": "An app for creating ai models using ui.",
   "license": "MIT",
   "author": {
-    "name": "Mihail Dimitrov"
+    "name": "Mihail Dimitrov, Alex Hristov"
   },
   "main": "./src/main/main.js",
   "scripts": {
@@ -130,8 +130,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "AiModelMaker",
+    "appId": "org.erb.AiModelMaker",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -156,6 +156,7 @@
       "gatekeeperAssess": false
     },
     "dmg": {
+      "icon": "assets/logo.png",
       "contents": [
         {
           "x": 130,
@@ -170,11 +171,13 @@
       ]
     },
     "win": {
+      "icon": "assets/logo.png",
       "target": [
         "nsis"
       ]
     },
     "linux": {
+      "icon": "assets/logo.png",
       "target": [
         "AppImage"
       ],
@@ -190,12 +193,12 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "MihailDimitrov1235",
+      "repo": "ai-model-maker"
     }
   },
   "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
+    "url": ""
   },
   "devEngines": {
     "node": ">=14.x",
