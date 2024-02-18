@@ -69,7 +69,11 @@ export default function ModelCard({
   }, [subType, model.type]);
 
   const handleUseModel = () => {
-    console.log('test');
+    if (subType) {
+      navigate(`/use/${model.type}/${subType}/${model.name}`);
+    } else {
+      navigate(`/use/${model.type}/${model.name}`);
+    }
   };
 
   return (

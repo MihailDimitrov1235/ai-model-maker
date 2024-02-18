@@ -62,7 +62,7 @@ parser.add_argument("batch_size", type=int)
 parser.add_argument("target", type=str)
 parser.add_argument("validation_split", type=float)
 parser.add_argument("test_split", type=float)
-parser.add_argument("result_type", type=str, default="categorycal")
+parser.add_argument("result_type", type=str, default="categorical")
 
 args = parser.parse_args()
 
