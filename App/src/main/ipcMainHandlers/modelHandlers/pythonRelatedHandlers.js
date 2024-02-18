@@ -210,7 +210,7 @@ export function pythonRelatedHandlers(win) {
       pyShell.stderr.on('data', function (err) {
         console.log('Python error');
         console.log(err);
-        if (err.includes('Error')) {
+        if (!err.toLowerCase().includes('warning') && err.includes('Error')) {
           error = true;
           win.webContents.send('create-snackbar', {
             message: 'python-error-message',
