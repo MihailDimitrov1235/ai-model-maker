@@ -217,6 +217,12 @@ export default function UseTable() {
                   )}
                 </>
               )}
+              {dataset.selectedTypes[model.target].type == 'numeric' && (
+                <TextField
+                  disabled
+                  value={result ? `${result[0].toFixed(2)}` : ''}
+                />
+              )}
             </Box>
           </Box>
           <Box display={tab == 'integrate' ? 'flex' : 'none'}>integrate</Box>

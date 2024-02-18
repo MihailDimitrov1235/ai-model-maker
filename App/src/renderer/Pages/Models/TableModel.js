@@ -46,6 +46,7 @@ export default function TableModel() {
 
   const [maxRecordsPerGraph, setMaxRecordsPerGraph] = useState(50);
   const [modelData, setModelData] = useState(null);
+  const [dataset, setDataset] = useState(null);
 
   const [learningRate, setLearningRate] = useState('');
   const [epochs, setEpochs] = useState('');
@@ -105,6 +106,7 @@ export default function TableModel() {
       target: modelData.target,
       validation_split: modelData.validation_split,
       test_split: modelData.test_split,
+      result_type: dataset.selectedTypes[modelData.target].type,
     });
   };
 
@@ -177,6 +179,10 @@ export default function TableModel() {
       setTestLossArray(newTestLossArray);
       setXAxis(newXAxis);
     }
+    const ds = await window.electronAPI.getDatasetInfo({
+      name: response.dataset,
+    });
+    setDataset(ds);
   };
 
   useEffect(() => {

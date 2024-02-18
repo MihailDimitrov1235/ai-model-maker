@@ -12,18 +12,24 @@ import sys
 
 
 class CustomCallback(tf.keras.callbacks.Callback):
-    def __init__(self, validation_data, test_data, initial_epochs):
+    def __init__(self, validation_data, test_data, initial_epochs, result_type):
         super(CustomCallback, self).__init__()
         self.validation_data = validation_data
         self.test_data = test_data
         self.initial_epochs = initial_epochs
+        self.result_type = result_type
 
     def on_epoch_end(self, epoch, logs=None):
 
         train_loss = logs.get("loss")
-        train_accuracy = logs.get("accuracy")
         val_loss = logs.get("val_loss")
-        val_accuracy = logs.get("val_accuracy")
+        if result_type == "numeric":
+            train_accuracy = logs.get("mae")
+            val_accuracy = logs.get("val_mae")
+        else:
+            train_accuracy = logs.get("accuracy")
+            val_accuracy = logs.get("val_accuracy")
+
         test_loss, test_accuracy = self.model.evaluate(self.test_data, verbose=0)
 
         results = {
@@ -56,6 +62,7 @@ parser.add_argument("batch_size", type=int)
 parser.add_argument("target", type=str)
 parser.add_argument("validation_split", type=float)
 parser.add_argument("test_split", type=float)
+parser.add_argument("result_type", type=str, default="categorycal")
 
 args = parser.parse_args()
 
@@ -70,6 +77,7 @@ target = args.target
 validation_split = args.validation_split
 test_split = args.test_split
 train_split = 1 - validation_split - test_split
+result_type = args.result_type
 
 model = tf.keras.models.load_model(model_path, safe_mode=False)
 model.optimizer.learning_rate = learning_rate
@@ -86,7 +94,7 @@ train_ds, val_ds, test_ds = create_train_val_test(
     validation_split,
 )
 
-custom_callback = CustomCallback(val_ds, test_ds, initial_epochs)
+custom_callback = CustomCallback(val_ds, test_ds, initial_epochs, result_type)
 
 model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     filepath=checkpoint_path,

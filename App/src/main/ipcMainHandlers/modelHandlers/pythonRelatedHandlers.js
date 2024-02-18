@@ -174,6 +174,7 @@ export function pythonRelatedHandlers(win) {
         data.target,
         data.validation_split,
         data.test_split,
+        data.result_type,
       ];
 
       let options = {
