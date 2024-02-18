@@ -76,8 +76,20 @@ export function setupIPCModelHandlers(win) {
 
   ipcMain.handle('get-dataset-info', async (event, arg) => {
     const filePath = path.join(tabularDatasetsFolder, arg.name, 'info.json');
-    const data = JSON.parse(fs.readFileSync(filePath));
-    return data;
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath));
+      return data;
+    } catch (err) {
+      console.log(err);
+      win.webContents.send('create-snackbar', {
+        message: 'read-file-error-message',
+        title: 'read-file-error-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+        // persist: true,
+        // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+      });
+    }
   });
 
   ipcMain.handle('get-models', async (event, data) => {
@@ -120,21 +132,33 @@ export function setupIPCModelHandlers(win) {
             folders[i],
             'info.json',
           );
-          const data = fs.readFileSync(infoFilePath);
-          let jsonData = JSON.parse(data);
-          if (folderPath.type == 'table') {
-            jsonData.type = 'table';
-          } else if (folderPath.type == 'image') {
-            jsonData.type = 'image';
-            if (folderPath.subType == 'classification') {
-              jsonData.subType = 'classification';
-            } else if (folderPath.subType == 'detection') {
-              jsonData.subType = 'detection';
-            } else if (folderPath.subType == 'captioning') {
-              jsonData.subType = 'captioning';
+          try {
+            const data = fs.readFileSync(infoFilePath);
+            let jsonData = JSON.parse(data);
+            if (folderPath.type == 'table') {
+              jsonData.type = 'table';
+            } else if (folderPath.type == 'image') {
+              jsonData.type = 'image';
+              if (folderPath.subType == 'classification') {
+                jsonData.subType = 'classification';
+              } else if (folderPath.subType == 'detection') {
+                jsonData.subType = 'detection';
+              } else if (folderPath.subType == 'captioning') {
+                jsonData.subType = 'captioning';
+              }
             }
+            models.push(jsonData);
+          } catch (err) {
+            console.log(err);
+            win.webContents.send('create-snackbar', {
+              message: 'read-file-error-message',
+              title: 'read-file-error-title',
+              alertVariant: 'error',
+              autoHideDuration: 3000,
+              // persist: true,
+              // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+            });
           }
-          models.push(jsonData);
         }
       }
     });

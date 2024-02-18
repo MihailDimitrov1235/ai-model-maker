@@ -64,11 +64,18 @@ function ImportTabular() {
     }
 
     let finalBodyData = [];
+    console.log(bodyData);
     for (let i = 0; i < bodyData.length; i++) {
       let row = [];
       for (let j = 0; j < bodyData[i].length; j++) {
         if (headerCheckboxes[j]) {
-          row.push(bodyData[i][j]);
+          console.log(j);
+          console.log(selectedTypes[j]);
+          if (selectedTypes[j].numeric) {
+            row.push(bodyData[i][j]);
+          } else {
+            row.push(`"${bodyData[i][j]}"`);
+          }
         }
       }
       finalBodyData.push(row);

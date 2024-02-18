@@ -17,6 +17,9 @@ export function pythonRelatedHandlers(win) {
     }
     let error = false;
     const save_model_path = getAssetPath('models/table/' + arg.name);
+    if (!fs.existsSync(save_model_path)) {
+      fs.mkdirSync(save_model_path, { recursive: true });
+    }
     const argsObject = {
       folder_path: getAssetPath('datasets/table/' + arg.dataset),
       save_model_path: save_model_path + '/model.keras',
@@ -79,9 +82,9 @@ export function pythonRelatedHandlers(win) {
     });
 
     pyShell.stderr.on('data', function (err) {
-      console.log('Python error:');
-      console.log(err);
-      if (err.includes('Error')) {
+      if (!err.toLowerCase().includes('warning') && err.includes('Error')) {
+        console.log('Python error:');
+        console.log(err);
         error = true;
         win.webContents.send('create-snackbar', {
           message: 'python-error-message',
@@ -96,9 +99,6 @@ export function pythonRelatedHandlers(win) {
 
     pyShell.on('close', (code, signal) => {
       if (!error) {
-        if (!fs.existsSync(save_model_path)) {
-          fs.mkdirSync(save_model_path, { recursive: true });
-        }
         try {
           fs.writeFileSync(
             jsonFilePath,
@@ -123,6 +123,8 @@ export function pythonRelatedHandlers(win) {
           // persist: true,
           // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
         });
+      } else {
+        fs.rmdirSync(save_model_path);
       }
 
       win.webContents.send('close-creating-model-dialog', { error: error });
@@ -226,20 +228,33 @@ export function pythonRelatedHandlers(win) {
       });
 
       pyShell.on('close', (code, signal) => {
-        const data = fs.readFileSync(
-          path.join(model_path, 'info.json'),
-          'utf8',
-        );
-        const jsonData = JSON.parse(data);
-        let newEpochs = jsonData.epochs;
-        newEpochs.push(...eps);
-        jsonData.epochs = newEpochs;
-        jsonData.accuracy = Math.max(acc, jsonData.accuracy);
+        try {
+          const data = fs.readFileSync(
+            path.join(model_path, 'info.json'),
+            'utf8',
+          );
+          const jsonData = JSON.parse(data);
+          let newEpochs = jsonData.epochs;
+          newEpochs.push(...eps);
+          jsonData.epochs = newEpochs;
+          jsonData.accuracy = Math.max(acc, jsonData.accuracy);
 
-        fs.writeFileSync(
-          path.join(model_path, 'info.json'),
-          JSON.stringify(jsonData, null, 2),
-        );
+          fs.writeFileSync(
+            path.join(model_path, 'info.json'),
+            JSON.stringify(jsonData, null, 2),
+          );
+        } catch (err) {
+          console.log(err);
+          win.webContents.send('create-snackbar', {
+            message: 'modify-file-error-message',
+            title: 'modify-file-error-title',
+            alertVariant: 'error',
+            autoHideDuration: 3000,
+            // persist: true,
+            // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+          });
+        }
+
         if (error) {
           win.webContents.send('create-snackbar', {
             message: 'error-while-training-message',

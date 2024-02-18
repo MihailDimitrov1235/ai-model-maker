@@ -191,22 +191,34 @@ function setupIPCDatasets(win) {
             folders[i],
             'info.json',
           );
-          const data = fs.readFileSync(infoFilePath);
-          const jsonData = JSON.parse(data);
-          if (folderPath.type == 'table') {
-            jsonData.type = 'table';
-          } else if (folderPath.type == 'image') {
-            jsonData.type = 'image';
-            if (folderPath.subType == 'classification') {
-              jsonData.subType = 'classification';
-            } else if (folderPath.subType == 'detection') {
-              jsonData.subType = 'detection';
-            } else if (folderPath.subType == 'captioning') {
-              jsonData.subType = 'captioning';
+          let jsonData;
+          try {
+            const data = fs.readFileSync(infoFilePath);
+            jsonData = JSON.parse(data);
+            if (folderPath.type == 'table') {
+              jsonData.type = 'table';
+            } else if (folderPath.type == 'image') {
+              jsonData.type = 'image';
+              if (folderPath.subType == 'classification') {
+                jsonData.subType = 'classification';
+              } else if (folderPath.subType == 'detection') {
+                jsonData.subType = 'detection';
+              } else if (folderPath.subType == 'captioning') {
+                jsonData.subType = 'captioning';
+              }
             }
-          }
 
-          datasetsInfo.push(jsonData);
+            datasetsInfo.push(jsonData);
+          } catch (err) {
+            win.webContents.send('create-snackbar', {
+              message: 'error-opening-file-message',
+              title: 'error-opening-file-title',
+              alertVariant: 'error',
+              autoHideDuration: 3000,
+              // persist: true,
+              // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+            });
+          }
         }
       }
     });

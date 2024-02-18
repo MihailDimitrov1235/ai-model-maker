@@ -40,12 +40,13 @@ const Models = function () {
     navigate('/models/create');
   };
 
-  const handleChangePage = (event, value) => {
+  const handleChangePage = async (event, value) => {
     setPage(value);
-    window.electronAPI.getModels({
+    const newModels = await window.electronAPI.getModels({
       page: value,
       modelsPerPage: modelsPerPage,
     });
+    setModels(newModels);
   };
 
   const handleOpenModel = (name, type, subtype) => {
