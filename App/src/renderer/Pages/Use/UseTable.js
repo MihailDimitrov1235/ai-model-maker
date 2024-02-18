@@ -47,7 +47,7 @@ export default function UseTable() {
 
   useEffect(() => {
     window.electronAPI.handleSetTestResult((event, value) => {
-      console.log(value[0][0]);
+      console.log(value);
       setResult(value[0]);
       console.log(result[0]);
     });
@@ -187,17 +187,36 @@ export default function UseTable() {
                 </>
               )}
 
-              {dataset.selectedTypes[model.target].type == 'classification' &&
-                dataset.selectedTypes[model.target].values.map((val, idx) => (
+              {dataset.selectedTypes[model.target].type == 'categorical' && (
+                <>
                   <Box display={'flex'} gap={3} alignItems={'center'}>
                     <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                      {val}
+                      {t('none')}
                     </Typography>
-                    <TextField disabled>
-                      {result ? `${(result[0] * 100).toFixed(2)}%` : ''}
-                    </TextField>
+                    <TextField
+                      disabled
+                      value={result ? `${(result[0] * 100).toFixed(2)}%` : ''}
+                    />
                   </Box>
-                ))}
+                  {dataset.selectedTypes[model.target].values.map(
+                    (val, idx) => (
+                      <Box display={'flex'} gap={3} alignItems={'center'}>
+                        <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                          {val}
+                        </Typography>
+                        <TextField
+                          disabled
+                          value={
+                            result
+                              ? `${(result[idx + 1] * 100).toFixed(2)}%`
+                              : ''
+                          }
+                        />
+                      </Box>
+                    ),
+                  )}
+                </>
+              )}
             </Box>
           </Box>
           <Box display={tab == 'integrate' ? 'flex' : 'none'}>integrate</Box>

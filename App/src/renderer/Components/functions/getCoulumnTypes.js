@@ -23,10 +23,8 @@ export default function getColumnTypes(table) {
         continue;
       }
 
-      if (typeof val !== 'number') {
-        if (!(typeof val === 'string' && /^\d+$/.test(val))) {
-          isNumeric = false;
-        }
+      if (isNaN(val)) {
+        isNumeric = false;
       } else {
         if (max == null || max < val) {
           max = val;

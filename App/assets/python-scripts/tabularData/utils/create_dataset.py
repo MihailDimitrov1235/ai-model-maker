@@ -45,15 +45,24 @@ def prepare_data(categorical_cols, numeric_cols, binary_cols, train_ds):
             dtype = "string"
             if i["numeric"]:
                 dtype = "int64"
-            binary_col = tf.keras.Input(shape=(1,), name=header, dtype=dtype)
+            # binary_col = tf.keras.Input(shape=(1,), name=header, dtype=dtype)
+            # print(binary_col)
 
-            def data_to_01(x):
-                return tf.where(tf.equal(x, i["zero"]), 0.0, 1.0)
+            # def data_to_01(x):
+            #     return tf.where(tf.equal(x, i["zero"]), 0.0, 1.0)
 
-            encoded_binary_col = layers.Lambda(data_to_01)(binary_col)
+            # encoded_binary_col = layers.Lambda(data_to_01)(binary_col)
 
-            all_inputs.append(binary_col)
-            encoded_features.append(encoded_binary_col)
+            # all_inputs.append(binary_col)
+            # encoded_features.append(encoded_binary_col)
+
+            categorical_col = tf.keras.Input(shape=(1,), name=header, dtype=dtype)
+            encoding_layer = get_category_encoding_layer(
+                name=header, dataset=train_ds, dtype=dtype, max_tokens=5
+            )
+            encoded_categorical_col = encoding_layer(categorical_col)
+            all_inputs.append(categorical_col)
+            encoded_features.append(encoded_categorical_col)
 
     return all_inputs, encoded_features
 
