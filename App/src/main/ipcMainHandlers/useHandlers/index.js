@@ -40,9 +40,16 @@ function setupIPCUseHandlers(win) {
     pyShell = new PythonShell('use_model.py', options);
 
     pyShell.stdout.on('data', function (message) {
-      console.log(message);
-      if (message.includes('model loaded')) {
-        modelReady = true;
+      try {
+        const jsonData = JSON.parse(message.trim());
+        console.log(jsonData);
+        if (jsonData['type'] == 'result') {
+          win.webContents.send('set-test-result', jsonData['predictions']);
+        }
+      } catch (e) {
+        if (message.includes('model loaded')) {
+          modelReady = true;
+        }
       }
     });
 

@@ -29,7 +29,6 @@ export default function Use() {
   const handleModelTypeChange = async (type) => {
     if (type != modelType) {
       if (!location.pathname.startsWith(`/use/${type}`)) {
-        console.log(`/use/${type}`);
         navigate(`/use/${type}`);
         setModel(null);
       }

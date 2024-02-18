@@ -18,6 +18,7 @@ export default function UseTable() {
   const [model, setModel] = useState(null);
   const [dataset, setDataset] = useState(null);
   const [tab, setTab] = useState('test');
+  const [result, setResult] = useState(null);
 
   const refs = useRef([]);
 
@@ -26,16 +27,12 @@ export default function UseTable() {
   };
 
   const handleTest = () => {
-    console.log(refs.current);
     let formData = {};
     dataset.header
       .filter((input) => input != model.target)
       .forEach((input, idx) => {
-        console.log(input);
-        console.log(refs.current[idx].current.value);
         formData[input] = refs.current[idx].current.value;
       });
-    console.log('Form Data:', formData);
     window.electronAPI.testTableModel(formData);
   };
 
@@ -47,6 +44,18 @@ export default function UseTable() {
     console.log(ds);
     setDataset(ds);
   };
+
+  useEffect(() => {
+    window.electronAPI.handleSetTestResult((event, value) => {
+      console.log(value[0][0]);
+      setResult(value[0]);
+      console.log(result[0]);
+    });
+
+    return () => {
+      window.electronAPI.removeListener('set-test-result');
+    };
+  }, []);
 
   useEffect(() => {
     window.electronAPI.prepareTableModelForUse(id);
@@ -143,13 +152,52 @@ export default function UseTable() {
                 width: '100%',
                 display: 'flex',
                 gap: 3,
-                alignItems: 'center',
+                alignItems: 'start',
+                flexDirection: 'column',
               }}
             >
-              <Typography sx={{ flex: 1, textAlign: 'right' }}>
+              <Typography
+                variant="h5"
+                sx={{ flex: 1, textAlign: 'left', width: '100%' }}
+              >
                 {t('result')}
               </Typography>
-              <TextField disabled>{t('test')}</TextField>
+              {dataset.selectedTypes[model.target].type == 'binary' && (
+                <>
+                  <Box display={'flex'} gap={3} alignItems={'center'}>
+                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                      {dataset.selectedTypes[model.target].values[0]}
+                    </Typography>
+                    <TextField
+                      disabled
+                      value={result ? `${(result[0] * 100).toFixed(2)}%` : ''}
+                    />
+                  </Box>
+                  <Box display={'flex'} gap={3} alignItems={'center'}>
+                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                      {dataset.selectedTypes[model.target].values[1]}
+                    </Typography>
+                    <TextField
+                      disabled
+                      value={
+                        result ? `${((1 - result[0]) * 100).toFixed(2)}%` : ''
+                      }
+                    />
+                  </Box>
+                </>
+              )}
+
+              {dataset.selectedTypes[model.target].type == 'classification' &&
+                dataset.selectedTypes[model.target].values.map((val, idx) => (
+                  <Box display={'flex'} gap={3} alignItems={'center'}>
+                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                      {val}
+                    </Typography>
+                    <TextField disabled>
+                      {result ? `${(result[0] * 100).toFixed(2)}%` : ''}
+                    </TextField>
+                  </Box>
+                ))}
             </Box>
           </Box>
           <Box display={tab == 'integrate' ? 'flex' : 'none'}>integrate</Box>
