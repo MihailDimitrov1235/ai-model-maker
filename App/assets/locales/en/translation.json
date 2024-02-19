@@ -1,6 +1,8 @@
 {
-  "Home": "Home",
-  "Data": "Data",
+  "home": "Home",
+  "data": "Data",
+  "use": "Use",
+  "learn": "Learn",
   "Train": "Train",
   "Test": "Test",
   "no-py-env": "Python enviornment not found!",
@@ -160,7 +162,28 @@
   "no-python-title": "No Python",
   "no-python-message": "You haven't setup python. You can see how to do that by going to the setup section.",
   "no-models-found": "No models were found",
-  "new-model": "New model"
+  "new-model": "New model",
+  "homepage-text1-part1": "First step ",
+  "homepage-text1-part2":"you need to take is to insert some data set in the form of a table or pictures by going to 'Data' and selecting 'Import'.",
+  "homepage-text2-part1": "Second step ",
+  "homepage-text2-part2":"is to make a model based on a dataset you made before by going to 'Models' and then to 'Create'.",
+  "homepage-text3-part1": "Third step ",
+  "homepage-text3-part2":" is to choose which model you want to train by selecting the 'Train Model' button.",
+  "train-model": "Train",
+  "homepage-text4-part1": "Last Step ",
+  "homepage-text4-part2": "is now that you are done with the training, you can test it and see the results by going to 'Use'.",
+  "use-model":"Use Model",
+  "homepage-introduction": "in our application, where anyone who is familiar with programming or more precisely with artificial intelligence can take advantage of the features of our program. Here you can create and train models that you can use in making apps or programs that you make. Here you can input and train information in the form of tables or pictures. You can quickly, easily and efficiently make models using machine learning(ML).",
+  "start-with-easy-step": "Start with some easy steps",
+  "go-to-setup": "Go to Setup",
+  "import": "Import",
+  "view":"View",
+  "not-trained":"Not Trained",
+  "create": "Create",
+  "epochs": "Epochs",
+  "select-model-options": "Select Model Options",
+  "model-trained-for":"Model Trained For"
+  
 
 
   

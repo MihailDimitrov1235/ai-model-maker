@@ -88,11 +88,11 @@ export default function Layout() {
   };
 
   const items = [
-    { type: 'item', name: t('Home'), icon: HomeIcon, href: '/' },
-    { type: 'item', name: t('Data'), icon: DatasetIcon, href: '/data' },
-    { type: 'item', name: t('Models'), icon: SmartToyIcon, href: '/models' },
-    { type: 'item', name: t('Use'), icon: ScienceIcon, href: '/use' },
-    { type: 'item', name: t('Learn'), icon: SchoolIcon, href: '/learn' },
+    { type: 'item', name: t('home'), icon: HomeIcon, href: '/' },
+    { type: 'item', name: t('data'), icon: DatasetIcon, href: '/data' },
+    { type: 'item', name: t('models'), icon: SmartToyIcon, href: '/models' },
+    { type: 'item', name: t('use'), icon: ScienceIcon, href: '/use' },
+    { type: 'item', name: t('learn'), icon: SchoolIcon, href: '/learn' },
   ];
   return (
     <Box
