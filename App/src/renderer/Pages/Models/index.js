@@ -53,6 +53,7 @@ const Models = function () {
     if (!subtype) {
       navigate(`/models/${type}/${name}`);
     } else {
+      console.log(`/models/${type}/${subtype}/${name}`);
       navigate(`/models/${type}/${subtype}/${name}`);
     }
   };

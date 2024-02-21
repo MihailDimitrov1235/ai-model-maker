@@ -42,7 +42,7 @@ const modelsItems = [
     href: '/models/create',
     items: [
       { type: 'item', name: 'tabular', href: '/models/create/tabular' },
-      { type: 'item', name: 'image', href: '/models/create/image' },
+      { type: 'item', name: 'image', href: '/models/create/image/' },
       { type: 'item', name: 'text', href: '/models/create/text' },
     ],
   },

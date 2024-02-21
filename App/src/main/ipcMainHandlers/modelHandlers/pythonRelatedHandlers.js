@@ -130,6 +130,125 @@ export function pythonRelatedHandlers(win) {
       win.webContents.send('close-creating-model-dialog', { error: error });
     });
   });
+  ipcMain.on('create-classification-model', (event, arg) => {
+    if (pyShell) {
+      pyShell.kill('SIGINT');
+    }
+    let error = false;
+    const save_model_path = getAssetPath('models/table/' + arg.name);
+    if (!fs.existsSync(save_model_path)) {
+      fs.mkdirSync(save_model_path, { recursive: true });
+    }
+    const argsObject = {
+      folder_path: getAssetPath('datasets/table/' + arg.dataset),
+      save_model_path: save_model_path + '/model.keras',
+      learning_rate: arg.learningRate,
+      epochs: arg.epochs,
+      batch_size: arg.batchSize,
+      target: arg.target,
+      validation_split: arg.dataSplit[1],
+      test_split: arg.dataSplit[2],
+    };
+    const infoData = {
+      name: arg.name,
+      dataset: arg.dataset,
+      learning_rate: arg.learningRate,
+      epochs: arg.epochs,
+      batch_size: arg.batchSize,
+      target: arg.target,
+      validation_split: arg.dataSplit[1],
+      test_split: arg.dataSplit[2],
+      layers: arg.layers,
+      accuracy: 0,
+      epochs: [],
+    };
+    const jsonFilePath = save_model_path + '/info.json';
+
+    let argsArray = [];
+    for (let key in argsObject) {
+      argsArray.push(argsObject[key]);
+    }
+
+    arg.layers.forEach((layer) => {
+      argsArray.push(JSON.stringify(layer));
+    });
+
+    const config = getConfig();
+    if (!config.python_exe_path) {
+      win.webContents.send('create-snackbar', {
+        message: 'no-python-message',
+        title: 'no-python-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+        // persist: true,
+        buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+      });
+      win.webContents.send('close-creating-model-dialog', { error: true });
+      return false;
+    }
+    let options = {
+      mode: 'text',
+      pythonPath: config.python_exe_path,
+      pythonOptions: ['-u'],
+      scriptPath: getAssetPath('/python-scripts/tabularData'),
+      args: argsArray,
+    };
+
+    pyShell = new PythonShell('init_model.py', options);
+
+    pyShell.stdout.on('data', function (message) {
+      console.log(message);
+    });
+
+    pyShell.stderr.on('data', function (err) {
+      if (!err.toLowerCase().includes('warning') && err.includes('Error')) {
+        console.log('Python error:');
+        console.log(err);
+        error = true;
+        win.webContents.send('create-snackbar', {
+          message: 'python-error-message',
+          title: 'python-error-title',
+          alertVariant: 'error',
+          autoHideDuration: 3000,
+          // persist: true,
+          buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+        });
+      }
+    });
+
+    pyShell.on('close', (code, signal) => {
+      if (!error) {
+        try {
+          fs.writeFileSync(
+            jsonFilePath,
+            JSON.stringify(infoData, null, 2),
+            'utf-8',
+          );
+        } catch (err) {
+          win.webContents.send('create-snackbar', {
+            message: 'create-file-error-message',
+            title: 'create-file-error-title',
+            alertVariant: 'error',
+            autoHideDuration: 3000,
+            // persist: true,
+            // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+          });
+        }
+        win.webContents.send('create-snackbar', {
+          message: 'model-created-message',
+          title: 'model-created-title',
+          alertVariant: 'success',
+          autoHideDuration: 3000,
+          // persist: true,
+          // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+        });
+      } else {
+        fs.rmdirSync(save_model_path);
+      }
+
+      win.webContents.send('close-creating-model-dialog', { error: error });
+    });
+  });
 
   ipcMain.handle('cancel-train-model', async (event, data) => {
     cancelTraining = true;
