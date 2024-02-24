@@ -16,6 +16,9 @@ export default function IntegrateTable({ dataset, model }) {
   const handleChangeTab = (event, value) => {
     setTab(value);
   };
+  const handleSaveModel = async () => {
+    window.electronAPI.saveModel();
+  };
 
   const pythonCode = `from tensorflow.keras.models import load_model
 import numpy as np
@@ -61,7 +64,9 @@ print(result)
         }}
       >
         <Typography>{t('integrate-table-text')}</Typography>
-        <Button variant="contrast">{t('save-model')}</Button>
+        <Button onClick={handleSaveModel} variant="contrast">
+          {t('save-model')}
+        </Button>
       </Box>
       <Tabs
         sx={{ borderBottom: 1, borderColor: 'border.main' }}

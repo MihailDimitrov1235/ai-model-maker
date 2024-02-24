@@ -204,7 +204,9 @@
   "create-file-error-title": "Грешка при създаване на файл",
   "create-file-error-message": "Имаше грешка при създаването на файл.",
   "model-created-title":"Моделът беше успешно създаден",
-  "model-created-message":"Моделът беше успешно създаден. Можете да продължите към тренирането му."
+  "model-created-message":"Моделът беше успешно създаден. Можете да продължите към тренирането му.",
+  "model-download-started-title": "Тегленето започна",
+  "model-download-started-message": "Изтеглянето на модела започна."
 
 
 

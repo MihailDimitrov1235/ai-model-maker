@@ -204,7 +204,9 @@
   "create-file-error-title": "Create file error",
   "create-file-error-message": "There was an error when trying to create a file.",
   "model-created-title":"Model created successfully",
-  "model-created-message":"The model was created successfully. You can proceed with the training."
+  "model-created-message":"The model was created successfully. You can proceed with the training.",
+  "model-download-started-title": "Download started",
+  "model-download-started-message": "Downloading the model has started."
 
 
   
