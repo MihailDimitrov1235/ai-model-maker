@@ -223,7 +223,7 @@ export default function TableModel() {
       <CustomDialog
         open={openTrainDialog}
         setOpen={setOpenTrainDialog}
-        title={'train-title'}
+        title={t('train-title')}
         text={trainText}
         buttons={[
           { text: t('cancel'), handleClick: () => handleCancelTraining() },

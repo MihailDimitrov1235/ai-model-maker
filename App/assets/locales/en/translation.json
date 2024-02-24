@@ -220,5 +220,8 @@
   "read-dataset-file-error-message":"Dataset file wasn't found. Maybe it was deleted.",
   "create-env-title":"Creating python enviornment",
   "train-title":"Training",
-  "starting-training":"Starting the training process"
+  "starting-training":"Starting the training process",
+  "success-training-title":"Successfully trained",
+  "success-training-message":"Training was successful.",
+  "records-per-graph":"Records Per Graph"
 }

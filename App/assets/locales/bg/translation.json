@@ -220,5 +220,8 @@
   "read-dataset-file-error-message":"Наборът от данни не беше намерен. Може би е бил изтрит.",
   "create-env-title":"Създаване на python изпълнителен файл",
   "train-title":"Трениране",
-  "starting-training":"Започване на тренирането на модела"
+  "starting-training":"Започване на тренирането на модела",
+  "success-training-title":"Успешно трениране",
+  "success-training-message":"Тренирането беше успешно",
+  "records-per-graph":"Данни на графа"
 }
