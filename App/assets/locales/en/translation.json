@@ -20,7 +20,6 @@
   "fill-manually": "Fill Manually",
   "no-labels": "No Labels?",
   "delete-rows": "Delete Rows",
-  "missing-values-text": "Missing Values Text",
   "name-dataset": "Dataset Name",
   "finish": "Finish",
   "tabular": "Тabular",
@@ -206,12 +205,20 @@
   "model-created-title":"Model created successfully",
   "model-created-message":"The model was created successfully. You can proceed with the training.",
   "model-download-started-title": "Download started",
-  "model-download-started-message": "Downloading the model has started."
-
-
-  
-
-  
-  
-
+  "model-download-started-message": "Downloading the model has started.",
+  "apply":"Apply",
+  "cancel": "Cancel",
+  "how-to-setup-python-enviornment": "How to setup the python enviornment?",
+  "data-type":"Data type",
+  "include":"Include",
+  "missing-values-title":"Some values are missing",
+  "missing-values-text": "Some values from the dataset are missing. What do you want to do with them?",
+  "has-headers": "Has Headers",
+  "name-missing": "Name is missing",
+  "create-tabular-dataset-warning":"The data should contain only numbers and latin letters, without commas and without NULL",
+  "read-dataset-file-error-title":"Dataset file not found",
+  "read-dataset-file-error-message":"Dataset file wasn't found. Maybe it was deleted.",
+  "create-env-title":"Creating python enviornment",
+  "train-title":"Training",
+  "starting-training":"Starting the training process"
 }

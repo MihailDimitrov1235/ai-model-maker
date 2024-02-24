@@ -82,8 +82,8 @@ export function setupIPCModelHandlers(win) {
     } catch (err) {
       console.log(err);
       win.webContents.send('create-snackbar', {
-        message: 'read-file-error-message',
-        title: 'read-file-error-title',
+        message: 'read-dataset-file-error-message',
+        title: 'read-dataset-file-error-title',
         alertVariant: 'error',
         autoHideDuration: 3000,
         // persist: true,

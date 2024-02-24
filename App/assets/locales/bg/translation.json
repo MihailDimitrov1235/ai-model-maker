@@ -20,7 +20,6 @@
   "finish-button": "Приключи",
   "fill-manually": "Попълни ръчно",
   "delete-rows": "Изтрий редове",
-  "missing-values-text": "Липсват стойности",
   "name-dataset": "Име на набор от данни",
   "tabular": "Табличен",
   "image": "Снимков",
@@ -206,11 +205,20 @@
   "model-created-title":"Моделът беше успешно създаден",
   "model-created-message":"Моделът беше успешно създаден. Можете да продължите към тренирането му.",
   "model-download-started-title": "Тегленето започна",
-  "model-download-started-message": "Изтеглянето на модела започна."
-
-
-
-
-
-
+  "model-download-started-message": "Изтеглянето на модела започна.",
+  "apply":"Запази",
+  "cancel": "Отмени",
+  "how-to-setup-python-enviornment": "Как да създам изпълнимия файла?",
+  "data-type":"Вид данни",
+  "include":"Включи",
+  "missing-values-title":"Някои данни липсват",
+  "missing-values-text": "Някои данни липсват. Какво искате да направите с тях?",
+  "has-headers": "Съдържа заглавия",
+  "name-missing": "Не е въведено име",
+  "create-tabular-dataset-warning":"Данните трябва да съдържат само цифри и латински букви, без запетаи и без NULL",
+  "read-dataset-file-error-title":"Наборът от данни не е намерен",
+  "read-dataset-file-error-message":"Наборът от данни не беше намерен. Може би е бил изтрит.",
+  "create-env-title":"Създаване на python изпълнителен файл",
+  "train-title":"Трениране",
+  "starting-training":"Започване на тренирането на модела"
 }
