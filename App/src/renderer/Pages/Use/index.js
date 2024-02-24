@@ -33,7 +33,7 @@ export default function Use() {
         setModel(null);
       }
       setModelType(type);
-      if (type == 'tabular') {
+      if (type == 'table') {
         const tabularDatasets = await window.electronAPI.getTabularModels();
         setModels(tabularDatasets);
       } else if (type == 'image') {
@@ -49,8 +49,8 @@ export default function Use() {
       navigate(`/use/${modelType}`);
       return;
     }
-    if (modelType == 'tabular') {
-      navigate(`/use/tabular/${newValue}`);
+    if (modelType == 'table') {
+      navigate(`/use/table/${newValue}`);
     } else if (modelType == 'image') {
       if (newValue.type == 'classification') {
         navigate(`/use/image/classification/${newValue}`);
@@ -72,7 +72,7 @@ export default function Use() {
             label={t('model-type')}
             onChange={(event) => handleModelTypeChange(event.target.value)}
           >
-            <MenuItem value={'tabular'}>{t('tabular')}</MenuItem>
+            <MenuItem value={'table'}>{t('tabular')}</MenuItem>
             <MenuItem value={'image'}>{t('image')}</MenuItem>
           </Select>
         </FormControl>

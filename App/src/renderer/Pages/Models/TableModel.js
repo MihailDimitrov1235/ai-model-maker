@@ -8,7 +8,7 @@ import {
   Slider,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import { useTranslation } from 'react-i18next';
@@ -34,6 +34,7 @@ const options = {
 export default function TableModel() {
   const { id } = useParams();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [trainAccuracyArray, setTrainAccuracyArray] = useState('');
   const [trainLossArray, setTrainLossArray] = useState('');
@@ -234,7 +235,14 @@ export default function TableModel() {
         {modelData != undefined &&
           modelData.epochs &&
           modelData.epochs.length > 0 && (
-            <Button variant="contrast">{t('use-model')}</Button>
+            <Button
+              onClick={() => {
+                navigate(`/use/table/${id}`);
+              }}
+              variant="contrast"
+            >
+              {t('use-model')}
+            </Button>
           )}
       </Box>
       {modelData != undefined ? (

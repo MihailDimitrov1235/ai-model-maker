@@ -155,7 +155,7 @@ const routes = [
             element: <Use />,
             children: [
               {
-                path: 'tabular',
+                path: 'table',
                 children: [{ path: ':id', element: <UseTable /> }],
               },
               {

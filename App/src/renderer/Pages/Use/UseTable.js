@@ -47,9 +47,7 @@ export default function UseTable() {
 
   useEffect(() => {
     window.electronAPI.handleSetTestResult((event, value) => {
-      console.log(value);
       setResult(value[0]);
-      console.log(result[0]);
     });
 
     return () => {

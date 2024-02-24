@@ -36,7 +36,7 @@ function setupIPCMain(win) {
 
   ipcMain.handle('select-python-exe', async (event, arg) => {
     const { canceled, filePaths } = await dialog.showOpenDialog({
-      properties: [{ name: 'Python executable', extensions: ['exe'] }],
+      filters: [{ name: 'Python Executable', extensions: ['exe'] }],
     });
     return { canceled: canceled, filePaths: filePaths };
   });

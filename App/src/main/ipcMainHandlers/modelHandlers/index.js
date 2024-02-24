@@ -158,6 +158,14 @@ export function setupIPCModelHandlers(win) {
               // persist: true,
               // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
             });
+            try {
+              fs.rmSync(path.join(folderPath.path, folders[i]), {
+                recursive: true,
+                force: true,
+              });
+            } catch (err) {
+              console.log(err);
+            }
           }
         }
       }
