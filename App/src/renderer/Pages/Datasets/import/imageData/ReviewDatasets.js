@@ -13,7 +13,7 @@ function ReviewDatasets() {
   );
 
   const [page, setPage] = useState(1);
-  const [imageWidthParam, setImageWidthParam] = useState(0);
+  // const [imageWidthParam, setImageWidthParam] = useState(0);
   //const [imageHeigthParam, setImageHeigthParam] = useState(0);
   const [labels, setLabels] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -30,8 +30,8 @@ function ReviewDatasets() {
       classes: classes,
       images: imagesPaths,
       type: queryParameters.get('type'),
-      width: queryParameters.get('width'),
-      height: queryParameters.get('height'),
+      // width: queryParameters.get('width'),
+      // height: queryParameters.get('height'),
     });
   };
 
