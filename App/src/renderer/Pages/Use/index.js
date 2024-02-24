@@ -34,10 +34,14 @@ export default function Use() {
       }
       setModelType(type);
       if (type == 'table') {
-        const tabularDatasets = await window.electronAPI.getTabularModels();
+        const tabularDatasets = await window.electronAPI.getTabularModels({
+          trained: true,
+        });
         setModels(tabularDatasets);
       } else if (type == 'image') {
-        const imageDatasets = await window.electronAPI.getImageModels();
+        const imageDatasets = await window.electronAPI.getImageModels({
+          trained: true,
+        });
         setModels(imageDatasets);
       }
     }

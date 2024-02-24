@@ -8,9 +8,9 @@ const dataItems = [
     name: 'view',
     href: '/data',
     items: [
-      { type: 'item', name: 'tabular', href: '/data/tabular' },
-      { type: 'item', name: 'image', href: '/data/image' },
-      { type: 'item', name: 'text', href: '/data/text' },
+      { type: 'item', name: 'tabular', href: '/data/?filter=table' },
+      { type: 'item', name: 'image', href: '/data/?filter=image' },
+      { type: 'item', name: 'text', href: '/data/?filter=text' },
     ],
   },
   {

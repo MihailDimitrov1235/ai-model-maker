@@ -210,7 +210,17 @@ export function setupIPCModelHandlers(win) {
   ipcMain.handle('get-tabular-models', async (event, data) => {
     if (fs.existsSync(tabularModelsFolder)) {
       const folders = fs.readdirSync(tabularModelsFolder);
-      return folders;
+      if (data.trained) {
+        let newFolders = [];
+        folders.forEach((folder) => {
+          if (fs.existsSync(path.join(tabularModelsFolder, folder, 'ckpt'))) {
+            newFolders.push(folder);
+          }
+        });
+        return newFolders;
+      } else {
+        return folders;
+      }
     } else {
       return [];
     }
@@ -229,8 +239,14 @@ export function setupIPCModelHandlers(win) {
           type = 'captioning';
         }
         const folders = fs.readdirSync(folder);
-        folders.forEach((folder) => {
-          result.push({ label: folder, type: type });
+        folders.forEach((folderPath) => {
+          if (arg.trained) {
+            if (fs.existsSync(path.join(folder, folderPath, 'ckpt'))) {
+              result.push({ label: folder, type: type });
+            }
+          } else {
+            result.push({ label: folder, type: type });
+          }
         });
       }
     });

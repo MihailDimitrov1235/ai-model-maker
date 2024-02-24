@@ -10,7 +10,6 @@ import ImportTabular from './Pages/Datasets/import/importTabular';
 import ImportImage from './Pages/Datasets/import/ImportImage';
 import ImportText from './Pages/Datasets/import/ImportText';
 
-import ImportInfo from './Pages/ImortInfo';
 import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
 import Classification from './Pages/Datasets/import/imageData/Classification';
 import CreateLabels from './Pages/Datasets/import/imageData/CreateLabels';
@@ -111,10 +110,6 @@ const routes = [
               },
               { path: 'text', element: <ImportText /> },
             ],
-          },
-          {
-            path: 'tables',
-            children: [{ path: 'import', element: <ImportInfo /> }],
           },
         ],
       },
