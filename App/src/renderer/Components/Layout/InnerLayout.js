@@ -49,8 +49,8 @@ const modelsItems = [
 ];
 
 const useItems = [
-  { type: 'item', name: 'Model1', href: '/test' },
-  { type: 'item', name: 'Model2', href: '/test' },
+  { type: 'item', name: 'tabular', href: '/use/table' },
+  { type: 'item', name: 'image', href: '/use/image' },
 ];
 const learnItems = [
   {
