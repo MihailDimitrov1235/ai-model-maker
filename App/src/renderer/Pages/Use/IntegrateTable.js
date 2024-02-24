@@ -60,11 +60,7 @@ print(result)
           alignItems: 'center',
         }}
       >
-        <Typography>
-          This section contains text which can be used to integrate the model
-          into your own code. You need to save the model and then import it into
-          code like this
-        </Typography>
+        <Typography>{t('integrate-table-text')}</Typography>
         <Button variant="contrast">{t('save-model')}</Button>
       </Box>
       <Tabs

@@ -182,8 +182,29 @@
   "create": "Create",
   "epochs": "Epochs",
   "select-model-options": "Select Model Options",
-  "model-trained-for":"Model Trained For"
-  
+  "model-trained-for":"Model Trained For",
+  "integrate-table-text":"This section contains code which can be used to integrate the model into your own projects. You need to save the model and then import it into code like this",
+  "tabular data": "Tabular data",
+  "accuracy": "Accuracy",
+  "edit": "Edit",
+  "delete": "Delete",
+  "model-type": "Model Type",
+  "model": "Model",
+  "test-model": "Test Model",
+  "integrate-model":"Integrate Model",
+  "result": "Result",
+  "save-model": "Save Model",
+  "python":"Python",
+  "settings-title":"Settings",
+  "python_exe_path": "Path to python executable",
+  "creating-model-title": "Creating Model",
+  "creating-model-text":"Creating the model may take some time",
+  "python-error-title":"Python Error",
+  "python-error-message":"There was an error while running the python code. Make sure you have set up everything correctly. You might have forgotten to download the libraries.",
+  "create-file-error-title": "Create file error",
+  "create-file-error-message": "There was an error when trying to create a file.",
+  "model-created-title":"Model created successfully",
+  "model-created-message":"The model was created successfully. You can proceed with the training."
 
 
   
