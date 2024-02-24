@@ -7,13 +7,36 @@ import {
   CardActions,
   Box,
   IconButton,
+  Menu,
+  MenuItem,
+  useTheme,
 } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function DatasetCard({ title, type, subType, records = null }) {
+  const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleEdit = () => {
+    console.log(title, type, subType);
+    setAnchorEl(null);
+  };
+  const handleDelete = () => {
+    console.log(title, type, subType);
+    setAnchorEl(null);
+  };
+
   const { t } = useTranslation();
   const [labels, setLabels] = useState([]);
   const navigate = useNavigate();
@@ -77,9 +100,36 @@ export default function DatasetCard({ title, type, subType, records = null }) {
           color="text.secondary"
         >
           {title}
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+              <MenuItem
+                sx={{
+                  display: 'flex',
+                  gap: 3,
+                  justifyContent: 'space-between',
+                }}
+                onClick={handleEdit}
+              >
+                <Typography>{t('edit')}</Typography>
+                <EditIcon />
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  color: theme.palette.error.main,
+                  display: 'flex',
+                  gap: 3,
+                  justifyContent: 'space-between',
+                }}
+                onClick={handleDelete}
+              >
+                <Typography>{t('delete')}</Typography>
+                <DeleteIcon />
+              </MenuItem>
+            </Menu>
+          </>
         </Typography>
         {labels.map((label, index) => (
           <Box

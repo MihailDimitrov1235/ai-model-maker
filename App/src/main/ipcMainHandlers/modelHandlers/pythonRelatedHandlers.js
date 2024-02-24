@@ -17,9 +17,7 @@ export function pythonRelatedHandlers(win) {
     }
     let error = false;
     const save_model_path = getAssetPath('models/table/' + arg.name);
-    if (!fs.existsSync(save_model_path)) {
-      fs.mkdirSync(save_model_path, { recursive: true });
-    }
+
     const argsObject = {
       folder_path: getAssetPath('datasets/table/' + arg.dataset),
       save_model_path: save_model_path + '/model.keras',
@@ -67,6 +65,11 @@ export function pythonRelatedHandlers(win) {
       win.webContents.send('close-creating-model-dialog', { error: true });
       return false;
     }
+
+    if (!fs.existsSync(save_model_path)) {
+      fs.mkdirSync(save_model_path, { recursive: true });
+    }
+
     let options = {
       mode: 'text',
       pythonPath: config.python_exe_path,

@@ -10,9 +10,9 @@ import {
   Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import LayersDisplay from './LayersDisplay';
+import LayersDisplay from '../../../../Components/Models/LayersDisplay';
 import { useNavigate } from 'react-router-dom';
-import CustomDialog from '../../../Components/Utils/CustomDialog';
+import CustomDialog from '../../../../Components/Utils/CustomDialog';
 
 export default function CreateTabular() {
   const { t } = useTranslation();

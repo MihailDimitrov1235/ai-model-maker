@@ -19,7 +19,7 @@ import Models from './Pages/Models';
 import CreateModel from './Pages/Models/CreateModel';
 import CreateTabular from './Pages/Models/CreateModel/CreateTabular';
 import TableModel from './Pages/Models/TableModel';
-import CreateImage from './Pages/Models/CreateImageModel/CreateImage';
+import CreateImage from './Pages/Models/CreateModel/CreateImageModel/CreateImage';
 
 import LearnAIComponents from './Pages/Learn/LearnAIComponents';
 import LearnDatasets from './Pages/Learn/LearnDatasets';
