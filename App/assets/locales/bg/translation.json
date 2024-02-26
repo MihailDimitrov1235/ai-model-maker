@@ -182,7 +182,10 @@
   "create":"Създаване",
   "epochs": "Епохи",
   "select-model-options": "Избери опции за модела",
-  "model-trained-for":"Моделът е трениран за"
+  "model-trained-for":"Моделът е трениран за",
+  "model-type": "Вид на модел",
+  "model": "Модел"
+
 
 
 

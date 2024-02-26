@@ -10,7 +10,6 @@ import {
   Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import LayersDisplay from './LayersDisplay';
 import { useNavigate } from 'react-router-dom';
 import CustomDialog from '../../../Components/Utils/CustomDialog';
 
@@ -335,13 +334,6 @@ export default function CreateTabular() {
           <Typography color={'error'}>{slidersError}</Typography>
         </Box>
       </Box>
-
-      <LayersDisplay
-        layers={layers}
-        setLayers={setLayers}
-        possibleLayers={possibleLayers}
-        layersError={layersError}
-      />
 
       <Box display={'flex'} width={'100%'} justifyContent={'right'}>
         <Button onClick={handleFinish} variant="contrast">

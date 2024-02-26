@@ -182,7 +182,9 @@
   "create": "Create",
   "epochs": "Epochs",
   "select-model-options": "Select Model Options",
-  "model-trained-for":"Model Trained For"
+  "model-trained-for":"Model Trained For",
+  "model-type": "Model Type",
+  "model": "model"
   
 
 
