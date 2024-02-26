@@ -223,5 +223,10 @@
   "starting-training":"Започване на тренирането на модела",
   "success-training-title":"Успешно трениране",
   "success-training-message":"Тренирането беше успешно",
-  "records-per-graph":"Данни на графа"
+  "records-per-graph":"Данни на графа",
+  "delete-dataset-success-title":"Успешно",
+  "delete-dataset-success-message":"Успешно изтрихте набора от данни",
+  "delete-model-success-title":"Успешно",
+  "delete-model-success-message":"Успешно изтрихте модела"
+
 }

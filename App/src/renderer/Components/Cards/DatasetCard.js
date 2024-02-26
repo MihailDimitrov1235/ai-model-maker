@@ -18,7 +18,13 @@ import { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function DatasetCard({ title, type, subType, records = null, fetchData }) {
+export default function DatasetCard({
+  title,
+  type,
+  subType,
+  records = null,
+  fetchData,
+}) {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -28,19 +34,19 @@ export default function DatasetCard({ title, type, subType, records = null, fetc
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEdit = () => {
-    console.log(title, type, subType);
-    setAnchorEl(null);
-  };
+  // const handleEdit = () => {
+  //   console.log(title, type, subType);
+  //   setAnchorEl(null);
+  // };
   const handleDelete = async () => {
     console.log(title, type, subType);
     setAnchorEl(null);
     await window.electronAPI.deleteDataset({
       title: title,
       type: type,
-      subType:subType,
+      subType: subType,
     });
-    fetchData()
+    fetchData();
   };
 
   const { t } = useTranslation();
@@ -111,7 +117,7 @@ export default function DatasetCard({ title, type, subType, records = null, fetc
               <MoreVertIcon />
             </IconButton>
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-              <MenuItem
+              {/* <MenuItem
                 sx={{
                   display: 'flex',
                   gap: 3,
@@ -121,7 +127,7 @@ export default function DatasetCard({ title, type, subType, records = null, fetc
               >
                 <Typography>{t('edit')}</Typography>
                 <EditIcon />
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 sx={{
                   color: theme.palette.error.main,

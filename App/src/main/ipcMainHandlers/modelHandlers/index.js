@@ -252,4 +252,30 @@ export function setupIPCModelHandlers(win) {
     });
     return result;
   });
+
+  ipcMain.handle('delete-model', async (event, data) => {
+    let title = data.title;
+    let type = data.type;
+    let subType = data.subType;
+    modelFolders.forEach((folderPath) => {
+      if (
+        fs.existsSync(folderPath.path) &&
+        type == folderPath.type &&
+        (!subType || subType == folderPath.subType)
+      ) {
+        fs.rmSync(path.join(folderPath.path, title), {
+          recursive: true,
+          force: true,
+        });
+        win.webContents.send('create-snackbar', {
+          message: 'delete-model-success-message',
+          title: 'delete-model-success-title',
+          alertVariant: 'success',
+          autoHideDuration: 3000,
+          // persist: true,
+          // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+        });
+      }
+    });
+  });
 }

@@ -248,26 +248,24 @@ function setupIPCDatasets(win) {
     datasetsFolderPaths.forEach((folderPath) => {
       if (
         fs.existsSync(folderPath.path) &&
-        (type == folderPath.type && (!subType || subType == folderPath.subType)
-      )) {
-        fs.rmSync(path.join(folderPath.path,title), { recursive: true, force: true });
+        type == folderPath.type &&
+        (!subType || subType == folderPath.subType)
+      ) {
+        fs.rmSync(path.join(folderPath.path, title), {
+          recursive: true,
+          force: true,
+        });
         win.webContents.send('create-snackbar', {
-          message: 'successful-message',
-          title: 'successful',
+          message: 'delete-dataset-success-message',
+          title: 'delete-dataset-success-title',
           alertVariant: 'success',
           autoHideDuration: 3000,
           // persist: true,
           // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
         });
-        
       }
     });
-
   });
-
-
-
-  
 }
 
 module.exports = { setupIPCDatasets };

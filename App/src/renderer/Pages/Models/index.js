@@ -100,6 +100,7 @@ const Models = function () {
                   handleOpenModel={() =>
                     handleOpenModel(model.name, model.type, model.subtype)
                   }
+                  fetchData={fetchData}
                 />
               </Grid>
             ))}

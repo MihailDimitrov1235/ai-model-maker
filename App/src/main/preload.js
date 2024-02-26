@@ -35,6 +35,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.invoke('create-classification-model', arg),
   saveModel: (arg) => ipcRenderer.invoke('save-model', arg),
   deleteDataset: (arg) => ipcRenderer.invoke('delete-dataset', arg),
+  deleteModel: (arg) => ipcRenderer.invoke('delete-model', arg),
 
   handleCreateSnackbar: (callback) =>
     ipcRenderer.on('create-snackbar', callback),
