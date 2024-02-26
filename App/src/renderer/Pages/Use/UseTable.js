@@ -2,8 +2,8 @@ import { useEffect, useRef, useState, createRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Tabs, Tab, Box, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import TestTable from './TestTable';
-import IntegrateTable from './IntegrateTable';
+import TestTable from './Table/TestTable';
+import IntegrateTable from './Table/IntegrateTable';
 
 export default function UseTable() {
   const { id } = useParams();
