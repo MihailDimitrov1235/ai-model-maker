@@ -18,11 +18,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { ShowDiagrams } from '../../Components/Charts/BarChart_GoogleLib';
 import CardElement from '../../Components/Cards/DatasetCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 
 const Datasets = function () {
+  let [searchParams, setSearchParams] = useSearchParams();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [datasets, setDatasets] = useState(null);
@@ -35,6 +36,10 @@ const Datasets = function () {
   useEffect(() => {
     fetchData();
   }, [filter]);
+
+  useEffect(() => {
+    setFilter(searchParams.get('filter'));
+  }, [searchParams]);
 
   const fetchData = async () => {
     const newDatasetsCount = await window.electronAPI.getDatasetsCount({
@@ -69,7 +74,6 @@ const Datasets = function () {
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSelectedSearchValue(value);
-    console.log(value);
   };
 
   return (
@@ -132,13 +136,12 @@ const Datasets = function () {
             {datasets?.map((dataset, index) => (
               <Grid item sm={12} md={6} lg={4} xl={3} key={index}>
                 {dataset.name.toLowerCase().includes(selectedSearchValue) && (
-                  // {console.log(dataset.subType)}
-                  // {dataset.subType === selectedTypeValue && (
                   <CardElement
                     title={dataset.name}
                     type={dataset.type}
                     subType={dataset.subType}
                     records={dataset.records}
+                    fetchData={fetchData}
                   />
                 )}
               </Grid>

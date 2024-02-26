@@ -7,6 +7,7 @@ const primaryDark = '#10839A';
 const textContrast = '#ffffff';
 const borderMain = '#4C4D51';
 const borderLightContrast = '#47A0B1';
+const errorColor = '#FF0000';
 
 const lightBackgroundMain = '#E9E9E9';
 const lightBackgroundStandOut = '#ffffff';
@@ -41,6 +42,7 @@ const createCustomTheme = (mode) =>
         contrast: textContrast,
         lightContrast: borderLightContrast,
       },
+      error: { main: errorColor },
     },
     components: {
       MuiButton: {

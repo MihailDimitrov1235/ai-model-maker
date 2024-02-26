@@ -20,7 +20,6 @@
   "fill-manually": "Fill Manually",
   "no-labels": "No Labels?",
   "delete-rows": "Delete Rows",
-  "missing-values-text": "Missing Values Text",
   "name-dataset": "Dataset Name",
   "finish": "Finish",
   "tabular": "Тabular",
@@ -183,14 +182,46 @@
   "epochs": "Epochs",
   "select-model-options": "Select Model Options",
   "model-trained-for":"Model Trained For",
+  "integrate-table-text":"This section contains code which can be used to integrate the model into your own projects. You need to save the model and then import it into code like this",
+  "tabular data": "Tabular data",
+  "accuracy": "Accuracy",
+  "edit": "Edit",
+  "delete": "Delete",
   "model-type": "Model Type",
-  "model": "model"
-  
-
-
-  
-
-  
-  
-
+  "model": "Model",
+  "test-model": "Test Model",
+  "integrate-model":"Integrate Model",
+  "result": "Result",
+  "save-model": "Save Model",
+  "python":"Python",
+  "settings-title":"Settings",
+  "python_exe_path": "Path to python executable",
+  "creating-model-title": "Creating Model",
+  "creating-model-text":"Creating the model may take some time",
+  "python-error-title":"Python Error",
+  "python-error-message":"There was an error while running the python code. Make sure you have set up everything correctly. You might have forgotten to download the libraries.",
+  "create-file-error-title": "Create file error",
+  "create-file-error-message": "There was an error when trying to create a file.",
+  "model-created-title":"Model created successfully",
+  "model-created-message":"The model was created successfully. You can proceed with the training.",
+  "model-download-started-title": "Download started",
+  "model-download-started-message": "Downloading the model has started.",
+  "apply":"Apply",
+  "cancel": "Cancel",
+  "how-to-setup-python-enviornment": "How to setup the python enviornment?",
+  "data-type":"Data type",
+  "include":"Include",
+  "missing-values-title":"Some values are missing",
+  "missing-values-text": "Some values from the dataset are missing. What do you want to do with them?",
+  "has-headers": "Has Headers",
+  "name-missing": "Name is missing",
+  "create-tabular-dataset-warning":"The data should contain only numbers and latin letters, without commas and without NULL",
+  "read-dataset-file-error-title":"Dataset file not found",
+  "read-dataset-file-error-message":"Dataset file wasn't found. Maybe it was deleted.",
+  "create-env-title":"Creating python enviornment",
+  "train-title":"Training",
+  "starting-training":"Starting the training process",
+  "success-training-title":"Successfully trained",
+  "success-training-message":"Training was successful.",
+  "records-per-graph":"Records Per Graph"
 }

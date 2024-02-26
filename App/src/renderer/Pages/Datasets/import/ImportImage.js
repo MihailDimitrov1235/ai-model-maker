@@ -12,7 +12,6 @@ import UploadButton from '../../../Components/Utils/UploadButton';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { width } from '@mui/system';
 
 function ImportImage() {
   const { t, i18n } = useTranslation();
@@ -26,11 +25,11 @@ function ImportImage() {
   const [selectedValue, setSelectedValue] = useState('');
   const [textUploadImages, setTextUploadImages] = useState(1);
   const [textUploadLabels, setTextUploadLabels] = useState(1);
-  const [imageWidth, setImageWidth] = useState(0);
-  const [imageHeight, setImageHeigth] = useState(0);
+  // const [imageWidth, setImageWidth] = useState(0);
+  // const [imageHeight, setImageHeigth] = useState(0);
   const [nameDataset, setNameDataset] = useState('');
-  const [widthError, setWidthError] = useState(false);
-  const [heightError, setHeightError] = useState(false);
+  // const [widthError, setWidthError] = useState(false);
+  // const [heightError, setHeightError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [classes, setClasses] = useState([]);
 
@@ -40,8 +39,6 @@ function ImportImage() {
   };
   useEffect(() => {
     // Check labels
-    console.log('PISNA MI');
-    console.log(queryParameters.get('labels'));
     if (JSON.parse(decodeURIComponent(queryParameters.get('labels'))) != null) {
       setLabels(JSON.parse(decodeURIComponent(queryParameters.get('labels'))));
       setImages(JSON.parse(decodeURIComponent(queryParameters.get('images'))));
@@ -91,31 +88,23 @@ function ImportImage() {
     }
   };
 
-  const handleInputChangeWidth = (e) => {
-    if (/^\d+$/.test(e.target.value)) {
-      setImageWidth(e.target.value);
-    }
-  };
-  const handleInputChangeHeight = (e) => {
-    if (/^\d+$/.test(e.target.value)) {
-      setImageHeigth(e.target.value);
-    }
-  };
+  // const handleInputChangeWidth = (e) => {
+  //   if (/^\d+$/.test(e.target.value)) {
+  //     setImageWidth(e.target.value);
+  //   }
+  // };
+  // const handleInputChangeHeight = (e) => {
+  //   if (/^\d+$/.test(e.target.value)) {
+  //     setImageHeigth(e.target.value);
+  //   }
+  // };
   const handleInputChangeName = (e) => {
     setNameDataset(e.target.value);
   };
   //Go to ReviewDatasets file when you want to make an overview to data you upload
   const handleOverviewButtonClick = () => {
-    if (!imageWidth || !imageHeight || !nameDataset) {
-      if (!imageWidth) {
-        setWidthError(true);
-      }
-      if (!imageHeight) {
-        setHeightError(true);
-      }
-      if (!nameDataset) {
-        setNameError(true);
-      }
+    if (!nameDataset) {
+      setNameError(true);
       return;
     } else {
       navigate(
@@ -123,7 +112,7 @@ function ImportImage() {
           JSON.stringify(images),
         )}&label=${encodeURIComponent(
           JSON.stringify(labels),
-        )}&width=${imageWidth}&height=${imageHeight}&type=${selectedValue}&name=${nameDataset}&class=${encodeURIComponent(
+        )}&type=${selectedValue}&name=${nameDataset}&class=${encodeURIComponent(
           JSON.stringify(classes),
         )}`,
       );
@@ -131,16 +120,8 @@ function ImportImage() {
   };
   // Go to main folder and then make datasets
   const handleFinish = (event, value) => {
-    if (!imageWidth || !imageHeight || !nameDataset) {
-      if (!imageWidth) {
-        setWidthError(true);
-      }
-      if (!imageHeight) {
-        setHeightError(true);
-      }
-      if (!nameDataset) {
-        setNameError(true);
-      }
+    if (!nameDataset) {
+      setNameError(true);
       return;
     } else {
       window.electronAPI.createDatasetLabels({
@@ -149,15 +130,13 @@ function ImportImage() {
         classes: classes,
         images: images,
         type: selectedValue,
-        width: imageWidth,
-        height: imageHeight,
+        width: 0,
+        height: 0,
       });
       navigate('/data');
     }
   };
-  console.log(selectedValue);
   const handleCreateLabels = (event, value) => {
-    console.log(`/data/import/image/labels/${selectedValue}/${images}`);
     navigate(
       `/data/import/image/labels/${selectedValue}/?images=${encodeURIComponent(
         JSON.stringify(images),
@@ -218,7 +197,7 @@ function ImportImage() {
                 sx={{ flex: 1 }}
               />
             </Box>
-            <Box sx={{ display: 'flex', gap: 3 }}>
+            {/* <Box sx={{ display: 'flex', gap: 3 }}>
               <TextField
                 variant="outlined"
                 placeholder={t('width')}
@@ -238,7 +217,7 @@ function ImportImage() {
                 onChange={handleInputChangeHeight}
                 sx={{ flex: 1 }}
               />
-            </Box>
+            </Box> */}
           </FormControl>
           {/* <Box> */}
           {/* <Typography color={'text.main'}>{t('no-labels')}</Typography> */}

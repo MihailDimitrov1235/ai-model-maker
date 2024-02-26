@@ -5,6 +5,7 @@ const { PythonShell } = require('python-shell');
 const XLSX = require('xlsx');
 const { parse } = require('csv-parse/sync');
 const { getAssetPath, convertCsvToArray } = require('../../utils');
+const { title } = require('process');
 
 function setupIPCDatasets(win) {
   const datasetsFolderPaths = [
@@ -239,6 +240,34 @@ function setupIPCDatasets(win) {
     });
     return datasetCount;
   });
+
+  ipcMain.handle('delete-dataset', async (event, data) => {
+    let title = data.title;
+    let type = data.type;
+    let subType = data.subType;
+    datasetsFolderPaths.forEach((folderPath) => {
+      if (
+        fs.existsSync(folderPath.path) &&
+        (type == folderPath.type && (!subType || subType == folderPath.subType)
+      )) {
+        fs.rmSync(path.join(folderPath.path,title), { recursive: true, force: true });
+        win.webContents.send('create-snackbar', {
+          message: 'successful-message',
+          title: 'successful',
+          alertVariant: 'success',
+          autoHideDuration: 3000,
+          // persist: true,
+          // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+        });
+        
+      }
+    });
+
+  });
+
+
+
+  
 }
 
 module.exports = { setupIPCDatasets };

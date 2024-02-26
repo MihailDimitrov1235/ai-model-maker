@@ -7,23 +7,41 @@ import {
   CardActions,
   Box,
   IconButton,
+  Menu,
+  MenuItem,
+  useTheme,
 } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-export default function ModelCard({
-  model,
-  handleOpenModel,
-  subType = null,
-  accuracy = null,
-}) {
-  console.log(model);
+export default function ModelCard({ model, handleOpenModel, subType = null }) {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [labels, setLabels] = useState([]);
   const navigate = useNavigate();
   const [link, setLink] = useState('');
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleEdit = () => {
+    // console.log(title, type, subType);
+    setAnchorEl(null);
+  };
+  const handleDelete = () => {
+    // console.log(title, type, subType);
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     let newLabels = [];
     switch (model.type) {
@@ -163,10 +181,36 @@ export default function ModelCard({
           {t('train-model')}
         </Button>
       )}
-
-      <IconButton sx={{ position: 'absolute', top: 22, right: 24 }}>
-        <MoreVertIcon />
-      </IconButton>
+      <Box sx={{ position: 'absolute', top: 22, right: 24 }}>
+        <IconButton onClick={handleClick}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem
+            sx={{
+              display: 'flex',
+              gap: 3,
+              justifyContent: 'space-between',
+            }}
+            onClick={handleEdit}
+          >
+            <Typography>{t('edit')}</Typography>
+            <EditIcon />
+          </MenuItem>
+          <MenuItem
+            sx={{
+              color: theme.palette.error.main,
+              display: 'flex',
+              gap: 3,
+              justifyContent: 'space-between',
+            }}
+            onClick={handleDelete}
+          >
+            <Typography>{t('delete')}</Typography>
+            <DeleteIcon />
+          </MenuItem>
+        </Menu>
+      </Box>
     </Box>
   );
 }

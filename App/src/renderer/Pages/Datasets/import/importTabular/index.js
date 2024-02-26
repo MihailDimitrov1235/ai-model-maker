@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Alert } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -174,6 +174,9 @@ function ImportTabular() {
               }}
             />
           </Box>
+          <Alert severity="warning">
+            {t('create-tabular-dataset-warning')}
+          </Alert>
           {data && data.length && (
             <CustomTable
               data={data}

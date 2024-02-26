@@ -82,8 +82,8 @@ export function setupIPCModelHandlers(win) {
     } catch (err) {
       console.log(err);
       win.webContents.send('create-snackbar', {
-        message: 'read-file-error-message',
-        title: 'read-file-error-title',
+        message: 'read-dataset-file-error-message',
+        title: 'read-dataset-file-error-title',
         alertVariant: 'error',
         autoHideDuration: 3000,
         // persist: true,
@@ -158,6 +158,14 @@ export function setupIPCModelHandlers(win) {
               // persist: true,
               // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
             });
+            try {
+              fs.rmSync(path.join(folderPath.path, folders[i]), {
+                recursive: true,
+                force: true,
+              });
+            } catch (err) {
+              console.log(err);
+            }
           }
         }
       }
@@ -202,7 +210,17 @@ export function setupIPCModelHandlers(win) {
   ipcMain.handle('get-tabular-models', async (event, data) => {
     if (fs.existsSync(tabularModelsFolder)) {
       const folders = fs.readdirSync(tabularModelsFolder);
-      return folders;
+      if (data.trained) {
+        let newFolders = [];
+        folders.forEach((folder) => {
+          if (fs.existsSync(path.join(tabularModelsFolder, folder, 'ckpt'))) {
+            newFolders.push(folder);
+          }
+        });
+        return newFolders;
+      } else {
+        return folders;
+      }
     } else {
       return [];
     }
@@ -221,8 +239,14 @@ export function setupIPCModelHandlers(win) {
           type = 'captioning';
         }
         const folders = fs.readdirSync(folder);
-        folders.forEach((folder) => {
-          result.push({ label: folder, type: type });
+        folders.forEach((folderPath) => {
+          if (arg.trained) {
+            if (fs.existsSync(path.join(folder, folderPath, 'ckpt'))) {
+              result.push({ label: folder, type: type });
+            }
+          } else {
+            result.push({ label: folder, type: type });
+          }
         });
       }
     });

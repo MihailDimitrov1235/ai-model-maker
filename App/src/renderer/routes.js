@@ -10,7 +10,6 @@ import ImportTabular from './Pages/Datasets/import/importTabular';
 import ImportImage from './Pages/Datasets/import/ImportImage';
 import ImportText from './Pages/Datasets/import/ImportText';
 
-import ImportInfo from './Pages/ImortInfo';
 import ReviewDatasets from './Pages/Datasets/import/imageData/ReviewDatasets';
 import Classification from './Pages/Datasets/import/imageData/Classification';
 import CreateLabels from './Pages/Datasets/import/imageData/CreateLabels';
@@ -19,7 +18,7 @@ import Models from './Pages/Models';
 import CreateModel from './Pages/Models/CreateModel';
 import CreateTabular from './Pages/Models/CreateModel/CreateTabular';
 import TableModel from './Pages/Models/TableModel';
-import CreateImage from './Pages/Models/CreateImageModel/CreateImage';
+import CreateImage from './Pages/Models/CreateModel/CreateImageModel/CreateImage';
 
 import LearnAIComponents from './Pages/Learn/LearnAIComponents';
 import LearnDatasets from './Pages/Learn/LearnDatasets';
@@ -112,10 +111,6 @@ const routes = [
               { path: 'text', element: <ImportText /> },
             ],
           },
-          {
-            path: 'tables',
-            children: [{ path: 'import', element: <ImportInfo /> }],
-          },
         ],
       },
       {
@@ -155,7 +150,7 @@ const routes = [
             element: <Use />,
             children: [
               {
-                path: 'tabular',
+                path: 'table',
                 children: [{ path: ':id', element: <UseTable /> }],
               },
               {

@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron');
+const { ipcMain, dialog } = require('electron');
 const { getAssetPath } = require('../../utils');
 import { getConfig } from '../../utils/configUtils';
 const { PythonShell } = require('python-shell');
@@ -74,6 +74,39 @@ function setupIPCUseHandlers(win) {
   ipcMain.handle('test-table-model', async (event, arg) => {
     if (modelReady) {
       pyShell.stdin.write(JSON.stringify({ type: 'test', data: arg }) + '\n');
+    } else {
+      win.webContents.send('create-snackbar', {
+        message: 'model-not-yet-loaded-message',
+        title: 'model-not-yet-loaded-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+        // persist: true,
+        // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+      });
+    }
+  });
+  ipcMain.handle('save-model', async (event, arg) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: ['openDirectory'],
+    });
+    if (canceled) {
+      return;
+    }
+    if (modelReady) {
+      pyShell.stdin.write(
+        JSON.stringify({
+          type: 'download',
+          path: path.join(filePaths[0], 'model.keras'),
+        }) + '\n',
+      );
+      win.webContents.send('create-snackbar', {
+        message: 'model-download-started-message',
+        title: 'model-download-started-title',
+        alertVariant: 'info',
+        autoHideDuration: 3000,
+        // persist: true,
+        // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+      });
     } else {
       win.webContents.send('create-snackbar', {
         message: 'model-not-yet-loaded-message',

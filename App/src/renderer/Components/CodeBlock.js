@@ -22,6 +22,7 @@ const CodeBlock = ({ language, code }) => {
         position: 'relative',
         borderRadius: '20px',
         overflow: 'hidden',
+        width: '100%',
         pre: {
           background: theme.palette.background.main,
           color: theme.palette.text.main,

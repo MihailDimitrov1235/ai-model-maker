@@ -1,16 +1,9 @@
 import { useEffect, useRef, useState, createRef } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  Tabs,
-  Tab,
-  Box,
-  Button,
-  CircularProgress,
-  Autocomplete,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Tabs, Tab, Box, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import TestTable from './Table/TestTable';
+import IntegrateTable from './Table/IntegrateTable';
 
 export default function UseTable() {
   const { id } = useParams();
@@ -18,7 +11,6 @@ export default function UseTable() {
   const [model, setModel] = useState(null);
   const [dataset, setDataset] = useState(null);
   const [tab, setTab] = useState('test');
-  const [result, setResult] = useState(null);
 
   const refs = useRef([]);
 
@@ -26,36 +18,12 @@ export default function UseTable() {
     setTab(value);
   };
 
-  const handleTest = () => {
-    let formData = {};
-    dataset.header
-      .filter((input) => input != model.target)
-      .forEach((input, idx) => {
-        formData[input] = refs.current[idx].current.value;
-      });
-    window.electronAPI.testTableModel(formData);
-  };
-
   const fetchData = async () => {
     const mod = await window.electronAPI.getModel({ model: id, type: 'table' });
-    console.log(mod);
     setModel(mod);
     const ds = await window.electronAPI.getDatasetInfo({ name: mod.dataset });
-    console.log(ds);
     setDataset(ds);
   };
-
-  useEffect(() => {
-    window.electronAPI.handleSetTestResult((event, value) => {
-      console.log(value);
-      setResult(value[0]);
-      console.log(result[0]);
-    });
-
-    return () => {
-      window.electronAPI.removeListener('set-test-result');
-    };
-  }, []);
 
   useEffect(() => {
     window.electronAPI.prepareTableModelForUse(id);
@@ -74,158 +42,15 @@ export default function UseTable() {
       </Tabs>
       {dataset ? (
         <>
-          <Box
+          <TestTable
+            dataset={dataset}
+            model={model}
+            refs={refs}
             display={tab == 'test' ? 'flex' : 'none'}
-            sx={{ flexDirection: 'column', width: '100%', gap: 3, mt: 3 }}
-          >
-            {dataset.header
-              .filter((input) => input != model.target)
-              .map((input, colIndex) => {
-                if (input == model.target) {
-                  return;
-                }
-                const type = dataset.selectedTypes[input];
-                refs.current[colIndex] = refs.current[colIndex] || createRef();
-                return (
-                  <Box
-                    key={colIndex}
-                    sx={{ display: 'flex', alignItems: 'center', gap: 3 }}
-                  >
-                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                      {input}
-                    </Typography>
-                    {type.type == 'categorical' && (
-                      <Autocomplete
-                        sx={{ flex: 5 }}
-                        options={type.values}
-                        getOptionLabel={(option) => option.toString()}
-                        isOptionEqualToValue={(option, value) =>
-                          option.toString() === value.toString()
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            inputRef={refs.current[colIndex]}
-                            {...params}
-                            label={input}
-                          />
-                        )}
-                      />
-                    )}
-                    {type.type == 'binary' && (
-                      <Autocomplete
-                        sx={{ flex: 5 }}
-                        options={type.values}
-                        getOptionLabel={(option) => option.toString()}
-                        isOptionEqualToValue={(option, value) =>
-                          option.toString() === value.toString()
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            inputRef={refs.current[colIndex]}
-                            {...params}
-                            label={input}
-                          />
-                        )}
-                      />
-                    )}
-                    {type.type == 'numeric' && (
-                      <TextField
-                        inputRef={refs.current[colIndex]}
-                        sx={{ flex: 5 }}
-                        type="number"
-                        inputProps={{
-                          min: type.min >= 0 ? 0 : null,
-                          step: 1,
-                        }}
-                      />
-                    )}
-                  </Box>
-                );
-              })}
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
-              <Button variant={'contrast'} onClick={handleTest}>
-                {t('test')}
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                width: '100%',
-                display: 'flex',
-                gap: 3,
-                alignItems: 'start',
-                flexDirection: 'column',
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{ flex: 1, textAlign: 'left', width: '100%' }}
-              >
-                {t('result')}
-              </Typography>
-              {dataset.selectedTypes[model.target].type == 'binary' && (
-                <>
-                  <Box display={'flex'} gap={3} alignItems={'center'}>
-                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                      {dataset.selectedTypes[model.target].values[0]}
-                    </Typography>
-                    <TextField
-                      disabled
-                      value={result ? `${(result[0] * 100).toFixed(2)}%` : ''}
-                    />
-                  </Box>
-                  <Box display={'flex'} gap={3} alignItems={'center'}>
-                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                      {dataset.selectedTypes[model.target].values[1]}
-                    </Typography>
-                    <TextField
-                      disabled
-                      value={
-                        result ? `${((1 - result[0]) * 100).toFixed(2)}%` : ''
-                      }
-                    />
-                  </Box>
-                </>
-              )}
-
-              {dataset.selectedTypes[model.target].type == 'categorical' && (
-                <>
-                  <Box display={'flex'} gap={3} alignItems={'center'}>
-                    <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                      {t('none')}
-                    </Typography>
-                    <TextField
-                      disabled
-                      value={result ? `${(result[0] * 100).toFixed(2)}%` : ''}
-                    />
-                  </Box>
-                  {dataset.selectedTypes[model.target].values.map(
-                    (val, idx) => (
-                      <Box display={'flex'} gap={3} alignItems={'center'}>
-                        <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                          {val}
-                        </Typography>
-                        <TextField
-                          disabled
-                          value={
-                            result
-                              ? `${(result[idx + 1] * 100).toFixed(2)}%`
-                              : ''
-                          }
-                        />
-                      </Box>
-                    ),
-                  )}
-                </>
-              )}
-              {dataset.selectedTypes[model.target].type == 'numeric' && (
-                <TextField
-                  disabled
-                  value={result ? `${result[0].toFixed(2)}` : ''}
-                />
-              )}
-            </Box>
+          />
+          <Box display={tab == 'integrate' ? 'flex' : 'none'}>
+            <IntegrateTable dataset={dataset} model={model} />
           </Box>
-          <Box display={tab == 'integrate' ? 'flex' : 'none'}>integrate</Box>
         </>
       ) : (
         <CircularProgress />

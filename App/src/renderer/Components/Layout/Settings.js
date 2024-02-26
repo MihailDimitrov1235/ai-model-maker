@@ -110,7 +110,7 @@ export default function Settings() {
                   onClick={() => setOpenSettings(false)}
                   style={{ marginLeft: 'auto', color: '#15A4C1' }}
                 >
-                  {t('how to setup python enviornment?')}
+                  {t('how-to-setup-python-enviornment')}
                 </Link>
               </Box>
             </Box>

@@ -36,5 +36,5 @@ while inp != "cancel":
         sys.stdout.flush()
         # print(json.dumps(predictions))
     if inp["type"] == "download":
-        print("download")
+        model.save(inp["path"])
     inp = json.loads(input())
