@@ -141,6 +141,7 @@ const Datasets = function () {
                     type={dataset.type}
                     subType={dataset.subType}
                     records={dataset.records}
+                    fetchData={fetchData}
                   />
                 )}
               </Grid>

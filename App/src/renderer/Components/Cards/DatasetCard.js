@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function DatasetCard({ title, type, subType, records = null }) {
+export default function DatasetCard({ title, type, subType, records = null, fetchData }) {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -32,9 +32,15 @@ export default function DatasetCard({ title, type, subType, records = null }) {
     console.log(title, type, subType);
     setAnchorEl(null);
   };
-  const handleDelete = () => {
+  const handleDelete = async () => {
     console.log(title, type, subType);
     setAnchorEl(null);
+    await window.electronAPI.deleteDataset({
+      title: title,
+      type: type,
+      subType:subType,
+    });
+    fetchData()
   };
 
   const { t } = useTranslation();
