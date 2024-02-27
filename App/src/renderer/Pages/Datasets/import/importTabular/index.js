@@ -2,7 +2,7 @@ import { Box, TextField, Alert } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import CustomTable from '../../../../Components/Utils/CustomTable';
+import CustomImportTable from '../../../../Components/Utils/CustomImportTable';
 import CustomDialog from '../../../../Components/Utils/CustomDialog';
 import FillTablular from './FillTablular';
 
@@ -178,7 +178,7 @@ function ImportTabular() {
             {t('create-tabular-dataset-warning')}
           </Alert>
           {data && data.length && (
-            <CustomTable
+            <CustomImportTable
               data={data}
               setData={setData}
               bodyData={bodyData}

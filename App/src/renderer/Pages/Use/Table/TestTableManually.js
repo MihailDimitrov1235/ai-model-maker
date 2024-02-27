@@ -46,70 +46,71 @@ export default function TestTableManually({ dataset, model, refs, display }) {
           gap: 3,
         }}
       >
-        {dataset.header
-          .filter((input) => input != model.target)
-          .map((input, colIndex) => {
-            if (input == model.target) {
-              return;
-            }
-            const type = dataset.selectedTypes[input];
-            refs.current[colIndex] = refs.current[colIndex] || createRef();
-            return (
-              <Box
-                key={colIndex}
-                sx={{ display: 'flex', alignItems: 'center', gap: 3 }}
-              >
-                <Typography sx={{ flex: 1, textAlign: 'right' }}>
-                  {input}
-                </Typography>
-                {type.type == 'categorical' && (
-                  <Autocomplete
-                    sx={{ flex: 5 }}
-                    options={type.values}
-                    getOptionLabel={(option) => option.toString()}
-                    isOptionEqualToValue={(option, value) =>
-                      option.toString() === value.toString()
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        inputRef={refs.current[colIndex]}
-                        {...params}
-                        label={input}
-                      />
-                    )}
-                  />
-                )}
-                {type.type == 'binary' && (
-                  <Autocomplete
-                    sx={{ flex: 5 }}
-                    options={type.values}
-                    getOptionLabel={(option) => option.toString()}
-                    isOptionEqualToValue={(option, value) =>
-                      option.toString() === value.toString()
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        inputRef={refs.current[colIndex]}
-                        {...params}
-                        label={input}
-                      />
-                    )}
-                  />
-                )}
-                {type.type == 'numeric' && (
-                  <TextField
-                    inputRef={refs.current[colIndex]}
-                    sx={{ flex: 5 }}
-                    type="number"
-                    inputProps={{
-                      min: type.min >= 0 ? 0 : null,
-                      step: 1,
-                    }}
-                  />
-                )}
-              </Box>
-            );
-          })}
+        {dataset &&
+          dataset.header
+            .filter((input) => input != model.target)
+            .map((input, colIndex) => {
+              if (input == model.target) {
+                return;
+              }
+              const type = dataset.selectedTypes[input];
+              refs.current[colIndex] = refs.current[colIndex] || createRef();
+              return (
+                <Box
+                  key={colIndex}
+                  sx={{ display: 'flex', alignItems: 'center', gap: 3 }}
+                >
+                  <Typography sx={{ flex: 1, textAlign: 'right' }}>
+                    {input}
+                  </Typography>
+                  {type.type == 'categorical' && (
+                    <Autocomplete
+                      sx={{ flex: 5 }}
+                      options={type.values}
+                      getOptionLabel={(option) => option.toString()}
+                      isOptionEqualToValue={(option, value) =>
+                        option.toString() === value.toString()
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          inputRef={refs.current[colIndex]}
+                          {...params}
+                          label={input}
+                        />
+                      )}
+                    />
+                  )}
+                  {type.type == 'binary' && (
+                    <Autocomplete
+                      sx={{ flex: 5 }}
+                      options={type.values}
+                      getOptionLabel={(option) => option.toString()}
+                      isOptionEqualToValue={(option, value) =>
+                        option.toString() === value.toString()
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          inputRef={refs.current[colIndex]}
+                          {...params}
+                          label={input}
+                        />
+                      )}
+                    />
+                  )}
+                  {type.type == 'numeric' && (
+                    <TextField
+                      inputRef={refs.current[colIndex]}
+                      sx={{ flex: 5 }}
+                      type="number"
+                      inputProps={{
+                        min: type.min >= 0 ? 0 : null,
+                        step: 1,
+                      }}
+                    />
+                  )}
+                </Box>
+              );
+            })}
       </Box>
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
         <Button variant={'contrast'} onClick={handleTest}>
