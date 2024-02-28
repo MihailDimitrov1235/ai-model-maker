@@ -20,21 +20,33 @@ export default function TestTableUsingFile({ dataset, model, display }) {
         if (setCopy.has(response.data[0][col])) {
           setCopy.delete(response.data[0][col]);
           if (setCopy.size == 0) {
-            hasHeaders = treu;
+            hasHeaders = true;
           }
         }
       }
 
       if (hasHeaders) {
-        let newData = [];
+        let idxs = [];
+        let newDatasetHeaders = [];
+        for (let i = 0; i < dataset.header.length; i++) {
+          if (dataset.header[i] != model.target) {
+            newDatasetHeaders.push(dataset.header[i]);
+          }
+        }
 
-        for (let row = 0; row < response.data.length; row++) {
-          let newRow = [];
+        for (let i = 0; i < newDatasetHeaders.length; i++) {
           for (let col = 0; col < response.data[0].length; col++) {
-            if (set.has(response.data[0][col])) {
-              newRow.push(response.data[row][col]);
-              set.delete(response.data[0][col]);
+            if (newDatasetHeaders[i] == response.data[0][col]) {
+              idxs.push(col);
             }
+          }
+        }
+
+        let newData = [];
+        for (let row = 1; row < response.data.length; row++) {
+          let newRow = [];
+          for (let col = 0; col < idxs.length; col++) {
+            newRow.push(response.data[row][idxs[col]]);
           }
           newData.push(newRow);
         }
