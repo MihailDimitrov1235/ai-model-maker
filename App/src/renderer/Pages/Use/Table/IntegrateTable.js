@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Tabs, Tab } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import CodeBlock from '../../Components/CodeBlock';
+import CodeBlock from '../../../Components/CodeBlock';
 
 export default function IntegrateTable({ dataset, model }) {
   let data = {};

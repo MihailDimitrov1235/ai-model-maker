@@ -8,7 +8,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   createDatasetLabels: (arg) => ipcRenderer.send('create-dataset-labels', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
   createTabularModel: (arg) => ipcRenderer.send('create-tabular-model', arg),
-
   selectTabularFile: (arg) => ipcRenderer.invoke('select-tabular-file', arg),
   selectPythonExe: (arg) => ipcRenderer.invoke('select-python-exe', arg),
   selectImageFolder: (arg) => ipcRenderer.invoke('select-image-folder', arg),
@@ -35,6 +34,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   createClassificationModel: (arg) =>
     ipcRenderer.invoke('create-classification-model', arg),
   saveModel: (arg) => ipcRenderer.invoke('save-model', arg),
+  deleteDataset: (arg) => ipcRenderer.invoke('delete-dataset', arg),
+  deleteModel: (arg) => ipcRenderer.invoke('delete-model', arg),
 
   handleCreateSnackbar: (callback) =>
     ipcRenderer.on('create-snackbar', callback),

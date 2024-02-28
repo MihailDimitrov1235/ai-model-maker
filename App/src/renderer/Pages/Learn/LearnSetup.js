@@ -74,7 +74,7 @@ export default function LearnSetup() {
         </Box>
         <Box>
           <Typography variant="h5">
-            {`2. Install Python (Python 3.8 – 3.11)`}
+            {`2.`} {t('install')} {`Python (Python 3.9)`}
           </Typography>
           <Typography variant="p">
             {t('python-version')}

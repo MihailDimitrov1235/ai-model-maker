@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import getColumnTypes from '../functions/getCoulumnTypes';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function CustomTable({
+export default function CustomImportTable({
   data,
   setData,
   bodyData,

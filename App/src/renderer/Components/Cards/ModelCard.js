@@ -18,7 +18,12 @@ import { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function ModelCard({ model, handleOpenModel, subType = null }) {
+export default function ModelCard({
+  model,
+  handleOpenModel,
+  subType = null,
+  fetchData,
+}) {
   const { t } = useTranslation();
   const theme = useTheme();
   const [labels, setLabels] = useState([]);
@@ -33,13 +38,19 @@ export default function ModelCard({ model, handleOpenModel, subType = null }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEdit = () => {
-    // console.log(title, type, subType);
+  // const handleEdit = () => {
+  //   // console.log(title, type, subType);
+  //   setAnchorEl(null);
+  // };
+
+  const handleDelete = async () => {
     setAnchorEl(null);
-  };
-  const handleDelete = () => {
-    // console.log(title, type, subType);
-    setAnchorEl(null);
+    await window.electronAPI.deleteModel({
+      title: model.name,
+      type: model.type,
+      subType: subType,
+    });
+    fetchData();
   };
 
   useEffect(() => {
@@ -186,7 +197,7 @@ export default function ModelCard({ model, handleOpenModel, subType = null }) {
           <MoreVertIcon />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem
+          {/* <MenuItem
             sx={{
               display: 'flex',
               gap: 3,
@@ -196,7 +207,7 @@ export default function ModelCard({ model, handleOpenModel, subType = null }) {
           >
             <Typography>{t('edit')}</Typography>
             <EditIcon />
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             sx={{
               color: theme.palette.error.main,

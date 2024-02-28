@@ -223,5 +223,9 @@
   "starting-training":"Starting the training process",
   "success-training-title":"Successfully trained",
   "success-training-message":"Training was successful.",
-  "records-per-graph":"Records Per Graph"
+  "records-per-graph":"Records Per Graph",
+  "delete-dataset-success-title":"Success",
+  "delete-dataset-success-message":"Successfully Deleted The Dataset",
+  "delete-model-success-title":"Success",
+  "delete-model-success-message":"Successfully Deleted The Model"
 }
