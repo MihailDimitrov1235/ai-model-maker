@@ -227,5 +227,9 @@
   "delete-dataset-success-title":"Success",
   "delete-dataset-success-message":"Successfully Deleted The Dataset",
   "delete-model-success-title":"Success",
-  "delete-model-success-message":"Successfully Deleted The Model"
+  "delete-model-success-message":"Successfully Deleted The Model",
+  "data-does-not-match-title":"No matching data",
+  "data-does-not-match-message":"The data doesn't match the expected shape. Make sure you either have exactly as many columns as expected or that your data contains headers.",
+  "error-opening-file-title":"Error opening file",
+  "error-opening-file-message":"An error occured when trying to read information from a file. Maybe the file doesn't exist."
 }

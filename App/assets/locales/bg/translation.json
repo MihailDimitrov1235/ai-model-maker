@@ -227,6 +227,10 @@
   "delete-dataset-success-title":"Успешно",
   "delete-dataset-success-message":"Успешно изтрихте набора от данни",
   "delete-model-success-title":"Успешно",
-  "delete-model-success-message":"Успешно изтрихте модела"
+  "delete-model-success-message":"Успешно изтрихте модела",
+  "data-does-not-match-title":"Информацията не съвпада",
+  "data-does-not-match-message":"Информацията във файла няма подходяща форма. Осигурете се, че файлът или съдържа толкова колони, колкото са очаквани, или всяка колона съдържа заглавие.",
+  "error-opening-file-title":"Грешка при отваряне на файл",
+  "error-opening-file-message":"Имаше грешка при четенето на информация от файл. Може би файлът не съществува."
 
 }

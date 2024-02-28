@@ -50,12 +50,27 @@ export default function TestTableUsingFile({ dataset, model, display }) {
           }
           newData.push(newRow);
         }
+        console.log(newData);
         setData(newData);
       } else {
         if (response.data[0].length == dataset.header.length - 1) {
           setData(response.data);
+        } else {
+          window.electronAPI.createSnackbar({
+            message: 'data-does-not-match-message',
+            title: 'data-does-not-match-title',
+            alertVariant: 'error',
+            autoHideDuration: 3000,
+          });
         }
       }
+    } else {
+      window.electronAPI.createSnackbar({
+        message: 'error-opening-file-message',
+        title: 'error-opening-file-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+      });
     }
   };
 

@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
+  // renderer to main
   checkEnv: (arg) => ipcRenderer.send('check-env', arg),
   createEnv: (arg) => ipcRenderer.send('create-env', arg),
   cancelCreateEnv: (arg) => ipcRenderer.send('cancel-create-env', arg),
@@ -8,6 +9,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   createDatasetLabels: (arg) => ipcRenderer.send('create-dataset-labels', arg),
   runPython: (arg) => ipcRenderer.send('run-python', arg),
   createTabularModel: (arg) => ipcRenderer.send('create-tabular-model', arg),
+
+  // renderer to main
   selectTabularFile: (arg) => ipcRenderer.invoke('select-tabular-file', arg),
   selectPythonExe: (arg) => ipcRenderer.invoke('select-python-exe', arg),
   selectImageFolder: (arg) => ipcRenderer.invoke('select-image-folder', arg),
@@ -37,6 +40,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   deleteDataset: (arg) => ipcRenderer.invoke('delete-dataset', arg),
   deleteModel: (arg) => ipcRenderer.invoke('delete-model', arg),
 
+  // renderer to renderer
+  createSnackbar: (arg) => ipcRenderer.emit('create-snackbar', 'event', arg),
+
+  // main to renderer
   handleCreateSnackbar: (callback) =>
     ipcRenderer.on('create-snackbar', callback),
   handleMissingVenv: (callback) => ipcRenderer.on('no-env', callback),
