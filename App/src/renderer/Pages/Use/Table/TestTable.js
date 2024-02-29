@@ -29,7 +29,7 @@ export default function TestTable({ dataset, model, refs, display }) {
         onChange={handleChangeTab}
       >
         <Tab value={'manual'} label={t('test-manually')} />
-        <Tab value={'file'} label={t('test-using-file')} />
+        {/* <Tab value={'file'} label={t('test-using-file')} /> */}
       </Tabs>
       <TestTableManually
         dataset={dataset}
