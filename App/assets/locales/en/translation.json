@@ -241,5 +241,11 @@
   "test-data-expected-1%-or-more": "Test Data Expected 1% or More",
   "test-manually":"Test Manually",
   "values-missing-title":"Values missing",
-  "values-missing-message":"Some values were missing. Make sure you filled all of them."
+  "values-missing-message":"Some values were missing. Make sure you filled all of them.",
+  "train-loss":"Train Loss",
+  "val-loss":"Validation Loss",
+  "test-loss":"Test Loss",
+  "train-accuracy": "Train Accuracy",
+  "val-accuracy": "Validation Accuracy",
+  "test-accuracy": "Test Accuracy"
 }
