@@ -34,11 +34,11 @@ export default function getColumnTypes(table) {
         }
       }
 
-      if (!(typeof val === 'string' || typeof val === 'boolean')) {
-        if (typeof val !== 'number' || val % 1 != 0) {
-          isCategorical = false;
-        }
-      }
+      // if (!(typeof val === 'string' || typeof val === 'boolean')) {
+      //   if (typeof val !== 'number' || val % 1 != 0) {
+      //     isCategorical = false;
+      //   }
+      // }
 
       if (!(val instanceof Date)) {
         isDateTime = false;
@@ -80,17 +80,17 @@ export default function getColumnTypes(table) {
       columnTypes.push({ type: 'numeric', min: min, max: max });
     }
 
-    if (isDateTime) {
-      columnTypes.push({ type: 'date' });
-    }
+    // if (isDateTime) {
+    //   columnTypes.push({ type: 'date' });
+    // }
 
-    if (isText) {
-      columnTypes.push({ type: 'text' });
-    }
+    // if (isText) {
+    //   columnTypes.push({ type: 'text' });
+    // }
 
-    if (!isNumeric && !isCategorical && !isDateTime && !isText && !isBinary) {
-      columnTypes.push({ type: 'mixed' });
-    }
+    // if (!isNumeric && !isCategorical && !isDateTime && !isText && !isBinary) {
+    //   columnTypes.push({ type: 'mixed' });
+    // }
     columnsTypes.push(columnTypes);
   }
   return columnsTypes;
