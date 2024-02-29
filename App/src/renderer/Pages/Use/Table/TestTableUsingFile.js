@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CustomTable from '../../../Components/Utils/CustomTable';
 
@@ -11,6 +11,11 @@ export default function TestTableUsingFile({ dataset, model, display }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  useEffect(() => {
+    setData(null);
+    setFile(t('select-file'));
+  }, [model]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -20,7 +25,12 @@ export default function TestTableUsingFile({ dataset, model, display }) {
     setPage(0);
   };
 
-  const handleTest = () => {};
+  const handleTest = () => {
+    window.electronAPI.testTableModelUsingFile({
+      data: data,
+      headers: dataset.header.filter((item) => item !== model.target),
+    });
+  };
 
   const handleSelectFile = async () => {
     const response = await window.electronAPI.selectTabularFile();
@@ -68,7 +78,6 @@ export default function TestTableUsingFile({ dataset, model, display }) {
           }
           newData.push(newRow);
         }
-        console.log(newData);
         setData(newData);
       } else {
         if (response.data[0].length == dataset.header.length - 1) {

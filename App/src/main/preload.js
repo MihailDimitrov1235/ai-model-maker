@@ -34,6 +34,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   prepareTableModelForUse: (arg) =>
     ipcRenderer.invoke('prepare-table-model-for-use', arg),
   testTableModel: (arg) => ipcRenderer.invoke('test-table-model', arg),
+  testTableModelUsingFile: (arg) =>
+    ipcRenderer.invoke('test-table-model-using-file', arg),
   createClassificationModel: (arg) =>
     ipcRenderer.invoke('create-classification-model', arg),
   saveModel: (arg) => ipcRenderer.invoke('save-model', arg),

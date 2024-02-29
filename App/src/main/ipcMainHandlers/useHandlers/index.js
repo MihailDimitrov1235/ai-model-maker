@@ -40,9 +40,10 @@ function setupIPCUseHandlers(win) {
     pyShell = new PythonShell('use_model.py', options);
 
     pyShell.stdout.on('data', function (message) {
+      console.log(message);
       try {
         const jsonData = JSON.parse(message.trim());
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData['type'] == 'result') {
           win.webContents.send('set-test-result', jsonData['predictions']);
         }
@@ -73,7 +74,30 @@ function setupIPCUseHandlers(win) {
 
   ipcMain.handle('test-table-model', async (event, arg) => {
     if (modelReady) {
-      pyShell.stdin.write(JSON.stringify({ type: 'test', data: arg }) + '\n');
+      pyShell.stdin.write(
+        JSON.stringify({ type: 'test', data: arg, single: true }) + '\n',
+      );
+    } else {
+      win.webContents.send('create-snackbar', {
+        message: 'model-not-yet-loaded-message',
+        title: 'model-not-yet-loaded-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+        // persist: true,
+        // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
+      });
+    }
+  });
+  ipcMain.handle('test-table-model-using-file', async (event, arg) => {
+    if (modelReady) {
+      pyShell.stdin.write(
+        JSON.stringify({
+          type: 'test',
+          data: arg.data,
+          headers: arg.headers,
+          single: false,
+        }) + '\n',
+      );
     } else {
       win.webContents.send('create-snackbar', {
         message: 'model-not-yet-loaded-message',

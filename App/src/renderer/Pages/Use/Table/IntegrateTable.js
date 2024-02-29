@@ -21,6 +21,7 @@ export default function IntegrateTable({ dataset, model }) {
   };
 
   const pythonCode = `from tensorflow.keras.models import load_model
+from tensorflow import convert_to_tensor
 import numpy as np
 
 # Load the Keras model
