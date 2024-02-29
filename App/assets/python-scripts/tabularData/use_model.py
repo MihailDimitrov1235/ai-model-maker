@@ -36,6 +36,7 @@ while inp != "cancel":
             }
             # print(json.dumps({"type": "debug", "predictions": input_dict.items()}))
             predictions = model.predict(input_dict, verbose=0)
+            print(json.dumps({"type": "result", "predictions": predictions.tolist()}))
             sys.stdout.flush()
         else:
             dicts = []

@@ -15,10 +15,9 @@ import CodeBlock from '../../Components/CodeBlock';
 import { useNavigate } from 'react-router-dom';
 
 export default function LearnSetup() {
-  const pipInstallCommand = `pip install tensorflow==2.10 numpy pandas`;
+  const pipInstallCommand = `pip install tensorflow numpy pandas`;
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const theme = useTheme();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {

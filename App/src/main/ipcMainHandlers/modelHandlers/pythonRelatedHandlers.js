@@ -127,7 +127,10 @@ export function pythonRelatedHandlers(win) {
           // buttons: [{ text: 'setup', link: '/learn/setup', variant: 'main' }],
         });
       } else {
-        fs.rmdirSync(save_model_path);
+        fs.rmSync(save_model_path, {
+          recursive: true,
+          force: true,
+        });
       }
 
       win.webContents.send('close-creating-model-dialog', { error: error });
