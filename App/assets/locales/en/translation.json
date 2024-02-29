@@ -247,5 +247,7 @@
   "test-loss":"Test Loss",
   "train-accuracy": "Train Accuracy",
   "val-accuracy": "Validation Accuracy",
-  "test-accuracy": "Test Accuracy"
+  "test-accuracy": "Test Accuracy",
+  "model-not-yet-loaded-title":"Model not loaded",
+  "model-not-yet-loaded-message":"The Model has not yet been loaded. Wait a few seconds"
 }
