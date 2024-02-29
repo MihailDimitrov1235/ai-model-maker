@@ -9,7 +9,7 @@ def create_model(all_inputs, encoded_features, layers, info, target, learning_ra
         if layer_type == "dense":
             x = keras.layers.Dense(layer["nodes"], activation=layer["activation"])(x)
         elif layer_type == "dropout":
-            x = keras.layers.Dropout(layer["rate"])(x)
+            x = keras.layers.Dropout(float(layer["rate"]))(x, training=True)
 
     target_type = info["selectedTypes"][target]["type"]
     model = None
