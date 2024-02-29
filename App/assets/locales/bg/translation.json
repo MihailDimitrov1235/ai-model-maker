@@ -50,7 +50,6 @@
   "expected-number-between": "Очаквано число между",
   "expected-whole-number-between": "Очаквано цяло число между",
   "and": "и",
-  "train-data-expected-10%-or-more": "Oчаквани данни за обучение 10% или повече ",
   "missing-layers": "Липсващи слоеве",
   "new-dataset": "Нов набор от данни",
   "select-file": "Избери файл",
@@ -239,8 +238,7 @@
   "val-data-expected-5%-or-more":"Данните за Валидация трябва да се 5% или повече",
   "train-data-expected-10%-or-more":"Данните за трениране трябва да са 10% или повече",
   "test-data-expected-1%-or-more": "Данните за тестване трябва да са 1% или повече",
-  "test-manually":"Тестване ръчно"
-  
-
-
+  "test-manually":"Тестване ръчно",
+  "values-missing-title":"Данни липсват",
+  "values-missing-message":"Някои данни липсват. Осигурете се, че сте попълнили всички данни."
 }

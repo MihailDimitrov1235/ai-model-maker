@@ -22,12 +22,27 @@ export default function TestTableManually({ dataset, model, refs, display }) {
   }, []);
   const handleTest = () => {
     let formData = {};
+    let error = false;
     dataset.header
       .filter((input) => input != model.target)
       .forEach((input, idx) => {
-        formData[input] = refs.current[idx].current.value;
+        let val = refs.current[idx].current.value;
+        if (val == undefined || val == null || val == '') {
+          error = true;
+          return;
+        }
+        formData[input] = val;
       });
-    window.electronAPI.testTableModel(formData);
+    if (error) {
+      window.electronAPI.createSnackbar({
+        message: 'values-missing-message',
+        title: 'values-missing-title',
+        alertVariant: 'error',
+        autoHideDuration: 3000,
+      });
+    } else {
+      window.electronAPI.testTableModel(formData);
+    }
   };
   return (
     <Box

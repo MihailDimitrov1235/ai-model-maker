@@ -239,6 +239,7 @@
   "val-data-expected-5%-or-more":"Validation Data Expected 5% or More",
   "train-data-expected-10%-or-more":"Train Data Expected 10% or More",
   "test-data-expected-1%-or-more": "Test Data Expected 1% or More",
-  "test-manually":"Test Manually"
-
+  "test-manually":"Test Manually",
+  "values-missing-title":"Values missing",
+  "values-missing-message":"Some values were missing. Make sure you filled all of them."
 }
