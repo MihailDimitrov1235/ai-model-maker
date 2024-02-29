@@ -184,8 +184,8 @@ function ImportImage() {
                 <MenuItem value={'classification'}>
                   {t('image-classification')}
                 </MenuItem>
-                <MenuItem value={'detection'}>{t('object-detection')}</MenuItem>
-                <MenuItem value={'captioning'}>{t('captioning')}</MenuItem>
+                {/* <MenuItem value={'detection'}>{t('object-detection')}</MenuItem>
+                <MenuItem value={'captioning'}>{t('captioning')}</MenuItem> */}
               </Select>
               <TextField
                 variant="outlined"

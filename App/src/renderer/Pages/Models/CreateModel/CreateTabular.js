@@ -191,7 +191,7 @@ export default function CreateTabular() {
       setSlidersError('');
     }
     if (test < 1) {
-      setSlidersError(t('val-data-expected-1%-or-more') + '*');
+      setSlidersError(t('test-data-expected-1%-or-more') + '*');
       return;
     } else {
       setSlidersError('');

@@ -10,7 +10,7 @@ const dataItems = [
     items: [
       { type: 'item', name: 'tabular', href: '/data/?filter=table' },
       { type: 'item', name: 'image', href: '/data/?filter=image' },
-      { type: 'item', name: 'text', href: '/data/?filter=text' },
+      // { type: 'item', name: 'text', href: '/data/?filter=text' },
     ],
   },
   {
@@ -20,7 +20,7 @@ const dataItems = [
     items: [
       { type: 'item', name: 'tabular', href: '/data/import/tabular' },
       { type: 'item', name: 'image', href: '/data/import/image' },
-      { type: 'item', name: 'text', href: '/data/import/text' },
+      // { type: 'item', name: 'text', href: '/data/import/text' },
     ],
   },
 ];
@@ -33,7 +33,7 @@ const modelsItems = [
     items: [
       { type: 'item', name: 'tabular', href: '/models/tabular' },
       { type: 'item', name: 'image', href: '/models/image' },
-      { type: 'item', name: 'text', href: '/models/text' },
+      // { type: 'item', name: 'text', href: '/models/text' },
     ],
   },
   {
@@ -43,7 +43,7 @@ const modelsItems = [
     items: [
       { type: 'item', name: 'tabular', href: '/models/create/tabular' },
       { type: 'item', name: 'image', href: '/models/create/image/' },
-      { type: 'item', name: 'text', href: '/models/create/text' },
+      // { type: 'item', name: 'text', href: '/models/create/text' },
     ],
   },
 ];
