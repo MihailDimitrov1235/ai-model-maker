@@ -184,6 +184,18 @@ export default function CreateTabular() {
     } else {
       setSlidersError('');
     }
+    if (val < 5) {
+      setSlidersError(t('val-data-expected-5%-or-more') + '*');
+      return;
+    } else {
+      setSlidersError('');
+    }
+    if (test < 1) {
+      setSlidersError(t('val-data-expected-1%-or-more') + '*');
+      return;
+    } else {
+      setSlidersError('');
+    }
 
     if (layers.length == 0) {
       setLayersError(t('missing-layers') + '*');
