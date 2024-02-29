@@ -1,14 +1,32 @@
-import { Box, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CustomTable from '../../../Components/Utils/CustomTable';
 
 export default function TestTableUsingFile({ dataset, model, display }) {
   const { t } = useTranslation();
   const [file, setFile] = useState(t('select-file'));
   const [data, setData] = useState(null);
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleTest = () => {};
+
   const handleSelectFile = async () => {
     const response = await window.electronAPI.selectTabularFile();
+    if (response.canceled) {
+      return;
+    }
     setFile(response.file);
     if (!response.error) {
       let set = new Set(dataset.header);
@@ -75,7 +93,7 @@ export default function TestTableUsingFile({ dataset, model, display }) {
   };
 
   return (
-    <Box sx={{ display: display }}>
+    <Box sx={{ display: display, flexDirection: 'column', gap: 3 }}>
       <TextField
         sx={{ input: { cursor: 'pointer' }, flex: 1 }}
         variant="outlined"
@@ -85,6 +103,24 @@ export default function TestTableUsingFile({ dataset, model, display }) {
           readOnly: true,
         }}
       />
+      {data && (
+        <>
+          <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+            <Button onClick={handleTest} variant="contrast">
+              {t('test')}
+            </Button>
+          </Box>
+          <CustomTable
+            header={dataset.header.filter((item) => item !== model.target)}
+            bodyData={data}
+            hasHeaders={true}
+            page={page}
+            handleChangePage={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </>
+      )}
     </Box>
   );
 }
