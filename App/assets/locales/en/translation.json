@@ -117,7 +117,7 @@
   "gpu-setup":"GPU setup",
   "system-requirements":"System Requirements",
   "or-higher":"or higher",
-  "python-version":"If Python is not already installed on your system, download and install Python 3.9 from the ",
+  "python-version":"If Python is not already installed on your system, download and install Python 3.11.5 from the ",
   "official-python-website": "Official Python Website",
   "check-python-path": " Make sure to check the option to add Python to your system PATH during installation.",
   "open-command-prompt": "Open Command Prompt",

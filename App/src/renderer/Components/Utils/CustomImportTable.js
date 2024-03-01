@@ -142,11 +142,11 @@ export default function CustomImportTable({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-        <InputLabel>{t('has-headers')}</InputLabel>
-        <Switch
+        {/* <InputLabel>{t('has-headers')}</InputLabel> */}
+        {/* <Switch
           checked={hasHeaders}
           onClick={(event) => setHasHeaders(event.target.checked)}
-        />
+        /> */}
         <Button onClick={handleFinish} variant="contrast" sx={{ ml: 'auto' }}>
           {t('finish-button')}
         </Button>

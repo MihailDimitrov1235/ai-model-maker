@@ -16,6 +16,7 @@ import {
   InputLabel,
   MenuItem,
   IconButton,
+  TextField,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,7 @@ export default function CustomTable({
   bodyData,
   hasHeaders,
   handleHeaderChange = null,
+  missingHeader = null,
   headerCheckboxes = null,
   handleClickCheckbox = null,
   selectedTypes = null,
