@@ -234,7 +234,7 @@ export default function CreateTabular() {
       <Typography variant="h6">{t('select-model-options')}</Typography>
       <Box display={'flex'} width={'100%'} gap={3}>
         <Box display={'flex'} flexDirection={'column'} flex={1} gap={3}>
-          <Box display={'flex'} gap={3} alignItems={'center'}>
+          {/* <Box display={'flex'} gap={3} alignItems={'center'}>
             <Typography textAlign={'right'} flex={1}>
               {t('learning-rate')}
             </Typography>
@@ -266,7 +266,7 @@ export default function CreateTabular() {
               sx={{ flex: 8 }}
               fullWidth
             />
-          </Box>
+          </Box> */}
 
           <Box display={'flex'} gap={3} alignItems={'center'}>
             <Typography textAlign={'right'} flex={1}>
@@ -302,67 +302,70 @@ export default function CreateTabular() {
               ))}
             </Select>
           </Box>
-        </Box>
-        <Box display={'flex'} flexDirection={'column'} gap={3}>
-          <Typography variant="p">{t('dataset-split')}</Typography>
-          <Box
-            display={'flex'}
-            width={'auto'}
-            minHeight={'200px'}
-            flex={1}
-            gap={3}
-          >
+          <Box display={'flex'} flexDirection={'column'} gap={3}>
+            <Typography variant="h6">{t('dataset-split')}</Typography>
             <Box
               display={'flex'}
               flexDirection={'column'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              gap={2}
+              width={'auto'}
+              px={3}
+              flex={1}
             >
-              <Typography>{t('train')}</Typography>
-              <Slider
-                value={train}
-                onChange={handleTrainChange}
-                orientation="vertical"
-                valueLabelDisplay="auto"
-                step={1}
-              />
+              <Box
+                display={'flex'}
+                flexDirection={'column'}
+                justifyContent={'center'}
+                alignItems={'left'}
+                gap={2}
+                px={3}
+              >
+                <Typography>{t('train')}</Typography>
+                <Slider
+                  value={train}
+                  onChange={handleTrainChange}
+                  orientation="horizontal"
+                  valueLabelDisplay="auto"
+                  step={1}
+                />
+              </Box>
+              <Box
+                display={'flex'}
+                flexDirection={'column'}
+                justifyContent={'center'}
+                alignItems={'left'}
+                gap={2}
+                px={3}
+              >
+                <Typography>{t('validation')}</Typography>
+                <Slider
+                  value={val}
+                  onChange={handleValChange}
+                  orientation="horizontal"
+                  valueLabelDisplay="auto"
+                  step={1}
+                />
+              </Box>
+              <Box
+                display={'flex'}
+                flexDirection={'column'}
+                justifyContent={'center'}
+                alignItems={'left'}
+                gap={2}
+                px={3}
+              >
+                <Typography>{t('test')}</Typography>
+                <Slider
+                  value={test}
+                  onChange={handleTestChange}
+                  orientation="horizontal"
+                  valueLabelDisplay="auto"
+                  step={1}
+                />
+              </Box>
             </Box>
-            <Box
-              display={'flex'}
-              flexDirection={'column'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              gap={2}
-            >
-              <Typography>{t('validation')}</Typography>
-              <Slider
-                value={val}
-                onChange={handleValChange}
-                orientation="vertical"
-                valueLabelDisplay="auto"
-                step={1}
-              />
-            </Box>
-            <Box
-              display={'flex'}
-              flexDirection={'column'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              gap={2}
-            >
-              <Typography>{t('test')}</Typography>
-              <Slider
-                value={test}
-                onChange={handleTestChange}
-                orientation="vertical"
-                valueLabelDisplay="auto"
-                step={1}
-              />
-            </Box>
-          </Box>
 
-          <Typography color={'error'}>{slidersError}</Typography>
+            <Typography color={'error'}>{slidersError}</Typography>
+          </Box>
         </Box>
       </Box>
 
