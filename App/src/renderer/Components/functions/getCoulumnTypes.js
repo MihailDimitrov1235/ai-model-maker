@@ -68,16 +68,16 @@ export default function getColumnTypes(table) {
       });
     }
 
+    if (isNumeric) {
+      columnTypes.push({ type: 'numeric', min: min, max: max });
+    }
+
     if (isCategorical) {
       columnTypes.push({
         type: 'categorical',
         numeric: isNumeric,
         values: uniqueValues,
       });
-    }
-
-    if (isNumeric) {
-      columnTypes.push({ type: 'numeric', min: min, max: max });
     }
 
     // if (isDateTime) {
