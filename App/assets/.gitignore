@@ -1,6 +1,0 @@
-/datasets/table/*
-/datasets/image/classification/*
-/datasets/image/detection/*
-/datasets/image/captioning/*
-
-/models/*

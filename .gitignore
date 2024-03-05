@@ -1,0 +1,8 @@
+/App/assets/config.json
+
+/App/assets/datasets/table/*
+/App/assets/datasets/image/classification/*
+/App/assets/datasets/image/detection/*
+/App/assets/datasets/image/captioning/*
+
+/App/assets/models/*
