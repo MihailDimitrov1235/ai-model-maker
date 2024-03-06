@@ -26,7 +26,7 @@ export default function LanguageChanger() {
         alignItems: 'center',
       }}
     >
-      <img src={i18n.language == 'en' ? enIcon : bgIcon} />
+      <img src={i18n.language == 'en' ? bgIcon : enIcon} />
     </Button>
   );
 }

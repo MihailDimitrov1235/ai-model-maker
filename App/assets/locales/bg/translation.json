@@ -214,7 +214,7 @@
   "missing-values-text": "Някои данни липсват. Какво искате да направите с тях?",
   "has-headers": "Съдържа заглавия",
   "name-missing": "Не е въведено име",
-  "create-tabular-dataset-warning":"Данните трябва да съдържат само цифри и латински букви, без запетаи и без NULL",
+  "create-tabular-dataset-warning":"Приемат се файлове само с разширение .csv и . xlsx. Данните трябва да съдържат само цифри и латински букви, без запетаи и без NULL",
   "read-dataset-file-error-title":"Наборът от данни не е намерен",
   "read-dataset-file-error-message":"Наборът от данни не беше намерен. Може би е бил изтрит.",
   "create-env-title":"Създаване на python изпълнителен файл",

@@ -215,7 +215,7 @@
   "missing-values-text": "Some values from the dataset are missing. What do you want to do with them?",
   "has-headers": "Has Headers",
   "name-missing": "Name is missing",
-  "create-tabular-dataset-warning":"The data should contain only numbers and latin letters, without commas and without NULL",
+  "create-tabular-dataset-warning":"Only files with .csv and .xlsx extension can be uploaded. The data should contain only numbers and latin letters, without commas and without NULL",
   "read-dataset-file-error-title":"Dataset file not found",
   "read-dataset-file-error-message":"Dataset file wasn't found. Maybe it was deleted.",
   "create-env-title":"Creating python enviornment",
