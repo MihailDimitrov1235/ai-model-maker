@@ -67,8 +67,9 @@ function Classification() {
             {t('classes')}
           </FormLabel>
           <RadioGroup onChange={handleChangeLabel}>
-            {Array.from(classes).map((item) => (
+            {Array.from(classes).map((item, index) => (
               <Box
+                key={index}
                 display={'flex'}
                 justifyContent={'space-between'}
                 sx={{ overflow: 'hidden', width: '100%', pl: 2 }}

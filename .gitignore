@@ -1,0 +1,38 @@
+/App/assets/config.json
+
+/App/assets/datasets/table/*
+/App/assets/datasets/image/classification/*
+/App/assets/datasets/image/detection/*
+/App/assets/datasets/image/captioning/*
+
+assets/models/*
+
+# Logs
+/App/logs
+/App/*.log
+
+# Runtime data
+/App/pids
+/App/*.pid
+/App/*.seed
+
+# Coverage directory used by tools like istanbul
+/App/coverage
+/App/.eslintcache
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+/App/node_modules
+
+# OSX
+/App/.DS_Store
+
+/App/release/app/dist
+/App/release/build
+/App/.erb/dll
+
+/App/.idea
+/App/npm-debug.log.*
+/App/*.css.d.ts
+/App/*.sass.d.ts
+/App/*.scss.d.ts

@@ -38,20 +38,35 @@ const Datasets = function () {
       type: 'text',
       title: t('learn-ai'),
       titleType: 'h3',
-      text: <><b>{t('welcome')}</b>{t('ml-introduction')}</>,
+      text: (
+        <>
+          <b>{t('welcome')}</b>
+          {t('ml-introduction')}
+        </>
+      ),
     },
     {
       type: 'text',
       title: t('neural-network'),
       titleType: 'h4',
-      text: <><b>{t('neural-network')}</b>{t('neural-network-text')}</>,
+      text: (
+        <>
+          <b>{t('neural-network')}</b>
+          {t('neural-network-text')}
+        </>
+      ),
     },
 
     {
       type: 'text',
       title: t('neurons'),
       id: 'neurons',
-      text: <><b>{t('neurons')}</b>{t('neurons-text')}</>,
+      text: (
+        <>
+          <b>{t('neurons')}</b>
+          {t('neurons-text')}
+        </>
+      ),
     },
 
     {
@@ -60,24 +75,39 @@ const Datasets = function () {
       id: 'layers',
       listItems: [
         {
-          text: <><b>{t('dense')}</b>{t('dense-text')}</>,
+          text: (
+            <>
+              <b>{t('dense')}</b>
+              {t('dense-text')}
+            </>
+          ),
           subId: 'dense',
         },
         {
-          text: <><b>{t('dropout')}</b>{t('dropout-text')}</>,
+          text: (
+            <>
+              <b>{t('dropout')}</b>
+              {t('dropout-text')}
+            </>
+          ),
           subId: 'dropout',
         },
         {
-          text: <>
-            <b>{t('conv2D')}</b>{t('conv2D-text')}
-          </>,
+          text: (
+            <>
+              <b>{t('conv2D')}</b>
+              {t('conv2D-text')}
+            </>
+          ),
           subId: 'conv-2D',
         },
         {
-          text: <>
-           <b>{t('max-poling2D')}</b>
-           {t('max-poling2D-text')}
-          </>,
+          text: (
+            <>
+              <b>{t('max-poling2D')}</b>
+              {t('max-poling2D-text')}
+            </>
+          ),
           subId: 'max-pooling-2D',
         },
       ],
@@ -86,9 +116,12 @@ const Datasets = function () {
       type: 'text',
       title: t('batch-size'),
       id: 'batch-size',
-      text: <>
-      <b>{t('batch-size')}</b>{t('batch-size-text')}
-    </>,
+      text: (
+        <>
+          <b>{t('batch-size')}</b>
+          {t('batch-size-text')}
+        </>
+      ),
     },
     {
       type: 'list',
@@ -96,21 +129,30 @@ const Datasets = function () {
       id: 'dataset-split',
       listItems: [
         {
-          text:  <>
-          <b>{t('training')}</b>{t('training-text')}
-        </>,
+          text: (
+            <>
+              <b>{t('training')}</b>
+              {t('training-text')}
+            </>
+          ),
           subId: 'training',
         },
         {
-          text: <>
-          <b>{t('validation')}</b>{t('validation-text')}
-        </>,
+          text: (
+            <>
+              <b>{t('validation')}</b>
+              {t('validation-text')}
+            </>
+          ),
           subId: 'validation',
         },
         {
-          text: <>
-          <b>{t('testing')}</b>{t('testing-text')}
-        </>,
+          text: (
+            <>
+              <b>{t('testing')}</b>
+              {t('testing-text')}
+            </>
+          ),
           subId: 'testing',
         },
       ],
@@ -119,33 +161,45 @@ const Datasets = function () {
       type: 'text',
       title: t('weights-bias'),
       id: 'weight-bias',
-      text: <>
-      <b>{t('weights-bias-start')}</b>{t('weights-bias-text')}
-    </>,
+      text: (
+        <>
+          <b>{t('weights-bias-start')}</b>
+          {t('weights-bias-text')}
+        </>
+      ),
     },
     {
       type: 'text',
       title: t('target'),
       id: 'target',
-      text:<>
-      <b>{t('target-start')}</b>{t('target-text')}
-    </> ,
+      text: (
+        <>
+          <b>{t('target-start')}</b>
+          {t('target-text')}
+        </>
+      ),
     },
     {
       type: 'text',
       title: t('learning-rate'),
       id: 'learning-rate',
-      text: <>
-      <b>{t('learning-rate-start')}</b>{t('learning-rate-text')}
-    </>,
+      text: (
+        <>
+          <b>{t('learning-rate-start')}</b>
+          {t('learning-rate-text')}
+        </>
+      ),
     },
     {
       type: 'text',
       title: t('epoch'),
       id: 'epoch',
-      text:<>
-      <b>{t('epoch')}</b>{t('epoch-text')}
-    </> ,
+      text: (
+        <>
+          <b>{t('epoch')}</b>
+          {t('epoch-text')}
+        </>
+      ),
     },
   ];
 
@@ -158,8 +212,9 @@ const Datasets = function () {
         gap: 3,
       }}
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <Box
+          key={index}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -184,8 +239,10 @@ const Datasets = function () {
                   },
                 }}
               >
-                {item.listItems.map((listItem) => (
-                  <ListItem id={listItem.subId || ''}>{listItem.text}</ListItem>
+                {item.listItems.map((listItem, index) => (
+                  <ListItem key={index} id={listItem.subId || ''}>
+                    {listItem.text}
+                  </ListItem>
                 ))}
               </List>
             </>

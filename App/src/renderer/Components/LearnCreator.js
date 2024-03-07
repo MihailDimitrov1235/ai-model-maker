@@ -21,8 +21,9 @@ export default function LearnCreator({ items }) {
         gap: 3,
       }}
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <Box
+          key={index}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -33,8 +34,8 @@ export default function LearnCreator({ items }) {
           </Typography>
           {item.type == 'text' && (
             <>
-              {item.paragraphs.map((paragraph) => (
-                <Typography>{paragraph}</Typography>
+              {item.paragraphs.map((paragraph, i) => (
+                <Typography key={i}>{paragraph}</Typography>
               ))}
             </>
           )}
@@ -49,8 +50,10 @@ export default function LearnCreator({ items }) {
                   },
                 }}
               >
-                {item.listItems.map((listItem) => (
-                  <ListItem id={listItem.subId || ''}>{listItem.text}</ListItem>
+                {item.listItems.map((listItem, idx) => (
+                  <ListItem key={idx} id={listItem.subId || ''}>
+                    {listItem.text}
+                  </ListItem>
                 ))}
               </List>
             </>
@@ -72,7 +75,7 @@ function CustomTabs({ item }) {
     <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange}>
         {item.tabs.map((tab, idx) => (
-          <Tab label={tab.label} value={idx} />
+          <Tab key={idx} label={tab.label} value={idx} />
         ))}
       </Tabs>
       <LearnCreator items={item.tabs[value].items} />
