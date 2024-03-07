@@ -5,7 +5,7 @@
 /App/assets/datasets/image/detection/*
 /App/assets/datasets/image/captioning/*
 
-assets/models/*
+/App/assets/models/*
 
 # Logs
 /App/logs
